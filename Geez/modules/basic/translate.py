@@ -18,7 +18,7 @@ from Geez.modules.basic import *
 from Geez.helper.cmd import *
 
 
-@Client.on_message(filters.command(["tr", "translate"], [cmd]) & filters.me)
+@Client.on_message(filters.command(["tr", "translate"], cmd) & filters.me)
 async def pytrans_tr(_, message: Message):
   tr_msg = await message.edit("`Processing...`")
   r_msg = message.reply_to_message

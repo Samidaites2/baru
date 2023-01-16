@@ -13,6 +13,7 @@ from datetime import datetime
 from platform import python_version
 from geezlibs import __version__ as gver
 from geezlibs import join
+from geezlibs import *
 from geezlibs import BOT_VER
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from pyrogram import __version__, filters, Client

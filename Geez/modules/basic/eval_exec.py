@@ -17,12 +17,13 @@ import traceback
 from pyrogram import filters, Client
 from pyrogram.types import Message
 
-from geezlibs.geez.database import cli as database
+from Geez.helper.cmd import *
+from geezlibs.geez.database import mongodb as database
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 
 
 @Client.on_message(
-    filters.command("eval", ".")
+    filters.command("eval", cmd)
     & filters.me
     & ~filters.forwarded
     & ~filters.via_bot
@@ -32,7 +33,7 @@ async def eval_func_init(bot, message):
 
 
 @Client.on_edited_message(
-    filters.command("eval", ".")
+    filters.command("eval", cmd)
     & filters.me
     & ~filters.forwarded
     & ~filters.via_bot
@@ -105,7 +106,7 @@ async def aexec(code, b, m, r, d):
 
 
 @Client.on_edited_message(
-    filters.command("exec", ".")
+    filters.command("exec", cmd)
     & filters.me
     & ~filters.forwarded
     & ~filters.via_bot
@@ -115,7 +116,7 @@ async def execution_func_edited(bot, message):
 
 
 @Client.on_message(
-    filters.command("exec", ".")
+    filters.command("exec", cmd)
     & filters.me
     & ~filters.forwarded
     & ~filters.via_bot

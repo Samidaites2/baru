@@ -12,7 +12,7 @@ import asyncio
 
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
-from requests import getget
+from requests import get
 from Geez.helper.cmd import *
 from geezlibs import BL_GCAST, DEVS
 

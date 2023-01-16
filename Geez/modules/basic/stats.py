@@ -12,6 +12,7 @@ from datetime import datetime
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 from Geez.modules.basic import *
+from Geez.helper.cmd import *
 
 
 @Client.on_message(filters.command(["stats", "status"], cmd) & filters.me)

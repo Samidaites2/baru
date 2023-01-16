@@ -33,7 +33,7 @@ def get_arg(message: Message):
     filters.group & filters.command("ggcast", cmd) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
-    filters.command(["gcast"], ".") & (filters.me | filters.user(SUDO_USER))
+    filters.command(["gcast"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def gcast_cmd(client: Client, message: Message):
     if message.reply_to_message or get_arg(message):
@@ -68,7 +68,7 @@ async def gcast_cmd(client: Client, message: Message):
     filters.group & filters.command("ggucast", cmd) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
-    filters.command(["gucast"], ".") & (filters.me | filters.user(SUDO_USER))
+    filters.command(["gucast"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def gucast(client: Client, message: Message):
     if message.reply_to_message or get_arg(message):

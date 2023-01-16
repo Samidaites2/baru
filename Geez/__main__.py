@@ -24,10 +24,7 @@ async def main():
         try:
             await bot.start()
             bot.me = await bot.get_me()
-            await bot.join_chat("ramsupport")
-            await bot.join_chat("GeezSupport")
-            await bot.join_chat("userbotch")
-            await bot.join_chat("Geezprojectt")
+            await bot.join_chat(join)
             try:
                 await bot.send_message(BOTLOG_CHATID, MSG_ON.format(BOT_VER))
             except BaseException:

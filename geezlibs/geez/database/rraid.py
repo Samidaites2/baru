@@ -1,20 +1,20 @@
 from typing import Dict, List, Union
 from geezlibs.geez.database import mongodb
 
-geez = geezdb
+geez = mongodb.geez
 
 
 async def rraid_user(chat):
     doc = {"_id": "Rraid", "users": [chat]}
-    r = await geezdb.find_one({"_id": "Rraid"})
+    r = await geez.find_one({"_id": "Rraid"})
     if r:
-        await geezdb.update_one({"_id": "Rraid"}, {"$push": {"users": chat}})
+        await geez.update_one({"_id": "Rraid"}, {"$push": {"users": chat}})
     else:
-        await geezdb.insert_one(doc)
+        await geez.insert_one(doc)
 
 
 async def get_rraid_users():
-    results = await geezdb.find_one({"_id": "Rraid"})
+    results = await geez.find_one({"_id": "Rraid"})
     if results:
         return results["users"]
     else:
@@ -22,7 +22,7 @@ async def get_rraid_users():
 
 
 async def unrraid_user(chat):
-    await geezdb.update_one({"_id": "Rraid"}, {"$pull": {"users": chat}})
+    await geez.update_one({"_id": "Rraid"}, {"$pull": {"users": chat}})
 
 
 
@@ -34,15 +34,15 @@ collection = cli["Geez"]["rraid"]
 
 async def rraid_user(chat):
     doc = {"_id": "Rraid", "users": [chat]}
-    r = await geezdb.find_one({"_id": "Rraid"})
+    r = await geez.find_one({"_id": "Rraid"})
     if r:
-        await geezdb.update_one({"_id": "Rraid"}, {"$push": {"users": chat}})
+        await geez.update_one({"_id": "Rraid"}, {"$push": {"users": chat}})
     else:
-        await geezdb.insert_one(doc)
+        await geez.insert_one(doc)
 
 
 async def get_rraid_users():
-    results = await geezdb.find_one({"_id": "Rraid"})
+    results = await geez.find_one({"_id": "Rraid"})
     if results:
         return results["users"]
     else:
@@ -50,5 +50,5 @@ async def get_rraid_users():
 
 
 async def unrraid_user(chat):
-    await geezdb.update_one({"_id": "Rraid"}, {"$pull": {"users": chat}})
+    await geez.update_one({"_id": "Rraid"}, {"$pull": {"users": chat}})
 """

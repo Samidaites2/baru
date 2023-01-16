@@ -18,18 +18,19 @@ from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from pyrogram import __version__, filters, Client
 from pyrogram.types import Message
 from config import ALIVE_PIC, ALIVE_TEXT
+from Geez.helper.cmd import *
 from Geez import START_TIME, SUDO_USER
 from Geez.modules.basic import add_command_help
 from Geez.modules.bot.inline import get_readable_time
 
 
-alive_logo = ALIVE_PIC or "https://telegra.ph/file/c78bb1efdeed38ee16eb2.png"
+alive_logo = ALIVE_PIC or ""
 
 if ALIVE_TEXT:
    txt = ALIVE_TEXT
 else:
     txt = (
-        f"**Geez Pyro Userbot**\n\n"
+        f"**Premium Userbot**\n\n"
         f"〄 **Versi**: `{BOT_VER}`\n"
         f"  ├• **Uptime**: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
         f"  ├• **Phython**: `{python_version()}`\n"
@@ -39,7 +40,7 @@ else:
     )
 
 @Client.on_message(
-    filters.command(["alive", "awake"], ".") & (filters.me | filters.user(SUDO_USER))
+    filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def alive(client: Client, message: Message):
     xx = await message.reply_text("⚡️")
@@ -64,7 +65,7 @@ async def alive(client: Client, message: Message):
     except BaseException:
         await xx.edit(xd, disable_web_page_preview=True)
 
-@Client.on_message(filters.command("repo", ".") & filters.me)
+@Client.on_message(filters.command("repo", cmd) & filters.me)
 async def repo(bot: Client, message: Message):
     await asyncio.sleep(1)
     await message.edit("Fetching Source Code.....")
@@ -72,19 +73,19 @@ async def repo(bot: Client, message: Message):
     await message.edit("Here is repo: \n\n\nhttps://github.com/hitokizzy/Geez-Pyro")
 
 
-@Client.on_message(filters.command("creator", ".") & filters.me)
+@Client.on_message(filters.command("wat", cmd) & filters.me)
 async def creator(bot: Client, message: Message):
     await message.edit("https://gitHub.com/hitokizzy")
 
 
-@Client.on_message(filters.command(["uptime", "up"], ".") & filters.me)
+@Client.on_message(filters.command(["uptime", "up"], cmd) & filters.me)
 async def uptime(bot: Client, message: Message):
     now = datetime.now()
     current_uptime = now - START_TIME
     await message.edit(f"Uptime ⚡\n" f"```{str(current_uptime).split('.')[0]}```")
 
 
-@Client.on_message(filters.command("id", ".") & filters.me)
+@Client.on_message(filters.command("id", cmd) & filters.me)
 async def get_id(bot: Client, message: Message):
     file_id = None
     user_id = None
@@ -171,24 +172,3 @@ async def get_id(bot: Client, message: Message):
 
     else:
         await message.edit(f"**Chat ID**: `{message.chat.id}`")
-
-
-
-
-add_command_help(
-    "start",
-    [
-        [".alive", "Check if the bot is alive or not."],
-        [".repo", "Display the repo of this userbot."],
-        [".creator", "Show the creator of this userbot."],
-        [".id", "Send id of what you replied to."],
-        [".up `or` .uptime", "Check bot's current uptime."],
-    ],
-)
-
-add_command_help(
-    "restart",
-    [
-        [".restart", "You are retarded if you do not know what this does."],
-    ],
-)

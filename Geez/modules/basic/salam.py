@@ -13,7 +13,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from geezlibs.geez.helper.basic import edit_or_reply
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
-from config import CMD_HNDLR as cmd
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
 
@@ -73,7 +73,7 @@ async def salamarab(client: Client, message: Message):
     await xx.edit("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ")
 
 add_command_help(
-    "salam",
+    "Salam",
     [
         ["p", "Assalamualaikum."],
         ["pe", "Assalamualaikum Warahmatullahi Wabarakatuh."],

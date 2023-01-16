@@ -14,7 +14,7 @@ from pyrogram.types import Message
 from Geez.modules.basic import *
 
 
-@Client.on_message(filters.command(["stats", "status"], ".") & filters.me)
+@Client.on_message(filters.command(["stats", "status"], cmd) & filters.me)
 async def stats(client: Client, message: Message):
     Man = await message.edit_text("`Collecting stats...`")
     start = datetime.now()
@@ -59,7 +59,7 @@ async def stats(client: Client, message: Message):
 
 
 add_command_help(
-    "stats",
+    "Stats",
     [
         ["stats", "to check your account status."],
     ],

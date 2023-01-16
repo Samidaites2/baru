@@ -16,6 +16,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 from pyrogram.types import ChatPermissions, Message
 
 from Geez.modules.basic import add_command_help
+from Geez.helper.cmd import *
 
 incorrect_parameters = f"Parameter Wrong, Type `.help locks`"
 data = {
@@ -91,7 +92,7 @@ async def tg_lock(
     )
 
 
-@Client.on_message(filters.command(["lock", "unlock"], ".") & filters.me)
+@Client.on_message(filters.command(["lock", "unlock"], cmd) & filters.me)
 async def locks_func(client: Client, message: Message):
     if len(message.command) != 2:
         return await message.edit_text(incorrect_parameters)
@@ -144,7 +145,7 @@ async def locks_func(client: Client, message: Message):
         )
 
 
-@Client.on_message(filters.command("locks", ".") & filters.me)
+@Client.on_message(filters.command("locks", cmd) & filters.me)
 async def locktypes(client: Client, message: Message):
     permissions = await current_chat_permissions(client, message.chat.id)
 
@@ -159,7 +160,7 @@ async def locktypes(client: Client, message: Message):
 
 
 add_command_help(
-    "locks",
+    "Lock",
     [
         ["lock [all or specific]", "restrict user to send."],
         [

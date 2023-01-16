@@ -28,6 +28,7 @@ from pytgcalls import GroupCallFactory, GroupCallFileAction
 from yt_dlp import YoutubeDL
 from youtubesearchpython import SearchVideos
 from geezlibs.geez.utils.tools import get_text, humanbytes, run_in_exc, run_cmd
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.basic import edit_or_reply
 from geezlibs import join
 from Geez.modules.basic import add_command_help
@@ -35,7 +36,7 @@ from Geez.modules.basic import add_command_help
 s_dict = {}
 GPC = {}
 
-@gez.on_message(filters.command(["playlist"], ".") & filters.me
+@gez.on_message(filters.command(["playlist"], cmd) & filters.me
 )
 async def pl(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
@@ -94,7 +95,7 @@ async def playout_ended_handler(group_call, filename):
     group_call.song_name = name_
     group_call.input_filename = raw_file
 
-@gez.on_message(filters.command(["skip"], ".") & filters.me
+@gez.on_message(filters.command(["skip"], cmd) & filters.me
 )
 async def ski_p(client, message):
     m_ = await edit_or_reply(message, "`Bentar Cuk!`")
@@ -135,7 +136,7 @@ async def ski_p(client, message):
         return await m_.edit(f"`Ganti Lagu : {s_} At Posisi #{no_t_s}`")
    
                 
-@gez.on_message(filters.command(["play"], ".") & filters.me
+@gez.on_message(filters.command(["play"], cmd) & filters.me
 )
 async def play_m(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
@@ -274,7 +275,7 @@ def yt_dl(url, client, message, start):
 RD_ = {}
 FFMPEG_PROCESSES = {}
  
-@gez.on_message(filters.command(["pause"], ".") & filters.me
+@gez.on_message(filters.command(["pause"], cmd) & filters.me
 )
 async def no_song_play(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
@@ -288,7 +289,7 @@ async def no_song_play(client, message):
     group_call.pause_playout()
     
     
-@gez.on_message(filters.command(["resume"], ".") & filters.me
+@gez.on_message(filters.command(["resume"], cmd) & filters.me
 )
 async def wow_dont_stop_songs(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))
@@ -302,7 +303,7 @@ async def wow_dont_stop_songs(client, message):
     await edit_or_reply(message, f"`▶️ Dilanjutkan.`")
         
 
-@gez.on_message(filters.command(["end"], ".") & filters.me
+@gez.on_message(filters.command(["end"], cmd) & filters.me
 )
 async def leave_vc_test(client, message):
     group_call = GPC.get((message.chat.id, client.me.id))

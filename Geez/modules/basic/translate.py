@@ -15,9 +15,10 @@ from pyrogram.types import Message
 from py_trans import Async_PyTranslator
 from geezlibs.geez.helper.utility import get_arg
 from Geez.modules.basic import *
+from Geez.helper.cmd import *
 
 
-@Client.on_message(filters.command(["tr", "translate"], ["."]) & filters.me)
+@Client.on_message(filters.command(["tr", "translate"], [cmd]) & filters.me)
 async def pytrans_tr(_, message: Message):
   tr_msg = await message.edit("`Processing...`")
   r_msg = message.reply_to_message
@@ -74,8 +75,8 @@ async def pytrans_tr(_, message: Message):
       await tr_msg.edit(tred_txt)
 
 add_command_help(
-    "translate",
+    "Translate",
     [
-        [".tr", "Translate some text by give a text or reply that text/caption."],
+        ["tr", "Translate some text by give a text or reply that text/caption."],
     ],
 )

@@ -16,7 +16,7 @@ from pyrogram.types import *
 from Geez.modules.basic import add_command_help
 from Geez.modules.basic.profile import extract_user
 
-@Client.on_message(filters.command(["sg", "sa", "sangmata"], ".") & filters.me)
+@Client.on_message(filters.command(["sg", "sa", "sangmata"], cmd) & filters.me)
 async def sg(client: Client, message: Message):
     args = await extract_user(message)
     lol = await message.edit_text("`Processing...`")
@@ -50,7 +50,7 @@ async def sg(client: Client, message: Message):
 
 
 add_command_help(
-    "sangmata",
+    "Sg",
     [
         [
             "sg [reply/userid/username]",

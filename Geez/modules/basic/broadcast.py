@@ -12,7 +12,8 @@ import asyncio
 
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
-from requests import get
+from requests import getget
+from Geez.helper.cmd import *
 from geezlibs import BL_GCAST, DEVS
 
 from Geez import SUDO_USER
@@ -29,7 +30,7 @@ def get_arg(message: Message):
 
 
 @Client.on_message(
-    filters.group & filters.command("ggcast", ["."]) & filters.user(DEVS) & ~filters.me
+    filters.group & filters.command("ggcast", cmd) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
     filters.command(["gcast"], ".") & (filters.me | filters.user(SUDO_USER))
@@ -64,7 +65,7 @@ async def gcast_cmd(client: Client, message: Message):
     )
 
 @Client.on_message(
-    filters.group & filters.command("ggucast", ["."]) & filters.user(DEVS) & ~filters.me
+    filters.group & filters.command("ggucast", cmd) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
     filters.command(["gucast"], ".") & (filters.me | filters.user(SUDO_USER))
@@ -100,7 +101,7 @@ async def gucast(client: Client, message: Message):
 
 
 add_command_help(
-    "broadcast",
+    "Broadcast",
     [
         [
             "gcast [text/reply]",

@@ -33,6 +33,7 @@ from pyrogram import Client, emoji, filters
 from pyrogram.enums import ParseMode
 from pyrogram.errors import StickersetInvalid, YouBlockedUser
 from pyrogram.raw.functions.messages import GetStickerSet
+from Geez.helper.cmd import *
 from pyrogram.raw.types import InputStickerSetShortName
 from pyrogram.types import Message
 
@@ -180,7 +181,7 @@ def get_arg(message: Message):
         return ""
     return " ".join(split[1:])
 
-@Client.on_message(filters.command(["tikel", "kang", "steal"], ".") & filters.me)
+@Client.on_message(filters.command(["tikel", "kang", "steal"], cmd) & filters.me)
 async def kang(client: Client, message: Message):
     user = client.me
     replied = message.reply_to_message
@@ -401,7 +402,7 @@ async def get_response(message, client):
     return [x async for x in client.get_chat_history("Stickers", limit=1)][0].text
 
 
-@Client.on_message(filters.command(["packinfo", "stickerinfo"], ".") & filters.me)
+@Client.on_message(filters.command(["packinfo", "stickerinfo"], cmd) & filters.me)
 async def packinfo(client: Client, message: Message):
     rep = await message.edit_text("`Processing...`")
     if not message.reply_to_message:
@@ -437,7 +438,7 @@ async def packinfo(client: Client, message: Message):
     await rep.edit(output)
 
 
-@Client.on_message(filters.command("stickers", ".") & filters.me)
+@Client.on_message(filters.command("stickers", cmd) & filters.me)
 async def cb_sticker(client: Client, message: Message):
     query = get_text(message)
     if not query:
@@ -457,7 +458,7 @@ async def cb_sticker(client: Client, message: Message):
     await xx.edit(reply)
 
 
-@Client.on_message(filters.command("tiny", ".") & filters.me)
+@Client.on_message(filters.command("tiny", cmd) & filters.me)
 async def tinying(client: Client, message: Message):
     reply = message.reply_to_message
     if not (reply and (reply.media)):
@@ -534,7 +535,7 @@ async def tinying(client: Client, message: Message):
     os.remove(ik)
 
 
-@Client.on_message(filters.command(["mmf", "memify"], ".") & filters.me)
+@Client.on_message(filters.command(["mmf", "memify"], cmd) & filters.me)
 async def memify(client: Client, message: Message):
     if not message.reply_to_message_id:
         await message.edit_text("**Plz reply to an sticker!**")
@@ -560,7 +561,7 @@ async def memify(client: Client, message: Message):
     os.remove(meme)
 
 
-@Client.on_message(filters.command(["getsticker", "mtoi"], ".") & filters.me)
+@Client.on_message(filters.command(["getsticker", "mtoi"], cmd) & filters.me)
 async def stick2png(client: Client, message: Message):
     try:
         await message.edit("`Downloading . . .`")
@@ -588,7 +589,7 @@ async def stick2png(client: Client, message: Message):
 
 
 add_command_help(
-    "sticker",
+    "Sticker",
     [
         [
             f"kang `reply` image",
@@ -612,7 +613,7 @@ add_command_help(
 
 
 add_command_help(
-    "memify",
+    "Memify",
     [
         [
             "mmf Top Text ; Bottom Text",
@@ -623,7 +624,7 @@ add_command_help(
 
 
 add_command_help(
-    "tiny",
+    "Tiny",
     [
         [
             "tiny [reply ke photo/sticker]",

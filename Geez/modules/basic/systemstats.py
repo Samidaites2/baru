@@ -51,7 +51,7 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
-@Client.on_message(filters.group & filters.command(["spc"], ".") & filters.me)
+@Client.on_message(filters.group & filters.command(["spc"], cmd) & filters.me)
 async def psu(client: Client, message: Message):
     uname = platform.uname()
     softw = "**Informasi Sistem**\n"
@@ -100,10 +100,3 @@ async def psu(client: Client, message: Message):
     help_string += f"`Pyrogram {__version__}`\n"
     help_string += f"`Geez Library - {gver}`\n"
     await message.reply(help_string)
-
-add_command_help(
-    "System",
-    [
-        ["spc", "Info system dan CPU Host."],
-    ],
-)

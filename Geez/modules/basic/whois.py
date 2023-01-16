@@ -13,12 +13,13 @@ from os import remove
 from pyrogram import Client, filters
 from pyrogram.enums import ChatType
 from pyrogram.types import Message
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from Geez.modules.basic.profile import extract_user
 from Geez.modules.basic import add_command_help
 
 
-@Client.on_message(filters.command(["whois", "info"], ".") & filters.me)
+@Client.on_message(filters.command(["whois", "info"], cmd) & filters.me)
 async def who_is(client: Client, message: Message):
     user_id = await extract_user(message)
     ex = await message.edit_text("`Processing . . .`")
@@ -44,7 +45,7 @@ async def who_is(client: Client, message: Message):
             status = "-"
         dc_id = f"{user.dc_id}" if user.dc_id else "-"
         common = await client.get_common_chats(user.id)
-        out_str = f"""<b>USER INFORMATION:</b>
+        out_str = f"""**<b>USER INFORMATION:</b>
 
 🆔 <b>User ID:</b> <code>{user.id}</code>
 👤 <b>First Name:</b> {first_name}
@@ -60,7 +61,7 @@ async def who_is(client: Client, message: Message):
 
 👀 <b>Same groups seen:</b> {len(common)}
 👁️ <b>Last Seen:</b> <code>{status}</code>
-🔗 <b>User permanent link:</b> <a href='tg://user?id={user.id}'>{fullname}</a>
+🔗 <b>User permanent link:</b> <a href='tg://user?id={user.id}'>{fullname}</a>**
 """
         photo_id = user.photo.big_file_id if user.photo else None
         if photo_id:
@@ -81,7 +82,7 @@ async def who_is(client: Client, message: Message):
         return await ex.edit(f"**INFO:** `{e}`")
 
 
-@Client.on_message(filters.command(["chatinfo", "cinfo", "ginfo"], ".") & filters.me)
+@Client.on_message(filters.command(["chatinfo", "cinfo", "ginfo"], cmd) & filters.me)
 async def chatinfo_handler(client: Client, message: Message):
     ex = await message.edit_text("`Processing...`")
     try:
@@ -105,7 +106,7 @@ async def chatinfo_handler(client: Client, message: Message):
         username = f"@{chat.username}" if chat.username else "-"
         description = f"{chat.description}" if chat.description else "-"
         dc_id = f"{chat.dc_id}" if chat.dc_id else "-"
-        out_str = f"""<b>CHAT INFORMATION:</b>
+        out_str = f"""**<b>CHAT INFORMATION:</b>
 
 🆔 <b>Chat ID:</b> <code>{chat.id}</code>
 👥 <b>Title:</b> {chat.title}
@@ -120,7 +121,7 @@ async def chatinfo_handler(client: Client, message: Message):
 
 🚻 <b>Total members:</b> <code>{chat.members_count}</code>
 📝 <b>Description:</b>
-<code>{description}</code>
+<code>{description}</code>**
 """
         photo_id = chat.photo.big_file_id if chat.photo else None
         if photo_id:
@@ -142,14 +143,14 @@ async def chatinfo_handler(client: Client, message: Message):
 
 
 add_command_help(
-    "info",
+    "Info",
     [
         [
             "info <username/userid/reply>",
             "get telegram user info with full description.",
         ],
         [
-            "chatinfo <username/chatid/reply>",
+            "cinfo <username/chatid/reply>",
             "get group info with full description.",
         ],
     ],

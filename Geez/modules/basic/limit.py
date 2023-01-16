@@ -10,7 +10,8 @@
 # ©2023 Geez & Ram Team
 import asyncio
 from pyrogram import Client, filters, raw
-from pyrogram.types import Message
+from pyrogram.types import MessageMessage
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.basic import edit_or_reply
 from Geez.modules.basic import add_command_help
 from config import CMD_HNDLR as cmd

@@ -11,6 +11,7 @@
 from asyncio import sleep
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
 spam_chats = []
@@ -24,7 +25,7 @@ def get_arg(message: Message):
         return ""
     return " ".join(split[1:])
 
-@Client.on_message(filters.command("tagall", ".") & filters.me)
+@Client.on_message(filters.command("tagall", cmd) & filters.me)
 async def mentionall(client: Client, message: Message):
     chat_id = message.chat.id
     direp = message.reply_to_message
@@ -55,7 +56,7 @@ async def mentionall(client: Client, message: Message):
         pass
 
 
-@Client.on_message(filters.command("cancel", ".") & filters.me)
+@Client.on_message(filters.command("batal", cmd) & filters.me)
 async def cancel_spam(client: Client, message: Message):
     if not message.chat.id in spam_chats:
         return await message.edit("**It seems there is no tagall here.**")
@@ -68,14 +69,14 @@ async def cancel_spam(client: Client, message: Message):
 
 
 add_command_help(
-    "tagall",
+    "Tag",
     [
         [
             "tagall [text/reply ke chat]",
             "Tag all the members one by one",
         ],
         [
-            "cancel",
+            "batal",
             f"to stop .tagall",
         ],
     ],

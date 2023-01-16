@@ -17,6 +17,7 @@ import re
 from pyrogram.types import Message
 from httpx import AsyncClient
 from geezlibs.geez.helper.utility import get_arg
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
 # Pastebins
@@ -89,7 +90,7 @@ async def get_pastebin_service(text: str):
         pastebin = "spacebin"
     return pastebin
 
-@Client.on_message(filters.command(["paste", "nekobin", "hastebin", "spacebin"], ["."]) & filters.me)
+@Client.on_message(filters.command(["paste", "nekobin", "hastebin", "spacebin"], [cmd]) & filters.me)
 async def paste_dis_text(_, message: Message):
     pstbin_serv = await get_pastebin_service(message.text.split(" ")[0])
     paste_msg = await message.edit(f"`Pasting to {pstbin_serv.capitalize()}...`")
@@ -113,10 +114,10 @@ async def paste_dis_text(_, message: Message):
     await paste_msg.edit(f"**Pasted to {pstbin_serv.capitalize()}!** \n\n**Url:** {pasted}", disable_web_page_preview=True)
 
 add_command_help(
-    "paste",
+    "Paste",
     [
         [
-            ".paste `or` .nekobin `or` .hastebin `or` .spacebin",
+            "paste `or` .nekobin `or` .hastebin `or` .spacebin",
             "To Paste Text to Hastebin / Nekobin or Spacebin \n\nCreate a Nekobin paste using replied to message.",
         ],
     ],

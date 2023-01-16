@@ -16,6 +16,7 @@ from pyrogram import filters, Client
 from pyrogram.types import Message
 
 from geezlibs.geez.helper.PyroHelpers import GetChatID, ReplyCheck
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
 AFK = False
@@ -86,7 +87,7 @@ async def collect_afk_messages(bot: Client, message: Message):
         CHAT_TYPE[GetChatID(message)] += 1
 
 
-@Client.on_message(filters.command("afk", ".") & filters.me, group=3)
+@Client.on_message(filters.command("afk", cmd) & filters.me, group=3)
 async def afk_set(bot: Client, message: Message):
     global AFK_REASON, AFK, AFK_TIME
 
@@ -145,9 +146,9 @@ if AFK:
 
 
 add_command_help(
-    "afk",
+    "Afk",
     [
-        [".afk", "Activates AFK mode with reason as anything after .afk\nUsage: ```.afk <reason>```"],
-        ["!afk", "Deactivates AFK mode."],
+        ["afk", "Activates AFK mode with reason as anything after afk\nUsage: ```afk <reason>```"],
+        ["! afk", "Deactivates AFK mode."],
     ],
 )

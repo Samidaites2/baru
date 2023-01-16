@@ -12,6 +12,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from telegraph import Telegraph, exceptions, upload_file
 import os
+from Geez.helper.cmd import *
 from Geez.modules.basic import *
 
 telegraph = Telegraph()
@@ -33,7 +34,7 @@ def get_text(message: Message) -> [None, str]:
     else:
         return None
 
-@Client.on_message(filters.command(["tg", "telegraph", "tm", "tgt"], ".") & filters.me)
+@Client.on_message(filters.command(["tg", "telegraph", "tm", "tgt"], cmd) & filters.me)
 async def uptotelegraph(client: Client, message: Message):
     tex = await message.edit_text("`Processing . . .`")
     if not message.reply_to_message:
@@ -53,7 +54,7 @@ async def uptotelegraph(client: Client, message: Message):
             os.remove(m_d)
             return
         U_done = (
-            f"**Uploaded on ** [Telegraph](https://telegra.ph/{media_url[0]})"
+            f"**[Uploaded](https://telegra.ph/{media_url[0]})**"
         )
         await tex.edit(U_done)
         os.remove(m_d)
@@ -71,7 +72,7 @@ async def uptotelegraph(client: Client, message: Message):
 
 
 add_command_help(
-    "telegraph",
+    "Telegraph",
     [
         [
             f"telegraph `or` .tg",

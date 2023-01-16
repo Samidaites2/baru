@@ -16,12 +16,12 @@ from pyrogram.types import *
 from geezlibs.geez.helper.basic import edit_or_reply, get_text, get_user
 
 from Geez.modules.basic.help import add_command_help
-
+from Geez.helper.cmd import *
 OWNER = os.environ.get("OWNER", None)
-BIO = os.environ.get("BIO", "404 : Bio Lost")
+BIO = os.environ.get("BIO", "Abis Clone Ga Bisa Balik")
 
 
-@Client.on_message(filters.command("clone", ".") & filters.me)
+@Client.on_message(filters.command("clone", cmd) & filters.me)
 async def clone(client: Client, message: Message):
     text = get_text(message)
     op = await message.edit_text("`Cloning`")
@@ -45,7 +45,7 @@ async def clone(client: Client, message: Message):
     await message.edit(f"**From now I'm** __{f_name}__")
 
 
-@Client.on_message(filters.command("revert", ".") & filters.me)
+@Client.on_message(filters.command("revert", cmd) & filters.me)
 async def revert(client: Client, message: Message):
     await message.edit("`Reverting`")
     r_bio = BIO
@@ -62,7 +62,7 @@ async def revert(client: Client, message: Message):
 
 
 add_command_help(
-    "clone",
+    "Clone",
     [
         ["clone", "To Clone someone Profile."],
         ["revert", "To Get Your Account Back."],

@@ -21,15 +21,16 @@ from geezlibs.geez.database import (add_banned_user,
                                        is_banned_user,
                                        remove_banned_user)
 from Geez.modules.basic.profile import extract_user, extract_user_and_reason
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 from Geez.modules.bot.inline import get_readable_time
 
 ok = []
 
 @Client.on_message(
-    filters.command("ggban", ["."]) & filters.user(DEVS) & ~filters.via_bot
+    filters.command("ggban", cmd) & filters.user(DEVS) & ~filters.via_bot
 )
-@Client.on_message(filters.command("gban", ".") & filters.me)
+@Client.on_message(filters.command("gban", cmd) & filters.me)
 async def gbanuser(client: Client, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
@@ -78,9 +79,9 @@ async def gbanuser(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command("gungban", ["."]) & filters.user(DEVS) & ~filters.via_bot
+    filters.command("gungban", cmd) & filters.user(DEVS) & ~filters.via_bot
 )
-@Client.on_message(filters.command("ungban", ".") & filters.me)
+@Client.on_message(filters.command("ungban", cmd) & filters.me)
 async def gungabn(client: Client, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
@@ -122,7 +123,7 @@ async def gungabn(client: Client, message: Message):
     await mystic.delete()
 
 
-@Client.on_message(filters.command("listgban", ".") & filters.me)
+@Client.on_message(filters.command("listgban", cmd) & filters.me)
 async def gbanned_list(client: Client, message: Message):
     counts = await get_banned_count()
     if counts == 0:
@@ -148,7 +149,7 @@ async def gbanned_list(client: Client, message: Message):
         return await mystic.edit_text(msg)
 
 
-@Client.on_message(filters.command("gmute", ".") & filters.me)
+@Client.on_message(filters.command("gmute", cmd) & filters.me)
 async def gmute_user(client: Client, message: Message):
     args = await extract_user(message)
     reply = message.reply_to_message
@@ -194,7 +195,7 @@ async def gmute_user(client: Client, message: Message):
         return
 
 
-@Client.on_message(filters.command("ungmute", ".") & filters.me)
+@Client.on_message(filters.command("ungmute", cmd) & filters.me)
 async def ungmute_user(client: Client, message: Message):
     args = await extract_user(message)
     reply = message.reply_to_message
@@ -238,7 +239,7 @@ async def ungmute_user(client: Client, message: Message):
         return
 
 
-@Client.on_message(filters.command("listgmute", ".") & filters.me)
+@Client.on_message(filters.command("listgmute", cmd) & filters.me)
 async def gmutelist(client: Client, message: Message):
     users = (await Gmute.gmute_list())
     ex = await message.edit_text("`Processing...`")
@@ -282,7 +283,7 @@ if ok:
 
 
 add_command_help(
-    "globals",
+    "Global",
     [
         [
             "gban <reply/username/userid>",

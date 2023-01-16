@@ -15,7 +15,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from Geez import aiosession
-
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 
 from Geez.modules.basic import add_command_help
@@ -29,7 +29,7 @@ async def make_carbon(code):
     return image
 
 
-@Client.on_message(filters.command("carbon", ".") & filters.me)
+@Client.on_message(filters.command("carbon", cmd) & filters.me)
 async def carbon_func(client: Client, message: Message):
     text = (
         message.text.split(None, 1)[1]
@@ -59,7 +59,7 @@ async def carbon_func(client: Client, message: Message):
 
 
 add_command_help(
-    "carbon",
+    "Carbon",
     [
         ["carbon <reply>", "Carbonize text with default settings."],
     ],

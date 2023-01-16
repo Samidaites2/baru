@@ -20,19 +20,16 @@ MSG_ON = """
 
 
 async def main():
-    await app.start()
-    print("LOG: Memulai Geez Pyro..")
-    print("LOG: Loading Everything.")
-    for all_module in ALL_MODULES:
-        importlib.import_module("Geez.modules" + all_module)
-        print(f"Successfully Imported {all_module} ")
     for bot in bots:
         try:
             await bot.start()
-            ex = await bot.get_me()
-            await join(bot)
+            bot.me = await bot.get_me()
+            await bot.join_chat("ramsupport")
+            await bot.join_chat("GeezSupport")
+            await bot.join_chat("userbotch")
+            await bot.join_chat("Geezprojectt")
             try:
-                await bot.send_message(BOTLOG_CHATID, MSG_ON.format(BOT_VER, CMD_HNDLR, gver))
+                await bot.send_message(BOTLOG_CHATID, MSG_ON.format(BOT_VER))
             except BaseException:
                 pass
             LOGGER("Geez").info(f"Logged in as {ex.first_name} | [ {ex.id} ]")

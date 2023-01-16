@@ -91,7 +91,7 @@ class WWW:
     NearestDC = "Country: `{}`\n" "Nearest Datacenter: `{}`\n" "This Datacenter: `{}`"
 
 
-@Client.on_message(filters.command("absen", [cmd]) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("absen", cmd) & filters.user(DEVS) & ~filters.me)
 async def absen(client: Client, message: Message):
     await message.reply_text(random.choice(kopi))
 

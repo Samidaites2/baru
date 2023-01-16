@@ -35,10 +35,11 @@ async def main():
                 await bot.send_message(BOTLOG_CHATID, MSG_ON.format(BOT_VER, CMD_HNDLR, gver))
             except BaseException:
                 pass
-            print(f"Started as {ex.first_name} | {ex.id} ")
-            ids.append(ex.id)
-        except Exception as e:
-            print(f"{e}")
+            LOGGER("Geez").info(f"Logged in as {ex.first_name} | [ {ex.id} ]")
+        except Exception as a:
+            LOGGER("main").warning(a)
+    LOGGER("Geez").info(f"Geez Pyro v{BOT_VER} ⚙️[⚡ Activated ⚡]")
+    if bot1 and not str(BOTLOG_CHATID).startswith("-100"):
     await idle()
     await aiosession.close()
 
@@ -47,4 +48,3 @@ if __name__ == "__main__":
     LOGGER("Geez").info("Starting Geez Pyro Userbot")
     install()
     LOOP.run_until_complete(main())
-

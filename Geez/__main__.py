@@ -29,7 +29,7 @@ async def main():
                 await bot.send_message(BOTLOG_CHATID, MSG_ON.format(BOT_VER))
             except BaseException:
                 pass
-            LOGGER("Geez").info(f"Logged in as {ex.first_name} | [ {ex.id} ]")
+            LOGGER("Geez").info(f"Logged in as {bot.me.first_name} | [ {bot.me.id} ]")
         except Exception as a:
             LOGGER("main").warning(a)
     LOGGER("Geez").info(f"Geez Pyro v{BOT_VER} ⚙️[⚡ Activated ⚡]")

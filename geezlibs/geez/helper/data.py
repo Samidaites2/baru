@@ -1,10 +1,10 @@
 from pyrogram.types import InlineKeyboardButton, WebAppInfo
-from Geez.helper.cmd import cmd
+from Geez.helper.cmd import PREFIX
 
 class Data:
 
     text_help_menu = (
-        "**Command List & Help**\n**Prefixes:** {cmd}"
+        "**Command List & Help**\n**Prefixes:** {PREFIX}"
         .replace(",", "")
         .replace("[", "")
         .replace("]", "")

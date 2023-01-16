@@ -29,7 +29,7 @@ def get_arg(message):
     return " ".join(split[1:])
 
 
-@Client.on_message(filters.command("setlimit", [cmd]) & filters.me)
+@Client.on_message(filters.command("setlimit", cmd) & filters.me)
 async def pmguard(client, message):
     arg = get_arg(message)
     if not arg:
@@ -40,7 +40,7 @@ async def pmguard(client, message):
 
 
 
-@Client.on_message(filters.command("setblockmsg", [cmd]) & filters.me)
+@Client.on_message(filters.command("setblockmsg", cmd) & filters.me)
 async def setpmmsg(client, message):
     arg = get_arg(message)
     if not arg:
@@ -54,7 +54,7 @@ async def setpmmsg(client, message):
     await message.edit("**Custom block message set**")
 
 
-@Client.on_message(filters.command(["allow", "ok", "approve", "k"], [cmd]) & filters.me & filters.private)
+@Client.on_message(filters.command(["allow", "ok", "approve", "k"], cmd) & filters.me & filters.private)
 async def allow(client, message):
     chat_id = message.chat.id
     pmpermit, pm_message, limit, block_message = await TOD.get_pm_settings()
@@ -67,7 +67,7 @@ async def allow(client, message):
     USERS_AND_WARNS.update({chat_id: 0})
 
 
-@Client.on_message(filters.command(["no", "fuck", "disapprove", "blok"], [cmd]) & filters.me & filters.private)
+@Client.on_message(filters.command(["no", "fuck", "disapprove", "blok"], cmd) & filters.me & filters.private)
 async def deny(client, message):
     chat_id = message.chat.id
     await TOD.deny_user(chat_id)

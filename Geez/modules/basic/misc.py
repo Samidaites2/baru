@@ -35,12 +35,11 @@ else:
         f"  ├• **Uptime**: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
         f"  ├• **Phython**: `{python_version()}`\n"
         f"  ├• **Pyrogram**: `{__version__}`\n"
-        f"  ├• **Geez Library**: `{gver}`\n\n"
         f"©️2023 [Geez Support](t.me/GeezSupport)><[RAM Support](t.me/ramsupportt)\n"
     )
 
 @Client.on_message(
-    filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(DEVS))
 )
 async def alive(client: Client, message: Message):
     xx = await message.reply_text("⚡️")
@@ -50,40 +49,18 @@ async def alive(client: Client, message: Message):
        await message.delete()
     except:
        pass
-    send = client.send_video if alive_logo.endswith(".mp4") else client.send_photo
     xd = (f"{txt}")
     try:
         await asyncio.gather(
             xx.delete(),
             send(
                 message.chat.id,
-                alive_logo,
                 caption=xd,
                 reply_to_message_id=ReplyCheck(message),
             ),
         )
     except BaseException:
         await xx.edit(xd, disable_web_page_preview=True)
-
-@Client.on_message(filters.command("repo", cmd) & filters.me)
-async def repo(bot: Client, message: Message):
-    await asyncio.sleep(1)
-    await message.edit("Fetching Source Code.....")
-    await asyncio.sleep(1)
-    await message.edit("Here is repo: \n\n\nhttps://github.com/hitokizzy/Geez-Pyro")
-
-
-@Client.on_message(filters.command("wat", cmd) & filters.me)
-async def creator(bot: Client, message: Message):
-    await message.edit("https://gitHub.com/hitokizzy")
-
-
-@Client.on_message(filters.command(["uptime", "up"], cmd) & filters.me)
-async def uptime(bot: Client, message: Message):
-    now = datetime.now()
-    current_uptime = now - START_TIME
-    await message.edit(f"Uptime ⚡\n" f"```{str(current_uptime).split('.')[0]}```")
-
 
 @Client.on_message(filters.command("id", cmd) & filters.me)
 async def get_id(bot: Client, message: Message):

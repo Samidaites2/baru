@@ -37,8 +37,8 @@ async def main():
             LOGGER("main").warning(a)
     LOGGER("Geez").info(f"Geez Pyro v{BOT_VER} ⚙️[⚡ Activated ⚡]")
     if bot1 and not str(BOTLOG_CHATID).startswith("-100"):
-    await idle()
-    await aiosession.close()
+       await idle()
+       await aiosession.close()
 
 
 if __name__ == "__main__":

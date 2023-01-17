@@ -1,6 +1,6 @@
 flask
 gunicorn
-geezlibs1==2.0.0
+git+https://github.com/Onlymeriz/hadeh
 gpytranslate
 pytgcalls==3.0.0.dev22
 uvloop

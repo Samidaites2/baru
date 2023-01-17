@@ -22,15 +22,13 @@ from Geez.modules.basic import add_command_help
 ok = []
 
 @Client.on_message(
-    filters.command("cgban", cmd) & filters.user(DEVS) & ~filters.via_bot
+    filters.command("ggban", ".") & filters.user(DEVS) & ~filters.via_bot
 )
 @Client.on_message(filters.command("gban", cmd) & filters.me)
 async def gban_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
     if message.from_user.id != client.me.id:
         ex = await message.reply_text("`Gbanning...`")
-    else:
-        ex = await message.edit("`Gbanning....`")
     if not user_id:
         return await ex.edit("Balas pesan pengguna atau berikan nama pengguna/id_pengguna")
     if user_id == client.me.id:

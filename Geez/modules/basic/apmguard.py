@@ -16,13 +16,13 @@ from .pmguard import get_arg, denied_users
 async def pmguard(client, message):
     arg = get_arg(message)
     if not arg:
-        await message.edit("**I only understand on or off**")
+        await message.edit("**I only understand True or False**")
         return
-    if arg == "off":
-        await TOD.set_pm(False)
+    if arg == "False":
+        await TOD.set_permit(False)
         await message.edit("**PM Guard Deactivated**")
-    if arg == "on":
-        await TOD.set_pm(True)
+    if arg == "True":
+        await TOD.set_permit(True)
         await message.edit("**PM Guard Activated**")
 @Client.on_message(filters.command("setpmmsg", cmd) & filters.me)
 async def setpmmsg(client, message):

@@ -27,7 +27,7 @@ async def main():
             ex = await bot.get_me()
             await join(bot)
             try:
-                await bot.send_message("me", MSG_ON)
+                await bot.send_message(BOTLOG_CHATID, MSG_ON)
             except BaseException:
                 pass
             print(f"Started as {ex.first_name} | {ex.id} ")

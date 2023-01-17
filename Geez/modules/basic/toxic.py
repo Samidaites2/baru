@@ -14,6 +14,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from Geez.modules.basic import *
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.basic import edit_or_reply
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from Geez.modules.basic.help import *

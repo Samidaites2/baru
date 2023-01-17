@@ -19,7 +19,6 @@ from geezlibs.geez.helper.basic import edit_or_reply
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from Geez.modules.basic.help import *
 from Geez.modules.basic.profile import extract_user
-from config import BL_GCAST
 
 
 @Client.on_message(filters.command("jamet", cmd) & filters.me)

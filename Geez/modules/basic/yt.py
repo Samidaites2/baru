@@ -21,6 +21,7 @@ from yt_dlp import YoutubeDL
 
 from Geez.modules.basic import add_command_help
 from Geez import *
+from Geez.helper.cmd import *
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from geezlibs.geez.helper.tools import get_arg
 

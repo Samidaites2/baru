@@ -3,6 +3,7 @@ import asyncio
 from pyrogram.types import Message 
 from pyrogram.methods import messages
 from geezlibs.geez.database.pmpermitdb import *
+from geezlibs.geez.database import *
 from Geez.helper.cmd import *
 import geezlibs.geez.database.pmpermitdb as TOD
 from config import BOTLOG_CHATID

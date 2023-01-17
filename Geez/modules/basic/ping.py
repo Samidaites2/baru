@@ -96,7 +96,7 @@ async def absen(client: Client, message: Message):
     await message.reply_text(random.choice(kopi))
 
 
-@Client.on_message(filters.command("gping", cmd) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gping", ".") & filters.user(DEVS) & ~filters.me)
 async def cpingme(client: Client, message: Message):
     """Ping the assistant"""
     mulai = time.time()

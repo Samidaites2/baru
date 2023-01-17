@@ -30,39 +30,7 @@ async def _callbacks(_, callback_query: CallbackQuery):
             Data.text_help_menu,
             reply_markup=InlineKeyboardMarkup(buttons),
         )
-    elif query == "close":
-        await app.edit_inline_text(callback_query.inline_message_id, "**CLOSED**")
-        return
-    elif query == "close_help":
-        if callback_query.from_user.id not in users:
-           return
-        await app.edit_inline_text(
-            callback_query.inline_message_id,
-            "**CLOSED MENU HELP**",
-            reply_markup=InlineKeyboardMarkup(Data.reopen),
-        )
-        return
-    elif query == "closed":
-        try:
-            await callback_query.message.delete()
-        except BaseException:
-            pass
-        try:
-            await callback_query.message.reply_to_message.delete()
-        except BaseException:
-            pass
-    elif query == "make_basic_button":
-        try:
-            bttn = paginate_help(0, CMD_HELP, "helpme")
-            await app.edit_inline_text(
-                callback_query.inline_message_id,
-                Data.text_help_menu,
-                reply_markup=InlineKeyboardMarkup(bttn),
-            )
-        except Exception as e:
-            e = traceback.format_exc()
-            print(e, "Callbacks")
-
+    
 
 @app.on_callback_query(filters.regex("ub_modul_(.*)"))
 # @cb_wrapper
@@ -73,9 +41,6 @@ async def on_plug_in_cb(_, callback_query: CallbackQuery):
     for x in commands:
         this_command += f"  •  **Command:** `*{str(x)}`\n  •  **Function:** `{str(commands[x])}`\n\n"
     this_command += ""
-    bttn = [
-        [InlineKeyboardButton(text="Return", callback_data="reopen")],
-    ]
     reply_pop_up_alert = (
         this_command
         if this_command is not None

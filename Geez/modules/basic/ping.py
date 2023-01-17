@@ -96,7 +96,7 @@ async def absen(client: Client, message: Message):
     await message.reply_text(random.choice(kopi))
 
 
-@Client.on_message(filters.command("ping", cmd) & filters.user(SUDO_USER) & ~filters.me)
+@Client.on_message(filters.command("gping", cmd) & filters.user(SUDO_USER) & ~filters.me)
 async def cpingme(client: Client, message: Message):
     """Ping the assistant"""
     mulai = time.time()
@@ -106,7 +106,7 @@ async def cpingme(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command(["tau"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["ping"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
@@ -123,7 +123,7 @@ async def pingme(client: Client, message: Message):
     await asyncio.sleep(1)
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await xx.edit(f"**Geez - Pyro!!🎈**\n**Pinger** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration))
+    await xx.edit(f"**🎈 Dorrr**\n**Pinger** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration))
 
 
 @Client.on_message(

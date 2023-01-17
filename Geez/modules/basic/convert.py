@@ -4,6 +4,7 @@ from pyrogram.types import Message
 
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from geezlibs.geez.utils.tools import run_cmd
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
 

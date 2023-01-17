@@ -23,7 +23,7 @@ from Geez.modules.basic import add_command_help
 from Geez import *
 from Geez.helper.cmd import *
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
-from geezlibs.geez.helper.tools import get_arg
+from geezlibs.geez.utils.tools import get_arg
 
 
 def get_text(message: Message) -> [None, str]:

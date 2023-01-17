@@ -130,7 +130,7 @@ async def gbanlist(client: Client, message: Message):
         return
     for lit in list_:
         oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}` \n\n"
-    return await ex.edit(gban_list)
+    return await ex.edit(list_)
 
 
 @Client.on_message(filters.command("gmute", cmd) & filters.me)

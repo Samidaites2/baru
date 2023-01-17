@@ -11,4 +11,4 @@ import logging
 from Geez import mongo_client
 from Geez import Config
 
-db_x = mongo_client["Geez"]
+db_x = mongo_client["geez"]

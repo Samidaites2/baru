@@ -5,12 +5,14 @@ import time
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
 from typing import Any, Dict
+from .config import Config
 
 from aiohttp import ClientSession
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from gpytranslate import Translator
 from pyrogram import Client
 from pytgcalls import GroupCallFactory
+
 
 from config import (
     API_HASH,
@@ -47,6 +49,8 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
 logging.getLogger("pyrogram.session.auth").setLevel(logging.CRITICAL)
 logging.getLogger("pyrogram.session.session").setLevel(logging.CRITICAL)
+
+mongo_client = motor.motor_asyncio.AsyncIOMotorClient(Config.MONGO_DB)
 
 LOGS = logging.getLogger(__name__)
 

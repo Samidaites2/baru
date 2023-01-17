@@ -122,6 +122,7 @@ async def ungban_user(client: Client, message: Message):
 @Client.on_message(filters.command("listgban", cmd) & filters.me)
 async def gbanlist(client: Client, message: Message):
     users = (await Geez.gban_list())
+    oof = "**GBanned Users:**\n"
     ex = await message.edit_text("`Processing...`")
     list_ = await Geez.gban_list()
     if len(list_) == 0:

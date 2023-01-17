@@ -58,7 +58,7 @@ async def gbanuser(client: Client, message: Message):
     time_expected = len(served_chats)
     time_expected = get_readable_time(time_expected)
     mystic = await message.reply_text(
-        ["**Menginisialisasi Larangan Global pada {0}**\n\nWaktu yang Diharapkan : {1}."].format(mention, time_expected)
+        f"**Menginisialisasi Larangan Gobal pada {0}**\n\nWaktu yang Diharapkan : : {len(served_chats)}"
     )
     number_of_chats = 0
     for chat_id in served_chats:

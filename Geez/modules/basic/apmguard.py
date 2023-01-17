@@ -19,10 +19,10 @@ async def pmguard(client, message):
         await message.edit("**I only understand True or False**")
         return
     if arg == "False":
-        await TOD.set_permit(False)
+        await TOD.pmpermitdb(False)
         await message.edit("**PM Guard Deactivated**")
     if arg == "True":
-        await TOD.set_permit(True)
+        await TOD.pmpermitdb(True)
         await message.edit("**PM Guard Activated**")
 @Client.on_message(filters.command("setpmmsg", cmd) & filters.me)
 async def setpmmsg(client, message):
@@ -31,10 +31,10 @@ async def setpmmsg(client, message):
         await message.edit("**What message to set**")
         return
     if arg == "default":
-        await TOD.set_permit_message(TOD.PMPERMIT_MESSAGE)
+        await TOD.pmpermitdb_message(TOD.PMPERMIT_MESSAGE)
         await message.edit("**Anti_PM message set to default**.")
         return
-    await TOD.set_permit_message(f"`{arg}`")
+    await TOD.pmpermitdb_message(f"`{arg}`")
     await message.edit("**Custom anti-pm message set**")
 
 

@@ -7,6 +7,7 @@ from pyrogram.types import Message
 
 from geezlibs.geez.helper.parser import mention_html, mention_markdown
 from Geez.modules.basic import add_command_help
+from Geez.helper.cmd import *
 
 
 @Client.on_message(

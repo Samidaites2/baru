@@ -2,20 +2,21 @@ from pyrogram import filters, Client
 import asyncio
 from pyrogram.types import Message 
 from pyrogram.methods import messages
-from geezlibs.geez.database.pmpermitdb import get_approved_users, pm_guard
+from geezlibs.geez.database.pmpermitdb import *
 from Geez.helper.cmd import *
 import geezlibs.geez.database.pmpermitdb as TOD
-from config import BOTLOG_CHATID, PM_LOGGER
+from config import BOTLOG_CHATID
 
 FLOOD_CTRL = 0
 ALLOWED = []
 USERS_AND_WARNS = {}
+flood = {}
 
 
 async def denied_users(filter, client: Client, message: Message):
     if not await pm_guard():
         return False
-    if message.chat.id in (await get_approved_users()):
+    if message.chat.id in (await is_pmpermit_approved()):
         return False
     else:
         return True
@@ -29,80 +30,96 @@ def get_arg(message):
     return " ".join(split[1:])
 
 
-@Client.on_message(filters.command("setlimit", cmd) & filters.me)
-async def pmguard(client, message):
-    arg = get_arg(message)
-    if not arg:
-        await message.edit("**Set limit to what?**")
-        return
-    await TOD.set_limit(int(arg))
-    await message.edit(f"**Limit set to {arg}**")
-
-
-
-@Client.on_message(filters.command("setblockmsg", cmd) & filters.me)
-async def setpmmsg(client, message):
-    arg = get_arg(message)
-    if not arg:
-        await message.edit("**What message to set**")
-        return
-    if arg == "default":
-        await TOD.set_block_message(TOD.BLOCKED)
-        await message.edit("**Block message set to default**.")
-        return
-    await TOD.set_block_message(f"`{arg}`")
-    await message.edit("**Custom block message set**")
-
-
 @Client.on_message(filters.command(["allow", "ok", "approve", "k"], cmd) & filters.me & filters.private)
-async def allow(client, message):
-    chat_id = message.chat.id
-    pmpermit, pm_message, limit, block_message = await TOD.get_pm_settings()
-    await TOD.allow_user(chat_id)
-    await message.edit(f"**I have allowed [you](tg://user?id={chat_id}) to PM me.**")
-    async for message in client.search_messages(
-        chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
-    ):
-        await message.delete()
-    USERS_AND_WARNS.update({chat_id: 0})
+async def pm_approve(client, message):
+    if not message.reply_to_message:
+        return await eor(
+            message, text="Reply to a user's message to approve."
+        )
+    user_id = message.reply_to_message.from_user.id
+    if await is_pmpermit_approved(user_id):
+        return await eor(message, text="User is already approved to pm")
+    await approve_pmpermit(user_id)
+    await eor(message, text="User is approved to pm")
 
 
-@Client.on_message(filters.command(["no", "fuck", "disapprove", "blok"], cmd) & filters.me & filters.private)
-async def deny(client, message):
-    chat_id = message.chat.id
-    await TOD.deny_user(chat_id)
-    await message.edit(f"**I have denied [you](tg://user?id={chat_id}) to PM me.**")
+@Client.on_message(filters.command(["no", "tolak", "disapprove", "blok"], [cmd]) & filters.me & filters.private)
+async def pm_disapprove(client, message):
+    if not message.reply_to_message:
+        return await eor(
+            message, text="Reply to a user's message to disapprove."
+        )
+    user_id = message.reply_to_message.from_user.id
+    if not await is_pmpermit_approved(user_id):
+        await eor(message, text="User is already disapproved to pm")
+        async for m in client.iter_history(user_id, limit=6):
+            if m.reply_markup:
+                try:
+                    await m.delete()
+                except Exception:
+                    pass
+        return
+    await disapprove_pmpermit(user_id)
+    await eor(message, text="User is disapproved to pm")
+    
+    
+@Client.on_message(filters.command(["blok"], cmd) & filters.me & filters.private)
+async def block_user_func(client, message):
+    if not message.reply_to_message:
+        return await eor(message, text="Reply to a user's message to block.")
+    user_id = message.reply_to_message.from_user.id
+    await eor(message, text="Successfully blocked the user")
+    await client.block_user(user_id)
+
+
+@Client.on_message(filters.command(["unblock"], cmd) & filters.me & filters.private)
+async def unblock_user_func(client, message):
+    if not message.reply_to_message:
+        return await eor(
+            message, text="Reply to a user's message to unblock."
+        )
+    user_id = message.reply_to_message.from_user.id
+    await client.unblock_user(user_id)
+    await eor(message, text="Successfully Unblocked the user")
 
 
 @Client.on_message(
     filters.private
-    & filters.create(denied_users)
     & filters.incoming
     & ~filters.service
     & ~filters.me
     & ~filters.bot
 )
-async def reply_pm(app: Client, message):
-    global FLOOD_CTRL
-    pmpermit, pm_message, limit, block_message = await TOD.get_pm_settings()
-    user = message.from_user.id
-    user_warns = 0 if user not in USERS_AND_WARNS else USERS_AND_WARNS[user]
-    if PM_LOGGER:
-        await app.send_message(PM_LOGGER, f"{message.text}")
-    if user_warns <= limit - 2:
-        user_warns += 1
-        USERS_AND_WARNS.update({user: user_warns})
-        if not FLOOD_CTRL > 0:
-            FLOOD_CTRL += 1
-        else:
-            FLOOD_CTRL = 0
-            return
-        async for message in app.search_messages(
-            chat_id=message.chat.id, query=pm_message, limit=1, from_user="me"
-        ):
-            await message.delete()
-        await message.reply(pm_message, disable_web_page_preview=True)
+async def awaiting_message(client, message):
+    if await is_on_off(5):
+        try:
+            await client.forward_messages(
+                chat_id=BOTLOG_CHATID,
+                from_chat_id=message.from_user.id,
+                message_ids=message.message_id,
+            )
+        except Exception as err:
+            pass
+    user_id = message.from_user.id
+    if await is_pmpermit_approved(user_id):
         return
-    await message.reply(block_message, disable_web_page_preview=True)
-    await app.block_user(message.chat.id)
-    USERS_AND_WARNS.update({user: 0})
+    async for m in client.iter_history(user_id, limit=6):
+        if m.reply_markup:
+            await m.delete()
+    if str(user_id) in flood:
+        flood[str(user_id)] += 1
+    else:
+        flood[str(user_id)] = 1
+    if flood[str(user_id)] > 5:
+        await message.reply_text("Spam Detected. User Blocked")
+        await client.send_message(
+            BOTLOG_CHATID,
+            f"**Spam Detect Block**\n\n- **Blocked User:** {message.from_user.mention}\n- **User ID:** {message.from_user.id}",
+        )
+        return await client.block_user(user_id)
+    await message.reply_text(
+        f"**peringatan! tolong baca pesan ini dengan hati-hati..\n\n**"
+    "**Saya Premium Userbot, saya di sini untuk melindungi tuanku dari spam**"
+    "**jika Anda bukan spammer, harap tunggu!.\n\n**"
+    "**sampai saat itu, jangan spam atau Anda akan diblokir dan dilaporkan bb saya, jadi berhati-hatilah untuk mengirim pesan pesan!**"
+    )

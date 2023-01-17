@@ -18,68 +18,22 @@ BLOCKED = "**Spammer, blocked!**"
 LIMIT = 5
 
 
-async def set_pm(value: bool):
-    doc = {"_id": 1, "pmpermit": value}
-    doc2 = {"_id": "Approved", "users": []}
-    r = await pmpermitdb.find_one({"_id": 1})
-    r2 = await pmpermitdb.find_one({"_id": "Approved"})
-    if r:
-        await pmpermitdb.update_one({"_id": 1}, {"$set": {"pmpermit": value}})
-    else:
-        await pmpermitdb.insert_one(doc)
-    if not r2:
-        await pmpermitdb.insert_one(doc2)
-
-
-async def set_permit_message(text):
-    await pmpermitdb.update_one({"_id": 1}, {"$set": {"pmpermit_message": text}})
-
-
-async def set_block_message(text):
-    await pmpermitdb.update_one({"_id": 1}, {"$set": {"block_message": text}})
-
-
-async def set_limit(limit):
-    await pmpermitdb.update_one({"_id": 1}, {"$set": {"limit": limit}})
-
-
-async def get_pm_settings():
-    result = await pmpermitdb.find_one({"_id": 1})
-    if not result:
+async def is_pmpermit_approved(user_id: int) -> bool:
+    user = await pmpermitdb.find_one({"user_id": user_id})
+    if not user:
         return False
-    pmpermit = result["pmpermit"]
-    pm_message = result.get("pmpermit_message", PMPERMIT_MESSAGE)
-    block_message = result.get("block_message", BLOCKED)
-    limit = result.get("limit", LIMIT)
-    return pmpermit, pm_message, limit, block_message
+    return True
 
 
-async def allow_user(chat):
-    doc = {"_id": "Approved", "users": [chat]}
-    r = await pmpermitdb.find_one({"_id": "Approved"})
-    if r:
-        await pmpermitdb.update_one({"_id": "Approved"}, {"$push": {"users": chat}})
-    else:
-        await pmpermitdb.insert_one(doc)
+async def approve_pmpermit(user_id: int):
+    is_pmpermit = await is_pmpermit_approved(user_id)
+    if is_pmpermit:
+        return
+    return await pmpermitdb.insert_one({"user_id": user_id})
 
 
-async def get_approved_users():
-    results = await pmpermitdb.find_one({"_id": "Approved"})
-    if results:
-        return results["users"]
-    else:
-        return []
-
-
-async def deny_user(chat):
-    await pmpermitdb.update_one({"_id": "Approved"}, {"$pull": {"users": chat}})
-
-
-async def pm_guard():
-    result = await pmpermitdb.find_one({"_id": 1})
-    if not result:
-        return False
-    if not result["pmpermit"]:
-        return False
-    else:
-        return True
+async def disapprove_pmpermit(user_id: int):
+    is_pmpermit = await is_pmpermit_approved(user_id)
+    if not is_pmpermit:
+        return
+    return await pmpermitdb.delete_one({"user_id": user_id})

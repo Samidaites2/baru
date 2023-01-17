@@ -1,28 +1,14 @@
-#import motor.motor_asyncio
+# Copyright (C) 2020-2021 by DevsExpo@Github, < https://github.com/DevsExpo >.
+#
+# This file is part of < https://github.com/DevsExpo/FridayUB > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/DevsExpo/blob/master/LICENSE >
+#
+# All rights reserved.
 
-#from config import MONGO_URL
-#cli = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+import logging
 
-from motor.motor_asyncio import AsyncIOMotorClient as _mongo_client_
-from pymongo import MongoClient
-from pyrogram import Client
-from config import MONGO_URL
+from Geez import mongo_client
+from Geez import Config
 
-
-
-_mongo_async_ = _mongo_client_(MONGO_URL)
-_mongo_sync_ = MongoClient(MONGO_URL)
-mongodb = _mongo_async_.Geez
-pymongodb = _mongo_sync_.Geez
-
-
-
-
-
-
-
-from geezlibs.geez.database.gbandb import *
-from geezlibs.geez.database.gmutedb import *
-from geezlibs.geez.database.pmpermitdb import *
-from geezlibs.geez.database.onoff import *
-from geezlibs.geez.database.rraid import *
+db_x = mongo_client["Geez"]

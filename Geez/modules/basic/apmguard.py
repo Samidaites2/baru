@@ -19,32 +19,20 @@ async def pmguard(client, message):
         await message.edit("**I only understand True or False**")
         return
     if arg == "False":
-        await TOD.pmpermitdb(False)
+        await TOD.add_off(False)
         await message.edit("**PM Guard Deactivated**")
     if arg == "True":
-        await TOD.pmpermitdb(True)
+        await TOD.add_on(True)
         await message.edit("**PM Guard Activated**")
-@Client.on_message(filters.command("setpmmsg", cmd) & filters.me)
-async def setpmmsg(client, message):
-    arg = get_arg(message)
-    if not arg:
-        await message.edit("**What message to set**")
-        return
-    if arg == "default":
-        await TOD.pmpermitdb_message(TOD.PMPERMIT_MESSAGE)
-        await message.edit("**Anti_PM message set to default**.")
-        return
-    await TOD.pmpermitdb_message(f"`{arg}`")
-    await message.edit("**Custom anti-pm message set**")
+
 
 
 add_command_help(
     "PM",
     [
         ["pm [on or off]", " -> Activates or deactivates anti-pm."],
-        ["setpmmsg [message or default]", " -> Sets a custom anti-pm message."],
-        ["setblockmsg [message or default]", "-> Sets custom block message."],
-        ["setlimit [value]", " -> This one sets a max. message limit for unwanted PMs and when they go beyond it, bamm!."],
+        ["block", " -> Block a user to you."],
+        ["unblock", " -> Unblock a user to you."],
         ["ok", " -> Allows a user to PM you."],
         ["no", " -> Denies a user to PM you."],
     ],

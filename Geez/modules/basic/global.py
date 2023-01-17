@@ -22,7 +22,7 @@ from Geez.modules.basic import add_command_help
 ok = []
 
 @Client.on_message(
-    filters.command("ggban", cmd) & filters.user(DEVS) & ~filters.via_bot
+    filters.command("cgban", cmd) & filters.user(DEVS) & ~filters.via_bot
 )
 @Client.on_message(filters.command("gban", cmd) & filters.me)
 async def gban_user(client: Client, message: Message):
@@ -72,7 +72,7 @@ async def gban_user(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command("gungban", cmd) & filters.user(DEVS) & ~filters.via_bot
+    filters.command("cungban", cmd) & filters.user(DEVS) & ~filters.via_bot
 )
 @Client.on_message(filters.command("ungban", cmd) & filters.me)
 async def ungban_user(client: Client, message: Message):
@@ -123,13 +123,12 @@ async def ungban_user(client: Client, message: Message):
 async def gbanlist(client: Client, message: Message):
     users = (await Geez.gban_list())
     ex = await message.edit_text("`Processing...`")
-    if not users:
-        return await ex.edit("No Users have been Banned yet")
-    gban_list = "**GBanned Users:**\n"
-    count = 0
-    for i in users:
-        count += 1
-        gban_list += f"**{count} -** `{i.sender}`\n"
+    list_ = await Geez.gban_list()
+    if len(list_) == 0:
+        await ex.edit("**No Users have been Banned yet**")
+        return
+    for lit in list_:
+        oof += f"**User :** `{lit['user']}` \n**Reason :** `{lit['reason']}` \n\n"
     return await ex.edit(gban_list)
 
 

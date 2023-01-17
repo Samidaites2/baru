@@ -29,7 +29,7 @@ async def gban_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
     if message.from_user.id != client.me.id:
         ex = await message.reply_text("`Gbanning...`")
-       else:
+      else:
     if not user_id:
         return await ex.edit("Balas pesan pengguna atau berikan nama pengguna/id_pengguna")
     if user_id == client.me.id:

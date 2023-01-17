@@ -43,7 +43,7 @@ async def pm_approve(client, message):
     await eor(message, text="User is approved to pm")
 
 
-@Client.on_message(filters.command(["no", "tolak", "disapprove", "blok"], [cmd]) & filters.me & filters.private)
+@Client.on_message(filters.command(["no", "tolak", "disapprove", "blok"], cmd) & filters.me & filters.private)
 async def pm_disapprove(client, message):
     if not message.reply_to_message:
         return await eor(

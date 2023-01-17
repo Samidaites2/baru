@@ -49,7 +49,7 @@ async def on_plug_in_cb(_, callback_query: CallbackQuery):
     await app.edit_inline_text(
         callback_query.inline_message_id,
         reply_pop_up_alert,
-        reply_markup=InlineKeyboardMarkup(bttn),
+        reply_markup=InlineKeyboardMarkup(buttons),
     )
 
 

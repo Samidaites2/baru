@@ -4,7 +4,7 @@ from pyrogram import Client as gez
 
 PREFIX = ["^", "?", "-", "+"]
 
-cmd = ["^", "?", "(", "*"] # cmd custom
+cmd = [".", "?", "(", "*"] # cmd custom
 
 command = filters.command
 

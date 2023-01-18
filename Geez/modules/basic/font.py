@@ -6,6 +6,8 @@ from geezlibs.geez.helper import *
 from geezlibs.geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
+from . import *
+
 
 arguments = [
     "smallcap",
@@ -48,14 +50,18 @@ def gen_font(text, new_font):
             text = text.replace(q, new)
     return text
 
+def get_cmd(array: list, string: bool = True):
+    random_num = random.choice(array)
+    return str(random_num) if string else random_num
+
 
 @Client.on_message(filters.command(["font"], cmd) & filters.me)
 async def font_geez(client: Client, message: Message):
-    if message.reply_to_message or get_text(message):
-        font = get_text(message)
+    if message.reply_to_message or geez.get_cmd(message):
+        font = geez.get_cmd(message)
         text = message.reply_to_message
         if not font:
-            return await message.reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
+            return await edit_or_reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
         if font == "smallcap":
             geez = gen_font(text, _smallcap)
         elif font == "monospace":
@@ -72,7 +78,7 @@ async def font_geez(client: Client, message: Message):
             geez = gen_font(text, _bold)
         elif font == "bolditalic":
             geez = gen_font(text, _bolditalic)
-        await message.reply(message)
+        await edit_or_reply(message, geez)
 
     else:
         return await message.reply("Balas Teks Dan Isi Nama Font Yang Bener Bego!!!")
@@ -80,7 +86,7 @@ async def font_geez(client: Client, message: Message):
 
 @Client.on_message(filters.command(["lf", "listfont"], cmd) & filters.me)
 async def fonts(client: Client, msg: Message):
-    await eor(
+    await edit_or_reply(
         msg,
         "<b>❯❯ ᴅᴀғᴛᴀʀ ғᴏɴᴛs ❮❮</b>\n"
         "<b>         ☟︎︎︎☟☟︎︎︎☟︎︎︎☟︎︎</b>\n\n\n"
@@ -97,9 +103,9 @@ async def fonts(client: Client, msg: Message):
 
 
 add_command_help(
-    "Font",
+    "Fonts",
     [
-        ["font", "<reply text> Membuat Text Dengan Gaya Font Berbeda."],
-        ["lf", "Untuk Melihat Daftar Font."],
+        ["font <reply text>": "Membuat Text Dengan Gaya Font Berbeda."],
+        ["lf": "Untuk Melihat Daftar Font."],
     ],
 )

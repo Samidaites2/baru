@@ -9,7 +9,7 @@ from Geez.modules.basic import add_command_help
 
 
 @Client.on_message(
-    filters.command("extractaudio", cmd) & filters.me
+    filters.command("audio", cmd) & filters.me
 )
 async def extract_audio(client: Client, message: Message):
     replied = message.reply_to_message
@@ -52,7 +52,7 @@ async def makevoice(client: Client, message: Message):
         await message.reply("`Downloading . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="Cilik/resources/",
+            file_name="Geez/resources/",
         )
         if replied.video:
             replied.video.duration
@@ -82,7 +82,7 @@ async def makevoice(client: Client, message: Message):
 add_command_help(
     "Convert",
     [
-        ["extractaudio <reply to file>", "Convert video to audio"],
+        ["audio <reply to file>", "Convert video to audio"],
         ["makevoice <reply to file>", "make voive video and audio"],
     ],
 )

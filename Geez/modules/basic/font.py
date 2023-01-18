@@ -105,7 +105,7 @@ async def fonts(client: Client, msg: Message):
 add_command_help(
     "Fonts",
     [
-        ["font <reply text>": "Membuat Text Dengan Gaya Font Berbeda."],
-        ["lf": "Untuk Melihat Daftar Font."],
+        ["font", "Membuat Text Dengan Gaya Font Berbeda."],
+        ["lf", "Untuk Melihat Daftar Font."],
     ],
 )

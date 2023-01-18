@@ -51,8 +51,8 @@ def gen_font(text, new_font):
 
 @Client.on_message(filters.command(["font"], cmd) & filters.me)
 async def font_geez(client: Client, message: Message):
-    if message.reply_to_message or message.reply(message):
-        font = message.reply(message)
+    if message.reply_to_message or get_text(message):
+        font = get_text(message)
         text = message.reply_to_message
         if not font:
             return await message.reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")

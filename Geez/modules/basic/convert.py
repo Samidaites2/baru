@@ -20,7 +20,7 @@ async def extract_audio(client: Client, message: Message):
         await message.reply("`Downloading Video . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="cache/dowloads/",
+            file_name="cache/dowloads/{out_file}",
         )
         replied.video.duration
         out_file = file + ".mp3"
@@ -52,7 +52,7 @@ async def makevoice(client: Client, message: Message):
         await message.reply("`Downloading . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="cache/dowloads",
+            file_name="cache/dowloads/{file}",
         )
         if replied.video:
             replied.video.duration

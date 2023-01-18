@@ -51,11 +51,11 @@ def gen_font(text, new_font):
 
 @Client.on_message(filters.command(["font"], cmd) & filters.me)
 async def font_geez(client: Client, message: Message):
-    if message.reply_to_message or edit_or_reply(message):
-        font = edit_or_reply(message)
+    if message.reply_to_message or message.reply(message):
+        font = message.reply(message)
         text = message.reply_to_message.text
         if not font:
-            return await edit_or_reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
+            return await message.reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
         if font == "smallcap":
             geez = gen_font(text, _smallcap)
         elif font == "monospace":
@@ -72,7 +72,7 @@ async def font_geez(client: Client, message: Message):
             geez = gen_font(text, _bold)
         elif font == "bolditalic":
             geez = gen_font(text, _bolditalic)
-        await edit_or_reply(message, geez)
+        await message.reply(message, geez)
 
     else:
         return await message.reply("Balas Teks Dan Isi Nama Font Yang Bener Bego!!!")

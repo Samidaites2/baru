@@ -1,88 +1,55 @@
+
+import os
+import shutil
+
 from pyrogram import Client, filters
 from pyrogram.enums import MessageMediaType
 from pyrogram.types import Message
 
+
+from Geez.config_var import Config
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from geezlibs.geez.utils.tools import *
 from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
+# Help
+mod_name = os.path.basename(__file__)[:-3]
+
 
 @Client.on_message(
     filters.command("audio", ["*", "-", "^", "?"]) & filters.me
 )
-async def extract_audio(client: Client, message: Message):
-    replied = message.reply_to_message
-    if not replied:
-        await message.reply("**Mohon Balas Ke Video**")
+async def extract_all_aud(client: Client, message: Message):
+    replied_msg = message.reply_to_message
+    geez = await edit_or_reply_or_reply("`Downloading Video . . .`")
+    ext_out_path = os.getcwd() + "/" + "Geez/py_extract/audios"
+    if not replied_msg:
+        await geez.edit_or_reply("**Mohon Balas Ke Video**")
         return
-    if replied.media == MessageMediaType.VIDEO:
-        await message.reply("`Downloading Video . . .`")
-        file = await client.download_media(
-            message=replied,
-            file_name="cache/",
-        )
-        replied.video.duration
-        out_file = file + ".mp3"
-        try:
-            xx = await message.reply("`Trying Extract Audio. . .`")
-            cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
-            await run_cmd(cmd)
-            await xx.edit("`Uploading Audio . . .`")
-            await xx.delete()
-            await client.send_audio(
-                message.chat.id,
-                audio=out_file,
-                reply_to_message_id=ReplyCheck(message),
-            )
-        except BaseException as e:
-            await message.reply(f"**INFO:** `{e}`")
-    else:
-        await message.reply("**Mohon Balas Ke Video**")
+    if not replied_msg.video:
+        await geez.edit_or_reply("**Mohon Balas Ke Video**")
         return
-
-
-@Client.on_message(filters.command("makevoice", ["*", "-", "^", "?"]) & filters.me)
-async def makevoice(client: Client, message: Message):
-    replied = message.reply_to_message
-    if not replied:
-        await message.reply("**Mohon Balas Ke Audio atau video**")
+    if os.path.exists(ext_out_path):
+        await geez.edit_or_reply("Sabar bujet.....")
         return
-    if replied.media == MessageMediaType.VIDEO or MessageMediaType.AUDIO:
-        await message.reply("`Downloading . . .`")
-        file = await client.download_media(
-            message=replied,
-            file_name="cache/",
-        )
-        if replied.video:
-            replied.video.duration
-        else:
-            if replied.audio:
-                replied.audio.duration
-            if replied.voice:
-                replied.voice.duration
-        try:
-            xx = await message.reply("`Trying Make Audio . . .`")
-            cmd = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
-            await run_cmd(cmd)
-            await xx.edit("`Uploading Audio . . .`")
-            await xx.delete()
-            await client.send_voice(
-                message.chat.id,
-                voice="voice.opus",
-                reply_to_message_id=ReplyCheck(message),
-            )
-        except BaseException as e:
-            await message.reply(f"**INFO:** `{e}`")
-    else:
-        await message.reply("**Mohon Balas Ke Audio atau video**")
-        return
-
-
+    replied_video = replied_msg.video
+    try:
+        await geez.edit_or_reply("`Downloading...`")
+        ext_video = await client.download_media(message=replied_video)
+        await geez.edit_or_reply("`Extracting Audio(s)...`")
+        exted_aud = Video_tools.extract_all_audio(input_file=ext_video, output_path=ext_out_path)
+        await geez.edit_or_reply("`Uploading...`")
+        for nexa_aud in exted_aud:
+            await message.reply_audio(audio=nexa_aud, caption=f"`Extracted by` {(await client.get_me()).mention}")
+        await geez.edit_or_reply("`Extracting Finished!`")
+        shutil.rmtree(ext_out_path)
+    except Exception as e:
+        await geez.edit_or_reply(f"**Error:** `{e}`")
+        
 add_command_help(
     "Convert",
     [
-        ["extractaudio <reply to file>", "Convert video to audio"],
-        ["makevoice <reply to file>", "make voive video and audio"],
+        ["audio <reply to file>", "Convert video to audio"],
     ],
 )

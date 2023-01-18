@@ -62,7 +62,7 @@ async def asupan(client: Client, message: Message):
                 [
                     asupan.video.file_id
                     async for asupan in client.search_messages(
-                        "notygirl", filter=enums.MessagesFilter.VIDEO
+                        "bahaninimah", filter=enums.MessagesFilter.VIDEO
                     )
                 ]
             ),

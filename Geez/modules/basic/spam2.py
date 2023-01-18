@@ -6,10 +6,10 @@ from threading import Event
 from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
-from geezlibs.geez.helper.basic import edit_or_reply
+from geezlibs.geez.helper import *
 from Geez.modules.basic import *
-from geezlibs.geez.utils.misc import extract_args
-from geezlibs.geez import BL_GCAST
+from geezlibs.geez.utils import *
+from geezlibs.geez import *
 from geezlibs.geez.helper.cmd import *
 from config import *
 

@@ -125,48 +125,43 @@ async def block_user_func(client: Client, message: Message):
     await tex.edit_text(f"**Successfully blocked** {umention}")
 
 
-@Client.on_message(
-    filters.command(["setname"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+@Client.on_message(filters.command(["setname"], cmd) & filters.me)
 async def setname(client: Client, message: Message):
-    tex = await message.reply_text("`Processing . . .`")
+    Geez = await message.reply(" `Processing...`")
     if len(message.command) == 1:
-        return await tex.edit(
-            "Provide a text to set as your name."
+        return await Geez.edit(
+            "Berikan teks untuk ditetapkan sebagai nama telegram anda."
         )
     elif len(message.command) > 1:
         name = message.text.split(None, 1)[1]
         try:
             await client.update_profile(first_name=name)
-            await tex.edit(f"**Successfully Changed Your Name To** `{name}`")
+            await Geez.edit(f"**Berhasil Mengubah Nama Telegram anda Menjadi** `{name}`")
         except Exception as e:
-            await tex.edit(f"**ERROR:** `{e}`")
+            await Geez.edit(f"**ERROR:** `{e}`")
     else:
-        return await tex.edit(
-            "Provide a text to set as your name."
+        return await Geez.edit(
+            "Berikan teks untuk ditetapkan sebagai nama telegram anda."
         )
 
-@Client.on_message(
-    filters.command(["setbio"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+
+@Client.on_message(filters.command(["setbio"], cmd) & filters.me)
 async def set_bio(client: Client, message: Message):
-    tex = await message.edit_text("`Processing . . .`")
+    Geez = await message.reply(" `Processing...`")
     if len(message.command) == 1:
-        return await tex.edit("Provide text to set as bio.")
+        return await Geez.edit("Berikan teks untuk ditetapkan sebagai bio.")
     elif len(message.command) > 1:
         bio = message.text.split(None, 1)[1]
         try:
             await client.update_profile(bio=bio)
-            await tex.edit(f"**Successfully Change your BIO to** `{bio}`")
+            await Geez.edit(f"**Berhasil Mengubah BIO anda menjadi** `{bio}`")
         except Exception as e:
-            await tex.edit(f"**ERROR:** `{e}`")
+            await Geez.edit(f"**ERROR:** `{e}`")
     else:
-        return await tex.edit("Provide text to set as bio.")
+        return await Geez.edit("Berikan teks untuk ditetapkan sebagai bio.")
 
 
-@Client.on_message(
-    filters.command(["setpfp"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+@Client.on_message(filters.me & filters.command(["setpfp"], cmd))
 async def set_pfp(client: Client, message: Message):
     replied = message.reply_to_message
     if (
@@ -181,18 +176,16 @@ async def set_pfp(client: Client, message: Message):
         await client.set_profile_photo(profile_photo)
         if os.path.exists(profile_photo):
             os.remove(profile_photo)
-        await message.reply_text("**Your Profile Photo Changed Successfully.**")
+        await message.edit("**Foto Profil anda Berhasil Diubah.**")
     else:
-        await message.reply_text(
-            "Reply to any photo to set as profile photo"
+        await message.edit(
+            "`Balas ke foto apa pun untuk dipasang sebagai foto profile`"
         )
         await sleep(3)
         await message.delete()
 
 
-@Client.on_message(
-    filters.command(["vpfp"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+@Client.on_message(filters.me & filters.command(["vpfp"], cmd))
 async def view_pfp(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id:
@@ -200,7 +193,7 @@ async def view_pfp(client: Client, message: Message):
     else:
         user = await client.get_me()
     if not user.photo:
-        await message.reply_text("Profile photo not found!")
+        await message.edit("Foto profil tidak ditemukan!")
         return
     await client.download_media(user.photo.big_file_id, file_name=profile_photo)
     await client.send_photo(

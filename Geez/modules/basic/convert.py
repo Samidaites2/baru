@@ -26,7 +26,7 @@ async def extract_audio(client: Client, message: Message):
         out_file = file + ".mp3"
         try:
             xx = await message.reply("`Trying Extract Audio. . .`")
-            cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
+            bash = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
             await bash(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()
@@ -63,7 +63,7 @@ async def makevoice(client: Client, message: Message):
                 replied.voice.duration
         try:
             xx = await message.reply("`Trying Make Audio . . .`")
-            cmd = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
+            bash = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
             await bash(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()

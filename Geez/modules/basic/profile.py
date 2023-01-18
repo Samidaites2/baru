@@ -161,7 +161,7 @@ async def set_bio(client: Client, message: Message):
         return await Geez.edit("Berikan teks untuk ditetapkan sebagai bio.")
 
 
-@Client.on_message(filters.me & filters.command(["setpfp"], cmd))
+@Client.on_message(filters.command(["setpfp"], cmd) & filters.me)
 async def set_pfp(client: Client, message: Message):
     replied = message.reply_to_message
     if (
@@ -185,7 +185,7 @@ async def set_pfp(client: Client, message: Message):
         await message.delete()
 
 
-@Client.on_message(filters.me & filters.command(["vpfp"], cmd))
+@Client.on_message(filters.command(["vpfp"], cmd) & filters.me)
 async def view_pfp(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id:

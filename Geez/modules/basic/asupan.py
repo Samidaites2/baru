@@ -48,8 +48,8 @@ async def asupan(client: Client, message: Message):
 
 # WARNING PORNO VIDEO THIS !!!
 
-@gez.on_message(filters.command("gbokep", ".") & filters.user(DEVS) & ~filters.me)
-@gez.on_message(filters.command(["bokep"], ".") & filters.me)
+@gez.on_message(filters.command("gbokep", cmd) & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command(["bokep"], cmd) & filters.me)
 async def asupan(client: Client, message: Message):
     if message.chat.id in BL_GCAST:
         return await edit_or_reply(message, "**This command is prohibited from being used in this group**")

@@ -6,8 +6,6 @@ from geezlibs.geez.helper import *
 from geezlibs.geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
-from . import *
-
 
 arguments = [
     "smallcap",
@@ -74,7 +72,7 @@ async def font_geez(client: Client, message: Message):
             geez = gen_font(text, _bold)
         elif font == "bolditalic":
             geez = gen_font(text, _bolditalic)
-        await eor(message, geez)
+        await edit_or_reply(message, geez)
 
     else:
         return await message.reply("Balas Teks Dan Isi Nama Font Yang Bener Bego!!!")
@@ -101,7 +99,7 @@ async def fonts(client: Client, msg: Message):
 add_command_help(
     "Font",
     [
-        ["font <reply text>": "Membuat Text Dengan Gaya Font Berbeda."],
+        ["font <reply text>" "Membuat Text Dengan Gaya Font Berbeda."],
         ["lf" "Untuk Melihat Daftar Font."],
     ],
 )

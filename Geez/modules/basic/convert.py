@@ -36,7 +36,7 @@ async def extract_audio(client: Client, message: Message):
                 reply_to_message_id=ReplyCheck(message),
             )
         except BaseException as e:
-            await message.reply(f"**INFO:** `{e}`")
+            await message.reply(f"**INFO:** `{out_file}`")
     else:
         await message.reply("**Mohon Balas Ke Video**")
         return
@@ -73,7 +73,7 @@ async def makevoice(client: Client, message: Message):
                 reply_to_message_id=ReplyCheck(message),
             )
         except BaseException as e:
-            await message.reply(f"**INFO:** `{e}`")
+            await message.reply(f"**INFO:** `{voice}`")
     else:
         await message.reply("**Mohon Balas Ke Audio atau video**")
         return

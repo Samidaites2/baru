@@ -212,8 +212,8 @@ add_command_help(
     "Spam",
     [
         ["replyspam", "Reply To User\n To Roast on Someone."],
-        ["dreplyspam", "To Disable Replyspam."],
-        ["dmspam", "To Disable Replyspam."],
-        ["dmsp", "To Disable Replyspam."],
+        ["dreplyspam", "Batalkan Spam"],
+        ["dmspam", "<balas pesan> <jumlah>"],
+        ["dmsp", "<username> <jumlah> <pesan>."],
     ],
 )

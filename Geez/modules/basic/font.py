@@ -53,7 +53,7 @@ def gen_font(text, new_font):
 async def font_geez(client: Client, message: Message):
     if message.reply_to_message or message.reply(message):
         font = message.reply(message)
-        text = message.reply_to_message.text
+        text = message.reply_to_message
         if not font:
             return await message.reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
         if font == "smallcap":

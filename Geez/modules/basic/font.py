@@ -57,8 +57,8 @@ def get_cmd(array: list, string: bool = True):
 
 @Client.on_message(filters.command(["font"], cmd) & filters.me)
 async def font_geez(client: Client, message: Message):
-    if message.reply_to_message or geez.get_cmd(message):
-        font = geez.get_cmd(message)
+    if message.reply_to_message or geez.edit(message):
+        font = geez.edit(message)
         text = message.reply_to_message
         if not font:
             return await edit_or_reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")

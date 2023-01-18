@@ -161,10 +161,7 @@ async def song(client: Client, message: Message):
             os.remove(files)
             
             
-@Client.on_message(
-    filters.command(["tt", "tiktok", "ig", "sosmed"], cmd)
-    & filters.me
-)
+@Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmd) & filters.me)
 async def sosmed(client: Client, message: Message):
     Geez = await message.reply("`📥 Downloading...`")
     link = get_arg(message)

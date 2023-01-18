@@ -4,7 +4,7 @@ from Geez.helper.cmd import PREFIX
 class Data:
 
     text_help_menu = (
-        "**Command List & Help**\n**Prefixes:** ^, ?, (, *"
+        "**Command List & Help**\n**Prefixes:** ., ?, *"
         .replace(",", "")
         .replace("[", "")
         .replace("]", "")

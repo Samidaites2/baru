@@ -9,7 +9,7 @@ from Geez.modules.basic import add_command_help
 
 
 @Client.on_message(
-    filters.command("audio", cmd) & filters.me
+    filters.command("audio", ["*", "-", "^", "?"]) & filters.me
 )
 async def extract_audio(client: Client, message: Message):
     replied = message.reply_to_message
@@ -20,14 +20,14 @@ async def extract_audio(client: Client, message: Message):
         await message.reply("`Downloading Video . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="cache/dowloads/{out_file}",
+            file_name="cache/",
         )
         replied.video.duration
         out_file = file + ".mp3"
         try:
             xx = await message.reply("`Trying Extract Audio. . .`")
-            bash = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
-            await bash(cmd)
+            cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
+            await run_cmd(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()
             await client.send_audio(
@@ -36,13 +36,13 @@ async def extract_audio(client: Client, message: Message):
                 reply_to_message_id=ReplyCheck(message),
             )
         except BaseException as e:
-            await message.reply(f"**INFO:** `{out_file}`")
+            await message.reply(f"**INFO:** `{e}`")
     else:
         await message.reply("**Mohon Balas Ke Video**")
         return
 
 
-@Client.on_message(filters.command("makevoice", cmd) & filters.me)
+@Client.on_message(filters.command("makevoice", ["*", "-", "^", "?"]) & filters.me)
 async def makevoice(client: Client, message: Message):
     replied = message.reply_to_message
     if not replied:
@@ -52,7 +52,7 @@ async def makevoice(client: Client, message: Message):
         await message.reply("`Downloading . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="cache/dowloads/{file}",
+            file_name="cache/",
         )
         if replied.video:
             replied.video.duration
@@ -63,8 +63,8 @@ async def makevoice(client: Client, message: Message):
                 replied.voice.duration
         try:
             xx = await message.reply("`Trying Make Audio . . .`")
-            bash = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
-            await bash(cmd)
+            cmd = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
+            await run_cmd(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()
             await client.send_voice(
@@ -73,7 +73,7 @@ async def makevoice(client: Client, message: Message):
                 reply_to_message_id=ReplyCheck(message),
             )
         except BaseException as e:
-            await message.reply(f"**INFO:** `{voice}`")
+            await message.reply(f"**INFO:** `{e}`")
     else:
         await message.reply("**Mohon Balas Ke Audio atau video**")
         return
@@ -82,7 +82,7 @@ async def makevoice(client: Client, message: Message):
 add_command_help(
     "Convert",
     [
-        ["audio <reply to file>", "Convert video to audio"],
+        ["extractaudio <reply to file>", "Convert video to audio"],
         ["makevoice <reply to file>", "make voive video and audio"],
     ],
 )

@@ -1,6 +1,5 @@
 flask
 gunicorn
-git+https://github.com/Onlymeriz/hadeh
 gpytranslate
 pytgcalls==3.0.0.dev22
 wget
@@ -14,6 +13,16 @@ aiohttp
 aiofiles
 bs4
 googlesearch-python==1.0.1
+gpytranslate
+gtts
+asyncio
+Pillow
+lottie
+tracemoepy
+urllib3
+google-search==1.1.1
+google==3.0.0
+yourls
 gitpython
 humanize
 httpx
@@ -25,6 +34,7 @@ psutil
 pyrogram
 pymongo
 python-dotenv
+psycopg2-binary
 pymediainfo
 prettytable
 git+https://github.com/Itz-fork/py-trans.git

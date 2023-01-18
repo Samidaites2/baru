@@ -3,7 +3,7 @@ from pyrogram.enums import MessageMediaType
 from pyrogram.types import Message
 
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
-from geezlibs.geez.utils.tools import run_cmd
+from geezlibs.geez.utils.tools import *
 from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
 
@@ -27,7 +27,7 @@ async def extract_audio(client: Client, message: Message):
         try:
             xx = await message.reply("`Trying Extract Audio. . .`")
             cmd = f"ffmpeg -i {file} -q:a 0 -map a {out_file}"
-            await run_cmd(cmd)
+            await bash(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()
             await client.send_audio(
@@ -64,7 +64,7 @@ async def makevoice(client: Client, message: Message):
         try:
             xx = await message.reply("`Trying Make Audio . . .`")
             cmd = f"ffmpeg -i '{file}' -map 0:a -codec:a libopus -b:a 100k -vbr on voice.opus"
-            await run_cmd(cmd)
+            await bash(cmd)
             await xx.edit("`Uploading Audio . . .`")
             await xx.delete()
             await client.send_voice(

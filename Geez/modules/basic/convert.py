@@ -20,7 +20,7 @@ async def extract_audio(client: Client, message: Message):
         await message.reply("`Downloading Video . . .`")
         file = await client.download_media(
             message=replied,
-            file_name="/cache",
+            file_name="Geez/resources/",
         )
         replied.video.duration
         out_file = file + ".mp3"

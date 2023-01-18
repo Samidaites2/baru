@@ -22,7 +22,7 @@ mod_name = os.path.basename(__file__)[:-3]
 )
 async def extract_all_aud(client: Client, message: Message):
     replied_msg = message.reply_to_message
-    geez = await edit_or_reply_or_reply("`Downloading Video . . .`")
+    geez = await edit_or_reply("`Downloading Video . . .`")
     ext_out_path = os.getcwd() + "/" + "Geez/py_extract/audios"
     if not replied_msg:
         await geez.edit_or_reply("**Mohon Balas Ke Video**")

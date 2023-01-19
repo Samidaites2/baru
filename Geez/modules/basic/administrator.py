@@ -20,7 +20,7 @@ from pyrogram.types import ChatPermissions, ChatPrivileges, Message
 
 from Geez.modules.basic import add_command_help
 from Geez.helper.cmd import *
-from geezlibs.geez.helper import *
+from geezlibs.geez import *
 from Geez.modules.basic.profile import extract_user
 
 admins_in_chat = {}

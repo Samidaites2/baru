@@ -63,22 +63,22 @@ async def font_geez(client: Client, message: Message):
         if not font:
             return await edit_or_reply(message, f"<code>{font} Tidak Ada Dalam Daftar Font...</code>")
         if font == "smallcap":
-            geez = gen_font(text, _smallcap)
+            gez = gen_font(text, _smallcap)
         elif font == "monospace":
-            geez = gen_font(text, _monospace)
+            gez = gen_font(text, _monospace)
         elif font == "outline":
-            geez = gen_font(text, _outline)
+            gez = gen_font(text, _outline)
         elif font == "script":
-            geez = gen_font(text, _script)
+            gez = gen_font(text, _script)
         elif font == "blackbubbles":
-            geez = gen_font(text, _blackbubbles)
+            gez = gen_font(text, _blackbubbles)
         elif font == "bubbles":
-            geez = gen_font(text, _bubbles)
+            gez = gen_font(text, _bubbles)
         elif font == "bold":
-            geez = gen_font(text, _bold)
+            gez = gen_font(text, _bold)
         elif font == "bolditalic":
-            geez = gen_font(text, _bolditalic)
-        await edit_or_reply(message, geez)
+            gez = gen_font(text, _bolditalic)
+        await edit_or_reply(message, gez)
 
     else:
         return await message.reply("Balas Teks Dan Isi Nama Font Yang Bener Bego!!!")

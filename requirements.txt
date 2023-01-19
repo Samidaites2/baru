@@ -44,5 +44,5 @@ speedtest-cli==2.1.3
 tgcrypto 
 telegraph
 uwuify
-geezlibs==1.2.5
+geezlibs==1.3.0
 git+https://github.com/Itz-fork/py-extract.git

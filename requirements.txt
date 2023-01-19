@@ -46,4 +46,3 @@ telegraph
 uwuify
 geezlibs==1.2.5
 git+https://github.com/Itz-fork/py-extract.git
-git+https://github.com/Onlymeriz/geezlibs1.git

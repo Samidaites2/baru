@@ -57,10 +57,7 @@ async def _style_text(message: Message):
     """Make text stylish"""
     reply = message.reply_to_message
     args = message.filtered_input_str or reply.text
-    if not args:
-        await message.edit("Bodo amat dah ah")
-        return
-    await message.edit("Yang oon ...`")
+    await message.edit("`Bentar..`")
     if message.flags:
         font_choice = list(message.flags.keys())[0]
         input_str = message.filtered_input_str or reply.text

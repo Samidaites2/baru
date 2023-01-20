@@ -18,6 +18,7 @@ import dotenv
 import heroku3
 import requests
 import urllib3
+from os import environ, execle, remove
 from datetime import datetime
 from time import strftime, time
 from geezlibs.geez.utils.misc import is_heroku, user_input, paste_queue

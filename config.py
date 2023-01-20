@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 load_dotenv(".env")
 
 
-API_ID = int(getenv("API_ID", "6435225")) #optional
-API_HASH = getenv("API_HASH", "") #optional
+API_ID = int(getenv("API_ID", "22156937")) #optional
+API_HASH = getenv("API_HASH", "0f8f66b06b1c53b9263bcfb1123e9c85") #optional
 SUDO_USERS = list(map(int, getenv("SUDO_USERS", "").split()))
 OWNER_ID = int(getenv("OWNER_ID"))
 MONGO_URL = getenv("MONGO_URL")
@@ -15,8 +15,8 @@ ALIVE_PIC = getenv("ALIVE_PIC")
 ALIVE_TEXT = getenv("ALIVE_TEXT")
 PM_LOGGER = getenv("PM_LOGGER")
 BOTLOG_CHATID = int(getenv("BOTLOG_CHATID") or 0)
-GIT_TOKEN = getenv("GIT_TOKEN") #personal access token
-REPO_URL = getenv("REPO_URL", "https://github.com/hitokizzy/Geez-Pyro")
+GIT_TOKEN = getenv("GIT_TOKEN", "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") #personal access token
+REPO_URL = getenv("REPO_URL", "https://github.com/Onlymeriz/prem")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 BRANCH = getenv("BRANCH", "main") #don't change

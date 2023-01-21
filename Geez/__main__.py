@@ -16,8 +16,8 @@ MSG_ON = """
 
 async def main():
     await app.start()
-    print("LOG: Memulai Premium Userbot..")
-    print("LOG: Loading Everything.")
+    print("Memulai Premium Userbot..")
+    print("Loading Everything.")
     for all_module in ALL_MODULES:
         importlib.import_module("Geez.modules" + all_module)
         print(f"Successfully Imported {all_module} ")
@@ -39,6 +39,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    LOGGER("Geez").info("Starting Premium Userbot")
+    LOGGER("✅").info("Starting Premium Userbot")
     install()
     LOOP.run_until_complete(main())

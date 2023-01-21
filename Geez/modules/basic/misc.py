@@ -9,6 +9,14 @@
 # kopas repo dan hapus credit, ga akan jadikan lu seorang developer
 # ©2023 Geez & Ram Team
 import asyncio
+from pyrogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    InlineQueryResultArticle,
+    InputTextMessageContent,
+    Message,
+)
+
 from datetime import datetime
 from platform import python_version
 from geezlibs import __version__ as gver

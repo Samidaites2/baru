@@ -52,9 +52,9 @@ else:
     filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def alive(client: Client, message: Message):
-    xx = await message.reply_text("")
+    xx = await message.reply_text("⚡")
     await join(client)
-    await asyncio.sleep(3)
+    await asyncio.sleep(1)
     try:
        await message.delete()
     except:

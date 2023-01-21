@@ -27,7 +27,7 @@ from Geez.modules.bot.inline import get_readable_time
 
 alive_logo = ALIVE_PIC or ""
 
-prem = InlineKeyboardButton("• OWNER •", url=f"https://t.me/riizzvbss")
+prem = InlineKeyboardMarkup([[InlineKeyboardButton("• OWNER •", url=f"https://t.me/riizzvbss")]])
 
 if ALIVE_TEXT:
    txt = ALIVE_TEXT
@@ -38,7 +38,6 @@ else:
         f"  ├• **Uptime**: `{str(datetime.now() - START_TIME).split('.')[0]}`\n"
         f"  ├• **Phython**: `{python_version()}`\n"
         f"  ├• **Pyrogram**: `{__version__}`\n"
-        f"©️ **ҡʏɴλɴ ꭙ ꝛᴏʙᴏᴛ**\n"
     )
 
 @Client.on_message(

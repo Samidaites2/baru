@@ -27,6 +27,8 @@ from Geez.modules.bot.inline import get_readable_time
 
 alive_logo = ALIVE_PIC or ""
 
+prem = InlineKeyboardButton("• OWNER •", url=f"https://t.me/riizzvbss")
+
 if ALIVE_TEXT:
    txt = ALIVE_TEXT
 else:
@@ -43,7 +45,7 @@ else:
     filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def alive(client: Client, message: Message):
-    xx = await message.reply_text("⚡️")
+    xx = await message.reply_text("")
     await join(client)
     await asyncio.sleep(3)
     try:
@@ -57,6 +59,7 @@ async def alive(client: Client, message: Message):
             send(
                 message.chat.id,
                 caption=xd,
+                reply_markup=prem,
                 reply_to_message_id=ReplyCheck(message),
             ),
         )

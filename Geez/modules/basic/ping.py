@@ -104,27 +104,44 @@ async def cpingme(client: Client, message: Message):
     akhir = time.time()
     await gez.edit_text(f"**🏓 Pong!**\n`{round((akhir - mulai) * 1000)}ms`")
 
-
 @Client.on_message(
-    filters.command(["ping"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command("cping", cmd) & filters.user(DEVS) & ~filters.me
 )
+@Client.on_message(filters.command("ping", cmd) & filters.me)
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    xx = await message.reply_text("**Pinging.**")
-    await asyncio.sleep(1)
-    try:
-       await message.delete()
-    except:
-       pass
-    await xx.edit("**Pinging..**")
-    await xx.edit("**Pinging...**")
-    await xx.edit("**Pinging....**")
-    await asyncio.sleep(1)
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    await xx.edit(f"**🎈 Dorrr**\n**Pinger** : %sms\n**Bot Uptime** : {uptime}🕛" % (duration))
+    await message.reply_text(
+        f"❏ **PONG!!🏓**\n"
+        f"├• **Pinger** - `%sms`\n"
+        f"├• **Uptime -** `{uptime}` \n"
+        f"└• **Owner :** {client.me.mention}" % (duration)
+    )
 
+
+@Client.on_message(
+    filters.command("keping", cmd) & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("kping", cmd) & filters.me)
+async def kping(client: Client, message: Message):
+    uptime = await get_readable_time((time.time() - StartTime))
+    start = datetime.now()
+    xx = await edit_or_reply(message, "8✊===D")
+    await xx.edit("8=✊==D")
+    await xx.edit("8==✊=D")
+    await xx.edit("8===✊D")
+    await xx.edit("8===✊D💦")
+    await xx.edit("Ahhhhhhhh Akhirnya Keluar Jugak 💦💦")
+    end = datetime.now()
+    duration = (end - start).microseconds / 1000
+    await xx.edit(
+        f"❏ **PONG!!🏓**\n"
+        f"├• **Pinger** - `%sms`\n"
+        f"├• **Uptime -** `{uptime}` \n"
+        f"└• **Owner :** {client.me.mention}" % (duration)
+    )
 
 @Client.on_message(
     filters.command(["pping"], cmd) & (filters.me | filters.user(SUDO_USER))

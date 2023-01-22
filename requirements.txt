@@ -39,6 +39,7 @@ pymediainfo
 prettytable
 git+https://github.com/Itz-fork/py-trans.git
 reportlab
+openai
 svglib
 speedtest-cli==2.1.3
 tgcrypto 

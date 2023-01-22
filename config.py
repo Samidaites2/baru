@@ -14,6 +14,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "")
 ALIVE_PIC = getenv("ALIVE_PIC")
 ALIVE_TEXT = getenv("ALIVE_TEXT")
 PM_LOGGER = getenv("PM_LOGGER")
+OPENAI_API = getConfig("OPENAI_API")
 BOTLOG_CHATID = int(getenv("BOTLOG_CHATID") or 0)
 GIT_TOKEN = getenv("GIT_TOKEN", "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") #personal access token
 REPO_URL = getenv("REPO_URL", "https://github.com/ayrizz/baru")

@@ -3,7 +3,7 @@ from pyrogram.types import *
 from pyrogram import Client as gez 
 from geezlibs.geez.helper.cmd import *
 from pyrogram.errors import MessageNotModified
-from geezlibs.geez.helper.what import *
+from Geez.helper.what import *
 from geezlibs.geez.helper.basic import *
 from Geez.modules.basic import DEVS, BL_GCAST
 from Geez.modules.basic import add_command_help

@@ -22,8 +22,8 @@ from pyrogram.types import Message
 from pyrogram import Client as gez
 from pyrogram import Client, enums, filters
 from geezlibs.geez.helper.basic import *
-from geezlibs.geez.helper.utils.misc import *
-from geezlibs.geez.helper.utils.tools import *
+from geezlibs.geez.utils.misc import *
+from geezlibs.geez.utils.tools import *
 from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help, DEVS
 from Geez import SUDO_USER

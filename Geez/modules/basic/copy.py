@@ -7,7 +7,7 @@ from pyrogram import Client
 from geezlibs.geez.helper.cmd import *
 from geezlibs.geez.helper.basic import *
 from geezlibs.geez.helper.PyroHelpers import *
-from geezlibs.geez.helper.misc import *
+from geezlibs.geez.utils.misc import *
 
 # credits @xtsea
 

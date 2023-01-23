@@ -9,26 +9,16 @@
 # kopas repo dan hapus credit, ga akan jadikan lu seorang developer
 # ©2023 Geez & Ram Team
 import asyncio
-from pyrogram.types import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    InlineQueryResultArticle,
-    InputTextMessageContent,
-    Message,
-)
-
 from datetime import datetime
 from platform import python_version
 from geezlibs import __version__ as gver
 from geezlibs import join
-from geezlibs import *
 from geezlibs import BOT_VER
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from pyrogram import __version__, filters, Client
 from pyrogram.types import Message
 from config import ALIVE_PIC, ALIVE_TEXT
-from Geez.helper.cmd import *
-from Geez import START_TIME, SUDO_USER
+from Geez import START_TIME, SUDO_USER, app
 from Geez.modules.basic import add_command_help
 from Geez.modules.bot.inline import get_readable_time
 
@@ -48,30 +38,25 @@ else:
         f"  ├• **Pyrogram**: `{__version__}`\n"
     )
 
-@Client.on_message(
-    filters.command(["alive", "awake"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
-async def alive(client: Client, message: Message):
-    xx = await message.reply_text("⚡")
+@Client.on_message(filters.command(["alive"], cmd) & filters.me)
+async def module_help(client: Client, message: Message):
     await join(client)
-    await asyncio.sleep(1)
-    try:
-       await message.delete()
-    except:
-       pass
-    xd = (f"{txt}")
-    try:
-        await asyncio.gather(
-            xx.delete(),
-            send(
-                message.chat.id,
-                caption=xd,
-                reply_markup=prem,
-                reply_to_message_id=ReplyCheck(message),
-            ),
-        )
-    except BaseException:
-        await xx.edit(xd, disable_web_page_preview=True)
+    cmd = message.command
+    help_arg = ""
+    bot_username = (await app.get_me()).username
+    if len(cmd) > 1:
+        help_arg = " ".join(cmd[1:])
+    elif not message.reply_to_message and len(cmd) == 1:
+        try:
+            nice = await client.get_inline_bot_results(bot=bot_username, query="Alive")
+            await asyncio.gather(
+                message.delete(),
+                client.send_inline_bot_result(
+                    message.chat.id, nice.query_id, nice.results[0].id
+                ),
+            )
+        except BaseException as e:
+            print(f"{e}")
 
 @Client.on_message(filters.command("id", cmd) & filters.me)
 async def get_id(bot: Client, message: Message):

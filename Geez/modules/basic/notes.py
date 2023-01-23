@@ -38,8 +38,7 @@ async def notes(client: Client, message: Message):
 
 
 @Client.on_message(filters.command(["get"], cmd) & filters.me)
-async def lmao(client, message):
-    engine = message.Engine
+async def lmao(client: Client, message: Message):
     if not await all_note(message.chat.id):
         return
     owo = message.matches[0].group(1)

@@ -28,7 +28,7 @@ from pyrogram.types import (
     Message,
 )
 from geezlibs.geez.helper.data import Data
-from geezlibs.geez.helper.inline import inline_wrapper, paginate_help
+from geezlibs.geez.helper.inline2 import inline_wrapper, paginate_help
 from geezlibs import BOT_VER
 from Geez import CMD_HELP, StartTime, app
 

@@ -19,7 +19,7 @@ from pyrogram.types import Message
 from datetime import datetime
 
 from Geez.helper.cmd import *
-from Geez import 
+from Geez import *
 from geezlibs.geez.helper.basic import *
 from geezlibs.geez.utils.misc import *
 from geezlibs.geez.utils.tools import *

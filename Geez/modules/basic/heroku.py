@@ -260,7 +260,7 @@ async def setvar(client: Client, message: Message):
             )
 
 @Client.on_message(
-    filters.command(["usage"], ".") & (filters.me | filters.user(SUDO_USER))
+    filters.command(["usage"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
 async def usage_dynos(client, message):
     ### Credits CatUserbot

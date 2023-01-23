@@ -164,7 +164,6 @@ async def sping(client: Client, message: Message):
     end = datetime.now()
     duration = (end - start).microseconds / 1000
     await xx.edit("⚡")
-    sleep(3)
     await xx.edit(
         f"**✧ 𝙿𝚁𝙴𝙼𝙸𝚄𝙼 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 ✧**\n\n"
         f"✧ **𝙿𝙸𝙽𝙶𝙴𝚁 :** `%sms`\n"

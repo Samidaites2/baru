@@ -11,6 +11,52 @@ from geezlibs.geez.utils.misc import *
 from geezlibs.geez.utils.tools import *
 
 
+@gez.on_message(filters.command("takepm", cmd) & filters.me)
+async def takepm(client: Client, message: Message):
+    lol = message.reply_to_message
+    if not lol:
+       return await message.edit("**Please reply**")
+    try:
+       await lol.copy(message.from_user.id)
+       await message.delete()
+    except BaseException:
+        pass
+
+@gez.on_message(filters.command("take", cmd) & filters.me)
+async def take(client: Client, message: Message):
+    lol = message.reply_to_message
+    if not lol:
+       return await message.edit("**Please reply**")
+    try:
+       await lol.copy(message.chat.id)
+       await message.delete()
+    except BaseException:
+        pass
+
+
+@gez.on_message(filters.command("fwd", cmd) & filters.me)
+async def fwd(client: Client, message: Message):
+    lol = message.reply_to_message
+    if not lol:
+       return await message.edit("**Please reply**")
+    try:
+       await lol.forward(message.chat.id)
+       await message.delete()
+    except BaseException:
+        pass
+
+@gez.on_message(filters.command("cp", cmd) & filters.me)
+async def cp(client: Client, message: Message):
+    tulis = get_arg(message)
+    user = message.reply_to_message
+    if not user:
+       return await message.edit("lu goblok") 
+    try:
+       await user.copy(message.chat.id, caption=tulis)
+    except Exception as e:
+        return await message.edit(f"**ERROR** `{e}`")
+
+
 @gez.on_message(filters.command("copy", cmd) & filters.me)
 async def kangcopy(client: Client, message: Message):
     mmk = await message.reply_text("`Processing . . .`")
@@ -46,5 +92,9 @@ add_command_help(
     "Curi",
     [
         [f"copy <link>", "Nyolong Media/Foto."],
+        [f"takepm [reply]", "saved messages."],
+        [f"take [reply]", "I take another."],
+        [f"fwd [reply]", "forward messages from the group."],
+        [f"cp [photo/caption]", "I copied the photo so that it was written."],
     ],
 )

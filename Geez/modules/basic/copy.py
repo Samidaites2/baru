@@ -22,7 +22,7 @@ if link:
          async for ren in client.get_history(bot, limit=1):
              await ren.copy(message.chat.id)
       except:
-          pass
+         pass
 
 add_command_help(
     "Curi",

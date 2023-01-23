@@ -163,7 +163,6 @@ async def sping(client: Client, message: Message):
     await xx.edit("**✧✧✧✧✧**")
     end = datetime.now()
     duration = (end - start).microseconds / 1000
-    user = await ping.client.get_me()
     await xx.edit("⚡")
     sleep(3)
     await xx.edit(

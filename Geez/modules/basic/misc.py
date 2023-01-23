@@ -17,6 +17,7 @@ from geezlibs import BOT_VER
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from pyrogram import __version__, filters, Client
 from pyrogram.types import Message
+from Geez.helper.cmd import *
 from config import ALIVE_PIC, ALIVE_TEXT
 from Geez import START_TIME, SUDO_USER, app
 from Geez.modules.basic import add_command_help

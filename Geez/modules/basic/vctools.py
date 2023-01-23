@@ -113,7 +113,7 @@ async def joinvc(client: Client, message: Message):
     except Exception as e:
         return await gez.edit(f"**ERROR:** `{e}`")
     await gez.edit(f"🤖 **Berhasil Naik Banh**\n **Kalo Gagal Naikin Dong**\n└ **Chat ID:** `{chat_id}`")
-    await sleep(5)
+    await asyncio.sleep(5)
     await client.group_call.set_is_mute(True)
 
 @gez.on_message(

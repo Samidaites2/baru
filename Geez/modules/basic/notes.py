@@ -17,6 +17,7 @@ from Geez import *
 from geezlibs.geez.helper import *
 from geezlibs.geez.utils import *
 
+BOTLOG_CHATID = "me"
 
 
 @Client.on_message(filters.command(["save"], cmd) & filters.me)
@@ -31,7 +32,7 @@ async def notes(client: Client, message: Message):
         return
     note_name = note_name.lower()
     msg = message.reply_to_message
-    copied_msg = await msg.copy(int(Config.BOTLOG_CHATID))
+    copied_msg = await msg.copy(int(BOTLOG_CHATID))
     await add_note(note_name, message.chat.id, copied_msg.message_id)
     await note_.edit("`Added To My Database.`")
 
@@ -47,7 +48,7 @@ async def lmao(client, message):
     if await note_info(owo, message.chat.id):
         sed = await note_info(owo, message.chat.id)
         await client.copy_message(
-            from_chat_id=int(Config.BOTLOG_CHATID),
+            from_chat_id=int(BOTLOG_CHATID),
             chat_id=message.chat.id,
             message_id=sed["msg_id"],
             reply_to_message_id=message.message_id,

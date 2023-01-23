@@ -112,7 +112,7 @@ async def cpingme(client: Client, message: Message):
 @Client.on_message(
     filters.command("sping", ["."]) & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("sping", cmd) & filters.me)
+@Client.on_message(filters.command("ping", cmd) & filters.me)
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -152,7 +152,7 @@ async def kping(client: Client, message: Message):
 @Client.on_message(
     filters.command("cping", ".") & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("ping", cmd) & filters.me)
+@Client.on_message(filters.command("cping", cmd) & filters.me)
 async def sping(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()

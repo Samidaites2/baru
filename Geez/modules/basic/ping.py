@@ -16,13 +16,15 @@ from pyrogram import Client, filters
 from pyrogram.raw import functions
 from pyrogram.types import Message
 from datetime import datetime
-from geezlibs.geez.helper import SpeedConvert
+from geezlibs.geez.helper import *
 from Geez.helper.cmd import *
 from geezlibs.geez.helper.basic import *
+from geezlibs.geez.helper.PyroHelpers import *
 from geezlibs.geez.utils.misc import *
 from geezlibs.geez.utils.tools import *
-from Geez import StartTime, app, SUDO_USER
-from Geez.modules.basic import add_command_help, DEVS
+from Geez.modules.bot.inline import *
+from Geez import *
+from Geez.modules.basic import *
 
 class WWW:
     SpeedTest = (
@@ -36,30 +38,6 @@ class WWW:
     NearestDC = "Country: `{}`\n" "Nearest Datacenter: `{}`\n" "This Datacenter: `{}`"
     
     
-async def get_readable_time(seconds: int) -> str:
-    count = 0
-    up_time = ""
-    time_list = []
-    time_suffix_list = ["s", "m", "Jam", "Hari"]
-
-    while count < 4:
-        count += 1
-        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
-        if seconds == 0 and remainder == 0:
-            break
-        time_list.append(int(result))
-        seconds = int(remainder)
-
-    for x in range(len(time_list)):
-        time_list[x] = str(time_list[x]) + time_suffix_list[x]
-    if len(time_list) == 4:
-        up_time += time_list.pop() + ", "
-
-    time_list.reverse()
-    up_time += ":".join(time_list)
-
-    return up_time
-
 @Client.on_message(
     filters.command(["speedtest"], cmd) & (filters.me | filters.user(SUDO_USER))
 )
@@ -132,9 +110,9 @@ async def cpingme(client: Client, message: Message):
     await gez.edit_text(f"**🏓 Pong!**\n`{round((akhir - mulai) * 1000)}ms`")
 
 @Client.on_message(
-    filters.command("cping", cmd) & filters.user(DEVS) & ~filters.me
+    filters.command("sping", ["."]) & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("ping", cmd) & filters.me)
+@Client.on_message(filters.command("sping", cmd) & filters.me)
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -148,8 +126,9 @@ async def pingme(client: Client, message: Message):
     )
 
 
+
 @Client.on_message(
-    filters.command("keping", cmd) & filters.user(DEVS) & ~filters.me
+    filters.command("kping", ".") & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(filters.command("kping", cmd) & filters.me)
 async def kping(client: Client, message: Message):
@@ -171,13 +150,13 @@ async def kping(client: Client, message: Message):
     )
     
 @Client.on_message(
-    filters.command("suping", cmd) & filters.user(DEVS) & ~filters.me
+    filters.command("cping", ".") & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("sping", cmd) & filters.me)
+@Client.on_message(filters.command("ping", cmd) & filters.me)
 async def sping(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    xx = await edit_or_reply(message, "**✧**")
+    xx = await message.reply_text("**✧**")
     await xx.edit("**✧✧**")
     await xx.edit("**✧✧✧**")
     await xx.edit("**✧✧✧✧**")

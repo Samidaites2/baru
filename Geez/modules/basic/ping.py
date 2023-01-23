@@ -22,7 +22,6 @@ from geezlibs.geez.helper.basic import *
 from geezlibs.geez.utils.misc import *
 from geezlibs.geez.utils.tools import *
 from Geez import StartTime, app, SUDO_USER
-from Geez.modules.bot.inline import get_readable_time
 from Geez.modules.basic import add_command_help, DEVS
 
 class WWW:
@@ -35,6 +34,31 @@ class WWW:
     )
 
     NearestDC = "Country: `{}`\n" "Nearest Datacenter: `{}`\n" "This Datacenter: `{}`"
+    
+    
+async def get_readable_time(seconds: int) -> str:
+    count = 0
+    up_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "Jam", "Hari"]
+
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        up_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    up_time += ":".join(time_list)
+
+    return up_time
 
 @Client.on_message(
     filters.command(["speedtest"], cmd) & (filters.me | filters.user(SUDO_USER))
@@ -144,6 +168,30 @@ async def kping(client: Client, message: Message):
         f"├• **Pinger** - `%sms`\n"
         f"├• **Uptime -** `{uptime}` \n"
         f"└• **Owner :** {client.me.mention}" % (duration)
+    )
+    
+@Client.on_message(
+    filters.command("suping", cmd) & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("sping", cmd) & filters.me)
+async def sping(client: Client, message: Message):
+    uptime = await get_readable_time((time.time() - StartTime))
+    start = datetime.now()
+    xx = await edit_or_reply(message, "**✧**")
+    await xx.edit("**✧✧**")
+    await xx.edit("**✧✧✧**")
+    await xx.edit("**✧✧✧✧**")
+    await xx.edit("**✧✧✧✧✧**")
+    end = datetime.now()
+    duration = (end - start).microseconds / 1000
+    user = await ping.client.get_me()
+    await xx.edit("⚡")
+    sleep(3)
+    await xx.edit(
+        f"**✧ 𝙿𝚁𝙴𝙼𝙸𝚄𝙼 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 ✧**\n\n"
+        f"✧ **𝙿𝙸𝙽𝙶𝙴𝚁 :** `%sms`\n"
+        f"✧ **𝚄𝙿𝚃𝙸𝙼𝙴 :** `{uptime}` \n"
+        f"✧ **𝙾𝚆𝙽𝙴𝚁 :** {client.me.mention}" % (duration)
     )
 
 @Client.on_message(

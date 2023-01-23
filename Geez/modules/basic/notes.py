@@ -9,7 +9,7 @@
 # kopas repo dan hapus credit, ga akan jadikan lu seorang developer
 # ©2023 Geez & Ram Team
 
-from pyrogram import Client, filters
+from pyrogram import Client, enums, filters
 from pyrogram.types import Message
 
 from Geez.database.notesdb import *
@@ -24,7 +24,7 @@ async def notes(client: Client, message: Message):
     note_ = await edit_or_reply(message, "`Processing...`")
     note_name = get_text(message)
     if not note_name:
-        await note_.edit("`Mohon balas ke pesan...`").format("Note Name"))
+        await note_.edit("`Mohon berikan judul ke pesan...`")
         return
     if not message.reply_to_message:
         await note_.edit("`Mohon balas ke pesan...`")
@@ -33,11 +33,11 @@ async def notes(client: Client, message: Message):
     msg = message.reply_to_message
     copied_msg = await msg.copy(int(Config.BOTLOG_CHATID))
     await add_note(note_name, message.chat.id, copied_msg.message_id)
-    await note_.edit("`Added {} To My {} Database.`").format(note_name, "Note"))
+    await note_.edit("`Added To My Database.`")
 
 
 @Client.on_message(filters.command(["get"], cmd) & filters.me)
-async def lmao(client: Client, message: Message):
+async def lmao(client, message):
     engine = message.Engine
     if not await all_note(message.chat.id):
         return

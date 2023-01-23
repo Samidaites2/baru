@@ -20,7 +20,7 @@ import random
 @gez.on_message(filters.command("ask", cmd) & filters.me)
 async def openai(c, m):
     if len(m.command) == 1:
-        return await m.reply(f"use command <code>.{m.command[0]} [question]</code> to ask questions using the API.")
+        return await m.reply(f"Ketik <code>.{m.command[0]} [question]</code> Pertanya untuk menggunakan OpenAI")
     question = m.text.split(" ", maxsplit=1)[1]
     headers = {
         "Content-Type": "application/json",
@@ -33,14 +33,14 @@ async def openai(c, m):
         "max_tokens": 200,
         "temperature": 0,
     }
-    msg = await m.reply("Wait a moment looking for your answer..")
+    msg = await m.reply("`Bentar otw nyari..")
     try:
         response = (await http.post("https://api.openai.com/v1/completions", headers=headers, json=json_data)).json()
         await msg.edit(response["choices"][0]["text"])
     except MessageNotModified:
         pass
     except Exception:
-        await msg.edit("Yahh, sorry i can't get your answer.")
+        await msg.edit("**Kalo nanya yang bener dikit kek...**")
 
 add_command_help(
     "Chatbot",

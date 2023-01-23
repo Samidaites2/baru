@@ -17,7 +17,7 @@ from Geez import *
 from geezlibs.geez.helper import *
 from geezlibs.geez.utils import *
 
-BOTLOG_CHATID = "me"
+BOTLOG_CHATID = "-1001774571904"
 
 
 @Client.on_message(filters.command(["save"], cmd) & filters.me)

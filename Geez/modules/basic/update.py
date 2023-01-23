@@ -33,7 +33,6 @@ from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from geezlibs import DEVS
-from geezlibs.geez.helper.cmd import *
 from config import GIT_TOKEN, REPO_URL, BRANCH
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
@@ -45,7 +44,7 @@ HAPP = None
 XCB = [
     "/",
     "@",
-    cmd,
+    ".",
     "com",
     ":",
     "git",
@@ -141,8 +140,8 @@ async def updateme_requirements():
     except Exception as e:
         return repr(e)
 
-@Client.on_message(filters.command("gupdate", cmd) & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("update", cmd) & filters.me)
+@Client.on_message(filters.command("gupdate", ["."]) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("update", ".") & filters.me)
 async def upstream(client: Client, message: Message):
     status = await message.edit_text("`Checking for Updates, Wait a Moment...`")
     conf = get_arg(message)
@@ -270,7 +269,7 @@ async def upstream(client: Client, message: Message):
         return
 
 
-@Client.on_message(filters.command("goupdate", cmd) & filters.me)
+@Client.on_message(filters.command("goupdate", ".") & filters.me)
 async def updatees(client: Client, message: Message):
     if await is_heroku():
         if HAPP is None:

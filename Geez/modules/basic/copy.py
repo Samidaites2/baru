@@ -5,6 +5,7 @@ from pyrogram import *
 from pyrogram import Client as gez
 from pyrogram import Client
 from Geez.helper.cmd import *
+from Geez.modules.basic import add_command_help
 from geezlibs.geez.helper.basic import *
 from geezlibs.geez.helper.PyroHelpers import *
 from geezlibs.geez.utils.misc import *

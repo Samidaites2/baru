@@ -18,6 +18,9 @@ from pyrogram.types import Message
 from datetime import datetime
 from geezlibs.geez.helper import SpeedConvert
 from Geez.helper.cmd import *
+from geezlibs.geez.helper.basic import *
+from geezlibs.geez.utils.misc import *
+from geezlibs.geez.utils.tools import *
 from Geez import StartTime, app, SUDO_USER
 from Geez.modules.bot.inline import get_readable_time
 from Geez.modules.basic import add_command_help, DEVS

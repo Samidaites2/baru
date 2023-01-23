@@ -163,27 +163,27 @@ async def song(client: Client, message: Message):
             
 @Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmd) & filters.me)
 async def sosmed(client: Client, message: Message):
-    Geez = await message.reply("`📥 Downloading...`")
+    prik = await message.edit("`Processing . . .`")
     link = get_arg(message)
     bot = "thisvidbot"
     if link:
         try:
-            xnxx = await client.send_message(bot, link)
+            tuyul = await client.send_message(bot, link)
             await asyncio.sleep(5)
-            await xnxx.delete()
+            await tuyul.delete()
         except YouBlockedUser:
             await client.unblock_user(bot)
-            xnxx = await client.send_message(bot, link)
+            tuyul = await client.send_message(bot, link)
             await asyncio.sleep(5)
-            await xnxx.delete()
+            await tuyul.delete()
     async for sosmed in client.search_messages(
         bot, filter=enums.MessagesFilter.VIDEO, limit=1
     ):
         await asyncio.gather(
-            Geez.delete(),
+            prik.delete(),
             client.send_video(
                 message.chat.id,
-                sosmed,
+                sosmed.video.file_id,
                 caption=f"**Upload by:** {client.me.mention}",
                 reply_to_message_id=ReplyCheck(message),
             ),

@@ -29,7 +29,7 @@ caption = f"**UPLOADED BY** Geez | RAM"
 async def asupan(client: Client, message: Message):
     if message.chat.id in BL_GCAST:
         return await edit_or_reply(message, "**This command is prohibited from being used in this group**")
-    gez = await edit_or_reply(message, "`Wait a moment...`")
+    gez = await edit_or_reply(message, "`Bentar cuy...`")
     await gather(
         gez.delete(),
         client.send_video(
@@ -38,7 +38,7 @@ async def asupan(client: Client, message: Message):
                 [
                     asupan.video.file_id
                     async for asupan in client.search_messages(
-                        "punyakenkan", filter=enums.MessagesFilter.VIDEO
+                        "asupanbdrl", filter=enums.MessagesFilter.VIDEO
                     )
                 ]
             ),

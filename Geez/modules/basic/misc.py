@@ -25,8 +25,6 @@ from Geez.modules.bot.inline import get_readable_time
 
 alive_logo = ALIVE_PIC or ""
 
-prem = InlineKeyboardMarkup([[InlineKeyboardButton("• OWNER •", url=f"https://t.me/riizzvbss")]])
-
 if ALIVE_TEXT:
    txt = ALIVE_TEXT
 else:

@@ -18,7 +18,7 @@ from pyrogram.raw import functions
 from pyrogram.types import Message
 from datetime import datetime
 
-from Geez.helper.cmd import *
+
 from Geez import *
 from geezlibs.geez.helper.basic import *
 from geezlibs.geez.utils.misc import *
@@ -28,7 +28,7 @@ from Geez.modules.basic import add_command_help, DEVS
 lang = "id"  # Default Language for voice
 
 
-@Client.on_message(filters.me & filters.command(["voice", "tts"], cmd))
+@Client.on_message(filters.me & filters.command(["voice", "tts"], cmds))
 async def voice(client: Client, message):
     global lang
     cmd = message.command
@@ -61,7 +61,7 @@ async def voice(client: Client, message):
     os.remove("voice.mp3")
 
 
-@Client.on_message(filters.me & filters.command(["voicelang"], cmd))
+@Client.on_message(filters.me & filters.command(["voicelang"], cmds))
 async def voicelang(client: Client, message: Message):
     global lang
     temp = lang
@@ -69,7 +69,7 @@ async def voicelang(client: Client, message: Message):
     try:
         gTTS("tes", lang=lang)
     except Exception:
-        await edit_or_reply(message, "`Bahasa yang bener woy`")
+        await edit_or_reply(message, "`Mohon masukan kode bahasa`")
         lang = temp
         return
     await edit_or_reply(
@@ -80,9 +80,9 @@ async def voicelang(client: Client, message: Message):
 add_command_help(
     "Voice",
     [
-        [f"voice atau {cmd}tts [reply]", "Ubah teks menjadi suara oleh google."],
+        [f"voice atau {cmds}tts [reply]", "Ubah teks menjadi suara oleh google."],
         [
-            f"{cmd}voicelang (lang_id) ",
+            f"{cmds}voicelang (lang_id) ",
             "Setel bahasa suara anda\n\nBeberapa Bahasa Suara yang Tersedia:"
             "\nID| Language  | ID| Language\n"
             "af: Afrikaans | ar: Arabic\n"

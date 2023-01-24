@@ -17,7 +17,7 @@ from geezlibs import BOT_VER
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from pyrogram import __version__, filters, Client
 from pyrogram.types import Message
-from Geez.helper.cmd import *
+from Geez import cmds
 from config import ALIVE_PIC, ALIVE_TEXT
 from Geez import START_TIME, SUDO_USER, app
 from Geez.modules.basic import add_command_help
@@ -37,7 +37,7 @@ else:
         f"  ├• **Pyrogram**: `{__version__}`\n"
     )
 
-@Client.on_message(filters.command(["alive"], cmd) & filters.me)
+@Client.on_message(filters.command(["alive"], cmds) & filters.me)
 async def module_help(client: Client, message: Message):
     await join(client)
     cmd = message.command
@@ -57,7 +57,7 @@ async def module_help(client: Client, message: Message):
         except BaseException as e:
             print(f"{e}")
 
-@Client.on_message(filters.command("id", cmd) & filters.me)
+@Client.on_message(filters.command("id", cmds) & filters.me)
 async def get_id(bot: Client, message: Message):
     file_id = None
     user_id = None

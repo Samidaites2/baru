@@ -14,14 +14,14 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from Geez.modules.basic import *
-from Geez.helper.cmd import *
+from Geez import *
 from geezlibs.geez.helper.basic import edit_or_reply
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from Geez.modules.basic.help import *
 from Geez.modules.basic.profile import extract_user
 
 
-@Client.on_message(filters.command("jamet", cmd) & filters.me)
+@Client.on_message(filters.command("jamet", cmds) & filters.me)
 async def ngejamet(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -51,7 +51,7 @@ async def ngejamet(client: Client, message: Message):
     await xx.edit("**LEMBEK NGENTOT🔥**")
 
 
-@Client.on_message(filters.command("ywc", cmd) & filters.me)
+@Client.on_message(filters.command("ywc", cmds) & filters.me)
 async def ywc(client: Client, message: Message):
     await asyncio.gather(
         message.delete(),
@@ -63,7 +63,7 @@ async def ywc(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("pp", cmd) & filters.me)
+@Client.on_message(filters.command("pp", cmds) & filters.me)
 async def toxicpp(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -80,7 +80,7 @@ async def toxicpp(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("dp", cmd) & filters.me)
+@Client.on_message(filters.command("dp", cmds) & filters.me)
 async def toxicdp(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -97,7 +97,7 @@ async def toxicdp(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("so", cmd) & filters.me)
+@Client.on_message(filters.command("so", cmds) & filters.me)
 async def toxicso(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -114,7 +114,7 @@ async def toxicso(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("nb", cmd) & filters.me)
+@Client.on_message(filters.command("nb", cmds) & filters.me)
 async def toxicnb(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
@@ -135,7 +135,7 @@ async def toxicnb(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("met", cmd) & filters.me)
+@Client.on_message(filters.command("met", cmds) & filters.me)
 async def toxicmet(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -152,7 +152,7 @@ async def toxicmet(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("war", cmd) & filters.me)
+@Client.on_message(filters.command("war", cmds) & filters.me)
 async def toxicwer(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -169,7 +169,7 @@ async def toxicwer(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("wartai", cmd) & filters.me)
+@Client.on_message(filters.command("wartai", cmds) & filters.me)
 async def toxicwartai(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -186,7 +186,7 @@ async def toxicwartai(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("kismin", cmd) & filters.me)
+@Client.on_message(filters.command("kismin", cmds) & filters.me)
 async def toxickismin(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -203,7 +203,7 @@ async def toxickismin(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("ded", cmd) & filters.me)
+@Client.on_message(filters.command("ded", cmds) & filters.me)
 async def toxicded(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -220,7 +220,7 @@ async def toxicded(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("sokab", cmd) & filters.me)
+@Client.on_message(filters.command("sokab", cmds) & filters.me)
 async def toxicsokab(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -237,7 +237,7 @@ async def toxicsokab(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("gembel", cmd) & filters.me)
+@Client.on_message(filters.command("gembel", cmds) & filters.me)
 async def toxicgembel(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -254,7 +254,7 @@ async def toxicgembel(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("cuih", cmd) & filters.me)
+@Client.on_message(filters.command("cuih", cmds) & filters.me)
 async def toxiccuih(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -271,7 +271,7 @@ async def toxiccuih(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("dih", cmd) & filters.me)
+@Client.on_message(filters.command("dih", cmds) & filters.me)
 async def toxicdih(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -288,7 +288,7 @@ async def toxicdih(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("gcs", cmd) & filters.me)
+@Client.on_message(filters.command("gcs", cmds) & filters.me)
 async def toxicgcs(client: Client, message: Message):
     user_id = await extract_user(message)
     if message.chat.id in BL_GCAST:
@@ -309,7 +309,7 @@ async def toxicgcs(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("skb", cmd) & filters.me)
+@Client.on_message(filters.command("skb", cmds) & filters.me)
 async def toxicskb(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:
@@ -326,7 +326,7 @@ async def toxicskb(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("virtual", cmd) & filters.me)
+@Client.on_message(filters.command("virtual", cmds) & filters.me)
 async def toxicvirtual(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id in DEVS:

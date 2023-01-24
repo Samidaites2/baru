@@ -14,8 +14,8 @@ import time
 from datetime import datetime
 
 import wget
-from pyrogram import Client, filters
-from pyrogram.types import Message
+from pyrogram import *
+from pyrogram.types import *
 from youtubesearchpython import SearchVideos
 from yt_dlp import YoutubeDL
 
@@ -195,7 +195,6 @@ add_command_help(
     [
         ["song <title>", "Download Audio From YouTube."],
         ["video <title>", "Download Video from YouTube."],
-        ["tt <link>", "Download Video Tiktok tanpa Watermark."],
     ],
 )
 

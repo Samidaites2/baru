@@ -7,11 +7,11 @@ from pyrogram.types import Message
 
 from geezlibs.geez.helper.parser import mention_html, mention_markdown
 from Geez.modules.basic import add_command_help
-from Geez.helper.cmd import *
+from Geez import *
 
 
 @Client.on_message(
-    filters.me & filters.command(["admins", "staff"], cmd)
+    filters.me & filters.command(["admins", "staff"], cmds)
 )
 async def adminlist(client: Client, message: Message):
     replyid = None
@@ -76,7 +76,7 @@ async def adminlist(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command(["kickdel", "zombies"], cmd) & filters.me
+    filters.command(["kickdel", "zombies"], cmds) & filters.me
 )
 async def kickdel_cmd(client: Client, message: Message):
     Geez = await message.reply("<b>Kicking deleted accounts...</b>")
@@ -92,7 +92,7 @@ async def kickdel_cmd(client: Client, message: Message):
 @Client.on_message(
     filters.me
     & filters.command(
-        ["reportadmin", "reportadmins", "report"], cmd
+        ["reportadmin", "reportadmins", "report"], cmds
     )
 )
 async def report_admin(client: Client, message: Message):
@@ -141,7 +141,7 @@ async def report_admin(client: Client, message: Message):
         )
 
 
-@Client.on_message(filters.me & filters.command(["hidetag"], cmd))
+@Client.on_message(filters.me & filters.command(["hidetag"], cmds))
 async def tag_all_users(client: Client, message: Message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -166,7 +166,7 @@ async def tag_all_users(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.me & filters.command(["botlist", "bots"], cmd)
+    filters.me & filters.command(["botlist", "bots"], cmds)
 )
 async def get_list_bots(client: Client, message: Message):
     replyid = None
@@ -210,7 +210,6 @@ add_command_help(
         ["staff", "untuk melihat daftar admin di grup."],
         ["bots", "Untuk melihat daftar bot dalam grup."],
         ["hidetag", "Untuk menandai semua anggota grup dengan angjay rahasia."],
-        [".zombies", "Menghapus akun yang dihapus."],
     ],
 )
 add_command_help(

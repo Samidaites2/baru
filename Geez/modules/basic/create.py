@@ -11,11 +11,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
+from Geez import cmds
 
-
-@Client.on_message(filters.command("buat", cmd) & filters.me)
+@Client.on_message(filters.command("buat", cmds) & filters.me)
 async def create(client: Client, message: Message):
     if len(message.command) < 3:
         return await message.edit_text(
@@ -28,14 +27,14 @@ async def create(client: Client, message: Message):
     desc = "Welcome To My " + ("Group" if group_type == "gc" else "Channel")
     if group_type == "gc":  # for supergroup
         _id = await client.create_supergroup(group_name, desc)
-        link = await client.get_chat(_id)
+        link = await client.get_chat(_id["id"])
         await xd.edit(
             f"**Successfully Created Telegram Group: [{group_name}]({link['invite_link']})**",
             disable_web_page_preview=True,
         )
     elif group_type == "ch":  # for channel
         _id = await client.create_channel(group_name, desc)
-        link = await client.get_chat(_id)
+        link = await client.get_chat(_id["id"])
         await xd.edit(
             f"**Successfully Created Telegram Channel: [{group_name}]({link['invite_link']})**",
             disable_web_page_preview=True,
@@ -45,7 +44,7 @@ async def create(client: Client, message: Message):
 add_command_help(
     "Buat",
     [
-        ["buat ch", "create an channel"],
-        ["buat gc", "create an group"],
+        [f"{cmds}buat ch", "create an channel"],
+        [f"{cmds}buat gc", "create an group"],
     ],
 )

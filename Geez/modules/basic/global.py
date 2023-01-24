@@ -14,17 +14,18 @@ from pyrogram.types import ChatPermissions, Message
 from geezlibs import DEVS, BL_GEEZ
 from geezlibs.geez.helper.PyroHelpers import get_ub_chats
 from Geez.modules.basic.profile import extract_user, extract_user_and_reason
-from Geez.helper.cmd import *
+from geezlibs.geez.helper.cmd import *
 from geezlibs.geez.database import gbandb as Geez
 from geezlibs.geez.database import gmutedb as Gmute
 from Geez.modules.basic import add_command_help
+from Geez import cmds
 
 ok = []
 
 @Client.on_message(
-    filters.command("ggban", ".") & filters.user(DEVS) & ~filters.via_bot
+    filters.command("cgban", ".") & filters.user(DEVS) & ~filters.via_bot
 )
-@Client.on_message(filters.command("gban", cmd) & filters.me)
+@Client.on_message(filters.command("gban", cmds) & filters.me)
 async def gban_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
     if message.from_user.id != client.me.id:
@@ -74,7 +75,7 @@ async def gban_user(client: Client, message: Message):
 @Client.on_message(
     filters.command("cungban", ".") & filters.user(DEVS) & ~filters.via_bot
 )
-@Client.on_message(filters.command("ungban", cmd) & filters.me)
+@Client.on_message(filters.command("ungban", cmds) & filters.me)
 async def ungban_user(client: Client, message: Message):
     user_id, reason = await extract_user_and_reason(message, sender_chat=True)
     if message.from_user.id != client.me.id:
@@ -119,7 +120,10 @@ async def ungban_user(client: Client, message: Message):
         return
 
 
-@Client.on_message(filters.command("listgban", cmd) & filters.me)
+@Client.on_message(
+    filters.command("glistgban", ".") & filters.user(DEVS) & ~filters.via_bot
+)
+@Client.on_message(filters.command("listgban", cmds) & filters.me)
 async def gbanlist(client: Client, message: Message):
     users = (await Geez.gban_list())
     oof = "**#GBanned Users:**\n"
@@ -137,10 +141,10 @@ add_command_help(
     "Global",
     [
         [
-            "gban <reply/username/userid>",
+            f"{cmds}gban <reply/username/userid>",
             "Do Global Banned To All Groups Where You As Admin.",
         ],
-        ["ungban <reply/username/userid>", "Remove Global Banned."],
-        ["listgban", "Displays the Global Banned List."],
+        [f"{cmds}ungban <reply/username/userid>", "Remove Global Banned."],
+        [f"{cmds}listgban", "Displays the Global Banned List."],
     ],
 )

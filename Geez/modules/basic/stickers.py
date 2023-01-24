@@ -33,14 +33,13 @@ from pyrogram import Client, emoji, filters
 from pyrogram.enums import ParseMode
 from pyrogram.errors import StickersetInvalid, YouBlockedUser
 from pyrogram.raw.functions.messages import GetStickerSet
-from Geez.helper.cmd import *
 from pyrogram.raw.types import InputStickerSetShortName
 from pyrogram.types import Message
 
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 
 from Geez.modules.basic import add_command_help
-
+from Geez import cmds
 
 async def add_text_img(image_path, text):
     font_size = 12
@@ -181,11 +180,11 @@ def get_arg(message: Message):
         return ""
     return " ".join(split[1:])
 
-@Client.on_message(filters.command(["tikel", "kang", "steal"], cmd) & filters.me)
+@Client.on_message(filters.command(["tikel", "kang", "steal"], cmds) & filters.me)
 async def kang(client: Client, message: Message):
     user = client.me
     replied = message.reply_to_message
-    um = await message.edit_text("`Trying to kang...`")
+    um = await message.edit_text("`cup..., nemu stiker...`")
     media_ = None
     emoji_ = None
     is_anim = False
@@ -402,7 +401,7 @@ async def get_response(message, client):
     return [x async for x in client.get_chat_history("Stickers", limit=1)][0].text
 
 
-@Client.on_message(filters.command(["packinfo", "stickerinfo"], cmd) & filters.me)
+@Client.on_message(filters.command(["packinfo", "stickerinfo"], cmds) & filters.me)
 async def packinfo(client: Client, message: Message):
     rep = await message.edit_text("`Processing...`")
     if not message.reply_to_message:
@@ -438,7 +437,7 @@ async def packinfo(client: Client, message: Message):
     await rep.edit(output)
 
 
-@Client.on_message(filters.command("stickers", cmd) & filters.me)
+@Client.on_message(filters.command("stickers", cmds) & filters.me)
 async def cb_sticker(client: Client, message: Message):
     query = get_text(message)
     if not query:
@@ -458,7 +457,7 @@ async def cb_sticker(client: Client, message: Message):
     await xx.edit(reply)
 
 
-@Client.on_message(filters.command("tiny", cmd) & filters.me)
+@Client.on_message(filters.command("tiny", cmds) & filters.me)
 async def tinying(client: Client, message: Message):
     reply = message.reply_to_message
     if not (reply and (reply.media)):
@@ -535,7 +534,7 @@ async def tinying(client: Client, message: Message):
     os.remove(ik)
 
 
-@Client.on_message(filters.command(["mmf", "memify"], cmd) & filters.me)
+@Client.on_message(filters.command(["mmf", "memify"], cmds) & filters.me)
 async def memify(client: Client, message: Message):
     if not message.reply_to_message_id:
         await message.edit_text("**Plz reply to an sticker!**")
@@ -561,7 +560,7 @@ async def memify(client: Client, message: Message):
     os.remove(meme)
 
 
-@Client.on_message(filters.command(["getsticker", "mtoi"], cmd) & filters.me)
+@Client.on_message(filters.command(["getsticker", "mtoi"], cmds) & filters.me)
 async def stick2png(client: Client, message: Message):
     try:
         await message.edit("`Downloading . . .`")
@@ -592,28 +591,28 @@ add_command_help(
     "Sticker",
     [
         [
-            f"kang `reply` image",
-            f"Reply .kang To Sticker Or Image To Add To Sticker Pack.",
+            f"{cmds}kang `reply` image",
+            f"Reply {cmds}kang To Sticker Or Image To Add To Sticker Pack.",
         ],
         [
-            f"kang [emoji] `or` .double [emoji]",
+            f"{cmds}kang [emoji] `or` {cmds}double [emoji]",
             f"To add and custom emoji stickers to your sticker pack.\n\n`",
         ],
         [
-            f"packinfo `or` .stickerinfo",
+            f"{cmds}packinfo `or` {cmds}stickerinfo",
             "To Get Sticker Pack Information.",
         ],
         [
-            f"mtoi [reply ke sticker] or .getsticker [reply ke sticker]",
+            f"{cmds}mtoi [reply ke sticker] or {cmds}getsticker [reply ke sticker]",
             "Reply to sticker to get sticker photo.",
         ],
-        ["stickers [nama sticker]", "To find sticker packs."],
+        [f"{cmds}stickers [nama sticker]", "To find sticker packs."],
     ],
 )
 
 
 add_command_help(
-    "Memify",
+    "Mmf",
     [
         [
             "mmf Top Text ; Bottom Text",

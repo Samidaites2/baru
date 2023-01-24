@@ -20,9 +20,9 @@ from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 
 from Geez import SUDO_USER
-from Geez.helper.cmd import *
 
 from Geez.modules.basic import add_command_help
+from Geez import cmds
 
 flood = {}
 profile_photo = "cache/pfp.jpg"
@@ -93,8 +93,7 @@ async def extract_user(message):
     return (await extract_user_and_reason(message))[0]
 
 @Client.on_message(
-    filters.command(["unblock"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+    filters.command(["unblock"], cmds) & filters.me)
 async def unblock_user_func(client: Client, message: Message):
     user_id = await extract_user(message)
     tex = await message.reply_text("`Processing . . .`")
@@ -109,8 +108,7 @@ async def unblock_user_func(client: Client, message: Message):
     await message.edit(f"**Successfully Unblocked** {umention}")
 
 @Client.on_message(
-    filters.command(["block"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+    filters.command(["block"], cmds) & filters.me)
 async def block_user_func(client: Client, message: Message):
     user_id = await extract_user(message)
     tex = await message.reply_text("`Processing . . .`")
@@ -125,43 +123,45 @@ async def block_user_func(client: Client, message: Message):
     await tex.edit_text(f"**Successfully blocked** {umention}")
 
 
-@Client.on_message(filters.command(["setname"], cmd) & filters.me)
+@Client.on_message(
+    filters.command(["setname"], cmds) & filters.me)
 async def setname(client: Client, message: Message):
-    Geez = await message.reply(" `Processing...`")
+    tex = await message.reply_text("`Processing . . .`")
     if len(message.command) == 1:
-        return await Geez.edit(
-            "Berikan teks untuk ditetapkan sebagai nama telegram anda."
+        return await tex.edit(
+            "Provide a text to set as your name."
         )
     elif len(message.command) > 1:
         name = message.text.split(None, 1)[1]
         try:
             await client.update_profile(first_name=name)
-            await Geez.edit(f"**Berhasil Mengubah Nama Telegram anda Menjadi** `{name}`")
+            await tex.edit(f"**Successfully Changed Your Name To** `{name}`")
         except Exception as e:
-            await Geez.edit(f"**ERROR:** `{e}`")
+            await tex.edit(f"**ERROR:** `{e}`")
     else:
-        return await Geez.edit(
-            "Berikan teks untuk ditetapkan sebagai nama telegram anda."
+        return await tex.edit(
+            "Provide a text to set as your name."
         )
 
-
-@Client.on_message(filters.command(["setbio"], cmd) & filters.me)
+@Client.on_message(
+    filters.command(["setbio"], cmds) & filters.me)
 async def set_bio(client: Client, message: Message):
-    Geez = await message.reply(" `Processing...`")
+    tex = await message.edit_text("`Processing . . .`")
     if len(message.command) == 1:
-        return await Geez.edit("Berikan teks untuk ditetapkan sebagai bio.")
+        return await tex.edit("Provide text to set as bio.")
     elif len(message.command) > 1:
         bio = message.text.split(None, 1)[1]
         try:
             await client.update_profile(bio=bio)
-            await Geez.edit(f"**Berhasil Mengubah BIO anda menjadi** `{bio}`")
+            await tex.edit(f"**Successfully Change your BIO to** `{bio}`")
         except Exception as e:
-            await Geez.edit(f"**ERROR:** `{e}`")
+            await tex.edit(f"**ERROR:** `{e}`")
     else:
-        return await Geez.edit("Berikan teks untuk ditetapkan sebagai bio.")
+        return await tex.edit("Provide text to set as bio.")
 
 
-@Client.on_message(filters.command(["setpfp"], cmd) & filters.me)
+@Client.on_message(
+    filters.command(["setpfp"], cmds) & filters.me)
 async def set_pfp(client: Client, message: Message):
     replied = message.reply_to_message
     if (
@@ -176,16 +176,17 @@ async def set_pfp(client: Client, message: Message):
         await client.set_profile_photo(profile_photo)
         if os.path.exists(profile_photo):
             os.remove(profile_photo)
-        await message.edit("**Foto Profil anda Berhasil Diubah.**")
+        await message.reply_text("**Your Profile Photo Changed Successfully.**")
     else:
-        await message.edit(
-            "`Balas ke foto apa pun untuk dipasang sebagai foto profile`"
+        await message.reply_text(
+            "Reply to any photo to set as profile photo"
         )
         await sleep(3)
         await message.delete()
 
 
-@Client.on_message(filters.command(["vpfp"], cmd) & filters.me)
+@Client.on_message(
+    filters.command(["vpfp"], cmds) & filters.me)
 async def view_pfp(client: Client, message: Message):
     user_id = await extract_user(message)
     if user_id:
@@ -193,7 +194,7 @@ async def view_pfp(client: Client, message: Message):
     else:
         user = await client.get_me()
     if not user.photo:
-        await message.edit("Foto profil tidak ditemukan!")
+        await message.reply_text("Profile photo not found!")
         return
     await client.download_media(user.photo.big_file_id, file_name=profile_photo)
     await client.send_photo(
@@ -207,14 +208,14 @@ async def view_pfp(client: Client, message: Message):
 add_command_help(
     "Profile",
     [
-        ["block", "to block someone on telegram"],
-        ["unblock", "to unblock someone on telegram"],
-        ["setname", "set your profile name."],
-        ["setbio", "set an bio."],
+        [f"{cmds}block", "to block someone on telegram"],
+        [f"{cmds}unblock", "to unblock someone on telegram"],
+        [f"{cmds}setname", "set your profile name."],
+        [f"{cmds}setbio", "set an bio."],
         [
-            "setpfp",
+            f"{cmds}setpfp",
             f"reply with image to set your profile pic.",
         ],
-        ["vpfp", "Reply with video to set your video profile."],
+        [f"{cmds}vpfp", "Reply with video to set your video profile."],
     ],
 )

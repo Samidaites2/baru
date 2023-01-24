@@ -12,11 +12,10 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from geezlibs.geez.helper.utility import get_arg
-from Geez.helper.cmd import *
 from Geez.modules.basic import add_command_help
+from Geez import cmds
 
-
-@Client.on_message(filters.me & filters.command(["q", "quotly"], cmd))
+@Client.on_message(filters.me & filters.command(["q", "quotly"], cmds))
 async def quotly(client: Client, message: Message):
     args = get_arg(message)
     if not message.reply_to_message and not args:
@@ -26,7 +25,7 @@ async def quotly(client: Client, message: Message):
         await message.edit("`Making a Quote . . .`")
         await client.unblock_user(bot)
         if args:
-            await client.send_message(bot, f"/q {args}")
+            await client.send_message(bot, f"/qcolor {args}")
             await asyncio.sleep(1)
         else:
             pass
@@ -49,11 +48,11 @@ add_command_help(
     "Quotly",
     [
         [
-            f"q",
+            f"q or .quotly",
             "To make an quote.",
         ],
         [
-            f"q <color>",
+            f"q <color> or .quotly <color>",
             "Make a message into a sticker with the custom background color given.",
         ],
     ],

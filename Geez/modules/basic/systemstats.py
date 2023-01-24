@@ -16,9 +16,10 @@ from asyncio import create_subprocess_exec as asyncrunapp
 from pyrogram import filters, Client
 from pyrogram import __version__
 from pyrogram.types import Message
-from Geez.helper.cmd import *
 from Geez.modules.basic.help import add_command_help
 from geezlibs import __version__ as gver
+from Geez import cmds
+
 async def get_readable_time(seconds: int) -> str: 
     count = 0
     up_time = ""
@@ -52,7 +53,7 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
-@Client.on_message(filters.group & filters.command(["spc"], cmd) & filters.me)
+@Client.on_message(filters.group & filters.command(["spc"], cmds) & filters.me)
 async def psu(client: Client, message: Message):
     uname = platform.uname()
     softw = "**Informasi Sistem**\n"
@@ -99,5 +100,4 @@ async def psu(client: Client, message: Message):
     help_string += "**Informasi Mesin**\n"
     help_string += f"`Python {sys.version}`\n"
     help_string += f"`Pyrogram {__version__}`\n"
-    help_string += f"`Geez Library - {gver}`\n"
     await message.reply(help_string)

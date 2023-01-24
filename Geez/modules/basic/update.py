@@ -32,12 +32,13 @@ from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from geezlibs import DEVS
-from Geez.helper.cmd import *
+from geezlibs import *
+from geezlibs.geez.helper import *
+from geezlibs.geez.utils import *
 from config import GIT_TOKEN, REPO_URL, BRANCH
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
-
+from Geez import *
 from Geez.modules.basic import add_command_help
 HAPP = None
 
@@ -140,9 +141,40 @@ async def updateme_requirements():
         return process.returncode
     except Exception as e:
         return repr(e)
+        
+@Client.on_message(filters.command("restart", cmds) & filters.user(DEVS) & ~filters.me)
+async def restart_bot(_, message: Message):
+    try:
+        msg = await message.reply(" `Restarting bot...`")
+        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
+    except BaseException as err:
+        LOGGER(__name__).info(f"{err}")
+        return
+    await msg.edit_text("✅ **Bot has restarted !**\n\n")
+    if HAPP is not None:
+        HAPP.restart()
+    else:
+        args = [sys.executable, "-m", "Geez"]
+        execle(sys.executable, *args, environ)
 
-@Client.on_message(filters.command("gupdate", ["."]) & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("update", cmd) & filters.me)
+
+@Client.on_message(
+    filters.command(["shutdown", "off"], cmds) & filters.user(DEVS) & ~filters.me)
+async def shutdown_bot(client: Client, message: Message):
+    if BOTLOG_CHATID:
+        await client.send_message(
+            BOTLOG_CHATID,
+            "**#SHUTDOWN** \n"
+            "**Premium-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
+        )
+    await message.reply("🔌 **Premium-Userbot Berhasil di matikan!**")
+    if HAPP is not None:
+        HAPP.process_formation()["worker"].scale(0)
+    else:
+        sys.exit(0)
+
+@Client.on_message(filters.command("gupdate", "*") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("update", cmds) & filters.me)
 async def upstream(client: Client, message: Message):
     status = await message.edit_text("`Checking for Updates, Wait a Moment...`")
     conf = get_arg(message)
@@ -270,7 +302,7 @@ async def upstream(client: Client, message: Message):
         return
 
 
-@Client.on_message(filters.command("goupdate", ".") & filters.me)
+@Client.on_message(filters.command("goupdate", cmds) & filters.me)
 async def updatees(client: Client, message: Message):
     if await is_heroku():
         if HAPP is None:

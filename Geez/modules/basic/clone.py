@@ -16,12 +16,13 @@ from pyrogram.types import *
 from geezlibs.geez.helper.basic import edit_or_reply, get_text, get_user
 
 from Geez.modules.basic.help import add_command_help
-from Geez.helper.cmd import *
+from Geez import cmds
+
 OWNER = os.environ.get("OWNER", None)
-BIO = os.environ.get("BIO", "Abis Clone Ga Bisa Balik")
+BIO = os.environ.get("BIO", "Sange Kok Di Tele")
 
 
-@Client.on_message(filters.command("clone", cmd) & filters.me)
+@Client.on_message(filters.command("clone", cmds) & filters.me)
 async def clone(client: Client, message: Message):
     text = get_text(message)
     op = await message.edit_text("`Cloning`")
@@ -42,10 +43,10 @@ async def clone(client: Client, message: Message):
         first_name=f_name,
         bio=c_bio,
     )
-    await message.edit(f"**From now I'm** __{f_name}__")
+    await message.edit(f"**Berhasil Clone** __{f_name}__")
 
 
-@Client.on_message(filters.command("revert", cmd) & filters.me)
+@Client.on_message(filters.command("revert", cmds) & filters.me)
 async def revert(client: Client, message: Message):
     await message.edit("`Reverting`")
     r_bio = BIO
@@ -64,7 +65,7 @@ async def revert(client: Client, message: Message):
 add_command_help(
     "Clone",
     [
-        ["clone", "To Clone someone Profile."],
-        ["revert", "To Get Your Account Back."],
+        [f"{cmds}clone", "To Clone someone Profile."],
+        [f"{cmds}revert", "To Get Your Account Back."],
     ],
 )

@@ -18,7 +18,6 @@ import dotenv
 import heroku3
 import requests
 import urllib3
-from os import environ, execle, remove
 from datetime import datetime
 from time import strftime, time
 from geezlibs.geez.utils.misc import is_heroku, user_input, paste_queue
@@ -29,14 +28,10 @@ from pyrogram.types import Message
 
 from config import BOTLOG_CHATID, HEROKU_API_KEY, HEROKU_APP_NAME, BRANCH, REPO_URL
 from config import CMD_HNDLR as cmds
-from Geez.helper.cmd import *
-from Geez import *
-from geezlibs.geez import *
+from Geez import SUDO_USER, Client
 from Geez.modules.basic import add_command_help
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-HAPP = None
 
 
 XCB = [
@@ -55,42 +50,8 @@ XCB = [
     "main",
 ]
 
-@Client.on_message(filters.command("restart", cmd) & filters.me)
-async def restart_bot(_, message: Message):
-    try:
-        msg = await message.reply(" `Restarting bot...`")
-        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
-    except BaseException as err:
-        LOGGER(__name__).info(f"{err}")
-        return
-    await msg.edit_text("✅ **Bot has restarted !**\n\n")
-    if HAPP is not None:
-        HAPP.restart()
-    else:
-        args = [sys.executable, "-m", "Geez"]
-        execle(sys.executable, *args, environ)
 
-
-@Client.on_message(
-    filters.command(["shutdown", "off"], cmd) & filters.me
-)
-async def shutdown_bot(client: Client, message: Message):
-    if BOTLOG_CHATID:
-        await client.send_message(
-            BOTLOG_CHATID,
-            "**#SHUTDOWN** \n"
-            "**Geez-Userbot** telah di matikan!\nJika ingin menghidupkan kembali silahkan buka heroku",
-        )
-    await message.reply("🔌 **Geez-Userbot Berhasil di matikan!**")
-    if HAPP is not None:
-        HAPP.process_formation()["worker"].scale(0)
-    else:
-        sys.exit(0)
-
-
-@Client.on_message(
-    filters.command(["logs"], cmd) & (filters.me | filters.user(SUDO_USER))
-)
+@Client.on_message(filters.command("logs", cmds) & filters.user(SUDO_USER))
 async def log_(client, message):
     if await is_heroku():
         if HEROKU_API_KEY == "" and HEROKU_APP_NAME == "":
@@ -121,11 +82,9 @@ async def log_(client, message):
         return await message.reply_text(data)
 
 
-@Client.on_message(
-    filters.command(["getvar"], ".") & (filters.me | filters.user(SUDO_USER))
-)
-async def varget(client: Client, message: Message):
-    usage = "**Usage:**\n/getvar [Var Name]"
+@Client.on_message(filters.command("getvar", cmds) & filters.user(SUDO_USER))
+async def varget_(client, message):
+    usage = "**Usage:**\n/get_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     check_var = message.text.split(None, 2)[1]
@@ -165,11 +124,9 @@ async def varget(client: Client, message: Message):
             )
 
 
-@Client.on_message(
-    filters.command(["delvar"], ".") & (filters.me | filters.user(SUDO_USER))
-)
-async def vardel(client: Client, message: Message):
-    usage = "**Usage:**\n/delvar [Var Name]"
+@Client.on_message(filters.command("delvar", cmds) & filters.me)
+async def vardel_(client, message):
+    usage = "**Usage:**\n/del_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     check_var = message.text.split(None, 2)[1]
@@ -210,10 +167,8 @@ async def vardel(client: Client, message: Message):
             )
 
 
-@Client.on_message(
-    filters.command(["setvar"], ".") & (filters.me | filters.user(SUDO_USER))
-)
-async def setvar(client: Client, message: Message):
+@Client.on_message(filters.command("setvar", cmds) & filters.me)
+async def setvar(client, message):
     usage = "**Usage:**\n/setvar [Var Name] [Var Value]"
     if len(message.command) < 3:
         return await message.reply_text(usage)
@@ -252,15 +207,16 @@ async def setvar(client: Client, message: Message):
         output = dotenv.set_key(path, to_set, value)
         if dotenv.get_key(path, to_set):
             return await message.reply_text(
-                f"**.env Var updated:**\n\n`{to_set}`has been updated successfully. To restart the bot touch /restart command."
+                f"**.env Var Updation:**\n\n`{to_set}`has been updated successfully. To restart the bot touch /restart command."
             )
         else:
             return await message.reply_text(
-                f"**.env var updated:**\n\n`{to_set}` has been added sucsessfully. To restart the bot touch /restart command."
+                f"**.env dəyişən əlavə edilməsi:**\n\n`{to_set}` has been added sucsessfully. To restart the bot touch /restart command."
             )
 
+
 @Client.on_message(
-    filters.command(["usage"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["usage"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
 async def usage_dynos(client, message):
     ### Credits CatUserbot

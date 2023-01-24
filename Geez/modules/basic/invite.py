@@ -13,14 +13,13 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType, UserStatus
 from pyrogram.types import Message
 from Geez import SUDO_USER
-from Geez.helper.cmd import *
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 
 from Geez.modules.basic import add_command_help
-
+from Geez import cmds
 
 @Client.on_message(
-    filters.command(["invite"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["invite"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
 async def inviteee(client: Client, message: Message):
     mg = await message.reply_text("`Adding Users!`")
@@ -37,7 +36,7 @@ async def inviteee(client: Client, message: Message):
     await mg.edit(f"`Sucessfully Added {len(user_list)} To This Group / Channel!`")
 
 @Client.on_message(
-    filters.command(["inviteall"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["inviteall"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
 async def inv(client: Client, message: Message):
     ex = await message.reply_text("`Processing . . .`")
@@ -62,7 +61,7 @@ async def inv(client: Client, message: Message):
             except Exception as e:
                 pass
 
-@Client.on_message(filters.command("invitelink", cmd) & filters.me)
+@Client.on_message(filters.command("invitelink", cmds) & filters.me)
 async def invite_link(client: Client, message: Message):
     um = await message.edit_text("`Processing...`")
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
@@ -78,10 +77,10 @@ add_command_help(
     "Culik",
     [
         [
-            "invitelink",
+            f"{cmds}invitelink",
             "Get your private invite link. [Need Admin]",
         ],
-        ["invite @username", "to invite someone."],
-        ["inviteall @username", "Mass adding (can affect your account)."],
+        [f"{cmds}invite @username", "to invite someone."],
+        [f"{cmds}inviteall @username", "Mass adding (can affect your account)."],
     ],
 )

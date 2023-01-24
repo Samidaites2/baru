@@ -11,7 +11,7 @@ from py_extract import Video_tools
 from Geez.config_var import Config
 from geezlibs.geez.helper import *
 from geezlibs.geez.utils import *
-from Geez.helper.cmd import *
+from Geez import *
 from Geez.modules.basic import add_command_help
 
 # Help
@@ -19,7 +19,7 @@ mod_name = os.path.basename(__file__)[:-3]
 
 
 @Client.on_message(
-    filters.command("audio", ["*", "-", "^", "?"]) & filters.me
+    filters.command("audio", cmds) & filters.me
 )
 async def extract_all_aud(client: Client, message: Message):
     replied_msg = message.reply_to_message

@@ -14,11 +14,11 @@ from gpytranslate import Translator
 from pyrogram import Client
 from pytgcalls import GroupCallFactory
 
-
 from config import (
     API_HASH,
     API_ID,
     BOTLOG_CHATID,
+    CMD_HNDLR,
     MONGO_URL,
     STRING_SESSION1,
     STRING_SESSION2,
@@ -33,6 +33,7 @@ from config import (
     SUDO_USERS,
     BOT_TOKEN
 )
+cmds = CMD_HNDLR
 DB_URL = MONGO_URL
 CMD_HELP = {}
 SUDO_USER = SUDO_USERS
@@ -56,10 +57,9 @@ logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
 logging.getLogger("pyrogram.session.auth").setLevel(logging.CRITICAL)
 logging.getLogger("pyrogram.session.session").setLevel(logging.CRITICAL)
 
-mongo_client = motor.motor_asyncio.AsyncIOMotorClient(Config.MONGO_URL)
-
 LOGS = logging.getLogger(__name__)
 
+mongo_client = motor.motor_asyncio.AsyncIOMotorClient(Config.MONGO_URL)
 
 def LOGGER(name: str) -> logging.Logger:
     return logging.getLogger(name)
@@ -182,7 +182,6 @@ bot5 = (
     if STRING_SESSION5
     else None
 )
-
 bot6 = (
     Client(
         name="bot6",
@@ -194,7 +193,6 @@ bot6 = (
     if STRING_SESSION6
     else None
 )
-
 bot7 = (
     Client(
         name="bot7",
@@ -206,7 +204,6 @@ bot7 = (
     if STRING_SESSION7
     else None
 )
-
 bot8 = (
     Client(
         name="bot8",
@@ -218,7 +215,6 @@ bot8 = (
     if STRING_SESSION8
     else None
 )
-
 bot9 = (
     Client(
         name="bot9",
@@ -230,7 +226,6 @@ bot9 = (
     if STRING_SESSION9
     else None
 )
-
 bot10 = (
     Client(
         name="bot10",

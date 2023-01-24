@@ -12,6 +12,7 @@ from geezlibs.geez.utils import *
 from geezlibs.geez import *
 from geezlibs.geez.helper.cmd import *
 from config import *
+from Geez import *
 
 commands = ["spam", "statspam", "slowspam", "fastspam"]
 SPAM_COUNT = [0]
@@ -27,7 +28,7 @@ def spam_allowed():
 
 
 @Client.on_message(
-    filters.me & filters.command(["dspam", "delayspam"], cmd)
+    filters.me & filters.command(["dspam", "delayspam"], cmds)
 )
 async def delayspam(client: Client, message: Message):
     if message.chat.id in BL_GCAST:
@@ -62,7 +63,7 @@ async def delayspam(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command(commands, cmd) & filters.me)
+@Client.on_message(filters.command(commands, cmds) & filters.me)
 async def sspam(client: Client, message: Message):
     amount = int(message.command[1])
     text = " ".join(message.command[2:])
@@ -87,7 +88,7 @@ async def sspam(client: Client, message: Message):
 @Client.on_message(
     filters.me
     & filters.command(
-        ["sspam", "stkspam", "spamstk", "stickerspam"], cmd
+        ["sspam", "stkspam", "spamstk", "stickerspam"], cmds
     )
 )
 async def spam_stick(client: Client, message: Message):

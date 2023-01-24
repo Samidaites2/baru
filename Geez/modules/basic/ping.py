@@ -17,7 +17,7 @@ from pyrogram.raw import functions
 from pyrogram.types import Message
 from datetime import datetime
 from geezlibs.geez.helper import *
-from Geez.helper.cmd import *
+from Geez import *
 from geezlibs.geez.helper.basic import *
 from geezlibs.geez.helper.PyroHelpers import *
 from geezlibs.geez.utils.misc import *
@@ -39,7 +39,7 @@ class WWW:
     
     
 @Client.on_message(
-    filters.command(["speedtest"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["speed"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
 async def speed_test(client: Client, message: Message):
     new_msg = await message.reply_text("`Running speed test . . .`")
@@ -101,7 +101,7 @@ async def absen(client: Client, message: Message):
     await message.reply_text(random.choice(kopi))
 
 
-@Client.on_message(filters.command("gping", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gping", cmds) & filters.user(DEVS) & ~filters.me)
 async def cpingme(client: Client, message: Message):
     """Ping the assistant"""
     mulai = time.time()
@@ -112,7 +112,7 @@ async def cpingme(client: Client, message: Message):
 @Client.on_message(
     filters.command("sping", ["."]) & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("ping", cmd) & filters.me)
+@Client.on_message(filters.command("ping", cmds) & filters.me)
 async def pingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -130,7 +130,7 @@ async def pingme(client: Client, message: Message):
 @Client.on_message(
     filters.command("kping", ".") & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("kping", cmd) & filters.me)
+@Client.on_message(filters.command("kping", cmds) & filters.me)
 async def kping(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -152,7 +152,7 @@ async def kping(client: Client, message: Message):
 @Client.on_message(
     filters.command("cping", ".") & filters.user(DEVS) & ~filters.me
 )
-@Client.on_message(filters.command("cping", cmd) & filters.me)
+@Client.on_message(filters.command("cping", cmds) & filters.me)
 async def sping(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -172,7 +172,7 @@ async def sping(client: Client, message: Message):
     )
 
 @Client.on_message(
-    filters.command(["pping"], cmd) & (filters.me | filters.user(SUDO_USER))
+    filters.command(["pping"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
 async def ppingme(client: Client, message: Message):
     uptime = await get_readable_time((time.time() - StartTime))

@@ -21,7 +21,6 @@ from yt_dlp import YoutubeDL
 
 from Geez.modules.basic import add_command_help
 from Geez import *
-from Geez.helper.cmd import *
 from geezlibs.geez.helper.PyroHelpers import ReplyCheck
 from geezlibs.geez.utils.tools import get_arg
 
@@ -41,7 +40,7 @@ def get_text(message: Message) -> [None, str]:
 
 
 @Client.on_message(
-    filters.command(["vid", "video"], cmd) & filters.me
+    filters.command(["vid", "video"], cmds) & filters.me
 )
 async def yt_vid(client: Client, message: Message):
     input_st = message.text
@@ -99,7 +98,7 @@ async def yt_vid(client: Client, message: Message):
             os.remove(files)
 
 
-@Client.on_message(filters.command("song", cmd) & filters.me)
+@Client.on_message(filters.command("song", cmds) & filters.me)
 async def song(client: Client, message: Message):
     input_str = get_text(message)
     rep = await message.reply("`Processing...`")
@@ -161,7 +160,7 @@ async def song(client: Client, message: Message):
             os.remove(files)
             
             
-@Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmd) & filters.me)
+@Client.on_message(filters.command(["tt", "tiktok", "ig", "sosmed"], cmds) & filters.me)
 async def sosmed(client: Client, message: Message):
     prik = await message.edit("`Processing . . .`")
     link = get_arg(message)

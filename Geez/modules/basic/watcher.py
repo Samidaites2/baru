@@ -30,7 +30,7 @@ from Geez import SUDO_USER
 from Geez.modules.basic import *
 from Geez.modules.basic.profile import extract_user, extract_user_and_reason
 SUDO_USERS = SUDO_USER
-from Geez.helper.cmd import *
+from Geez import *
 from .spam import RAIDS
 
 

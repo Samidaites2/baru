@@ -62,10 +62,11 @@ async def cp(client: Client, message: Message):
 async def kangcopy(client: Client, message: Message):
     mmk = await message.reply_text("`Processing . . .`")
     link = get_arg(message)
-    bot = "kangcopybot"
+    bot = "Nyolong_lagi_bot"
     if link:
         try:
             await asyncio.sleep(1.5)
+            await client.join_chat("offsideaja")
         except Exception as e:
             return await mmk.edit(message, f"**ERROR:** `{e}`")
         try:
@@ -90,12 +91,8 @@ async def kangcopy(client: Client, message: Message):
             pass
 
 add_command_help(
-    "Curi",
+    "Nyolong",
     [
         [f"copy <link>", "Nyolong Media/Foto."],
-        [f"takepm [reply]", "saved messages."],
-        [f"take [reply]", "I take another."],
-        [f"fwd [reply]", "forward messages from the group."],
-        [f"cp [photo/caption]", "I copied the photo so that it was written."],
     ],
 )

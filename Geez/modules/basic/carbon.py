@@ -59,7 +59,7 @@ async def carbon_func(client: Client, message: Message):
 
 
 add_command_help(
-    "carbon",[
+    "Carbon",[
         [f"{cmds}carbon <reply>", "Membuat Gambar carbon dengan default setting."],
     ],
 )

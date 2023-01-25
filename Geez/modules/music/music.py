@@ -14,7 +14,7 @@ import youtube_dl
 
 from datetime import datetime
 from pyrogram import Client, filters
-from pytgcalls import GroupCall
+from pytgcalls import GroupCallFactory
 from Python_ARQ import ARQ
 
 from .functions import (
@@ -34,7 +34,7 @@ from geezlibs.geez.utils import *
 from Geez.modules.basic import add_command_help
 
 
-group_calls = GroupCall(None, path_to_log_file='')
+group_call = GroupCallFactory(None, path_to_log_file='')
 
 # Arq Client
 arq = ARQ(ARQ_API)
@@ -48,23 +48,23 @@ playing = False  # Tells if something is playing or not
 
 @app.on_message(filters.command("join", cmds) & filters.me)
 async def join(_, message):
-    if group_calls.is_connected:
+    if group_call.is_connected:
         await message.reply_text('Bot already joined!')
         return
-    group_calls.client = app
-    await group_calls.start(message.chat.id)
+    group_call.client = app
+    await group_call.start(message.chat.id)
     await message.reply_text('Succsessfully joined!')
 
 
 @app.on_message(filters.command("mute", cmds) & filters.me)
 async def mute(_, message):
-    group_calls.set_is_mute(is_muted=True)
+    group_call.set_is_mute(is_muted=True)
     await message.reply_text('Succsessfully muted bot!')
 
 
 @app.on_message(filters.command("unmute", cmds) & filters.me)
 async def unmute(_, message):
-    group_calls.set_is_mute(is_muted=False)
+    group_call.set_is_mute(is_muted=False)
     await message.reply_text('Succsessfully unmuted bot!')
 
 
@@ -73,14 +73,14 @@ async def volume(_, message):
     if len(message.command) < 2:
         await message.reply_text('You forgot to pass volume (1-200)')
 
-    await group_calls.set_my_volume(volume=int(message.command[1]))
+    await group_call.set_my_volume(volume=int(message.command[1]))
     await message.reply_text(f'Volume changed to {message.command[1]}')
 
 
 @app.on_message(filters.command("end", cmds) & filters.me)
 async def stop(_, message):
     global playing
-    group_calls.stop_playout()
+    group_call.stop_playout()
     queue.clear()
     playing = False
     await message.reply_text('Succsessfully end song!')
@@ -89,19 +89,19 @@ async def stop(_, message):
 @app.on_message(filters.command("leave", cmds) & filters.me)
 async def leave(_, message):
     global playing
-    if not group_calls.is_connected:
+    if not group_call.is_connected:
         await message.reply_text('Bot already leaved!')
         return
-    await group_calls.stop()
+    await group_call.stop()
     queue.clear()
     playing = False
-    group_calls.input_filename = ''
+    group_call.input_filename = ''
     await message.reply_text('Succsessfully leaved!')
 
 
 @app.on_message(filters.command("play", cmds) & filters.me)
 async def queues(_, message):
-    if not group_calls.is_connected:
+    if not group_call.is_connected:
         await message.reply_text('Bot not joined on Voice Calls!')
         return
     usage = "**Usage:**\n__**{cmds}play  Song_Name**__"
@@ -216,7 +216,7 @@ async def deezer(requested_by, query):
         caption=f"**Playing** __**[{title}]({url})**__ **Via Deezer.**",
     )
     os.remove("final.png")
-    group_calls.input_filename = raw_filename
+    group_call.input_filename = raw_filename
     await asyncio.sleep(int(songs[0]["duration"]))
     await m.delete()
     playing = False
@@ -254,7 +254,7 @@ async def jiosaavn(requested_by, query):
         photo="final.png",
     )
     os.remove("final.png")
-    group_calls.input_filename = raw_filename
+    group_call.input_filename = raw_filename
     await asyncio.sleep(int(sduration))
     await m.delete()
     playing = False
@@ -300,7 +300,7 @@ async def ytplay(requested_by, query):
         photo="final.png",
     )
     os.remove("final.png")
-    group_calls.input_filename = raw_filename
+    group_call.input_filename = raw_filename
     await asyncio.sleep(int(time_to_seconds(duration)))
     playing = False
     await m.delete()

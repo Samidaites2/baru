@@ -45,7 +45,7 @@ queue = []  # This is where the whole song queue is stored
 playing = False  # Tells if something is playing or not
 
 
-@app.on_message(filters.command("join", cmds) & filters.me)
+@Client.on_message(filters.command("join", cmds) & filters.me)
 async def join(_, message):
     if group_call.is_connected:
         await message.reply_text('Bot already joined!')
@@ -55,19 +55,19 @@ async def join(_, message):
     await message.reply_text('Succsessfully joined!')
 
 
-@app.on_message(filters.command("mute", cmds) & filters.me)
+@Client.on_message(filters.command("mute", cmds) & filters.me)
 async def mute(_, message):
     group_call.set_is_mute(is_muted=True)
     await message.reply_text('Succsessfully muted bot!')
 
 
-@app.on_message(filters.command("unmute", cmds) & filters.me)
+@Client.on_message(filters.command("unmute", cmds) & filters.me)
 async def unmute(_, message):
     group_call.set_is_mute(is_muted=False)
     await message.reply_text('Succsessfully unmuted bot!')
 
 
-@app.on_message(filters.command("volume", cmds) & filters.me)
+@Client.on_message(filters.command("volume", cmds) & filters.me)
 async def volume(_, message):
     if len(message.command) < 2:
         await message.reply_text('You forgot to pass volume (1-200)')
@@ -76,7 +76,7 @@ async def volume(_, message):
     await message.reply_text(f'Volume changed to {message.command[1]}')
 
 
-@app.on_message(filters.command("end", cmds) & filters.me)
+@Client.on_message(filters.command("end", cmds) & filters.me)
 async def stop(_, message):
     global playing
     group_call.stop_playout()
@@ -85,7 +85,7 @@ async def stop(_, message):
     await message.reply_text('Succsessfully end song!')
 
 
-@app.on_message(filters.command("leave", cmds) & filters.me)
+@Client.on_message(filters.command("leave", cmds) & filters.me)
 async def leave(_, message):
     global playing
     if not group_call.is_connected:
@@ -98,7 +98,7 @@ async def leave(_, message):
     await message.reply_text('Succsessfully leaved!')
 
 
-@app.on_message(filters.command("play", cmds) & filters.me)
+@Client.on_message(filters.command("play", cmds) & filters.me)
 async def queues(_, message):
     if not group_call.is_connected:
         await message.reply_text('Bot not joined on Voice Calls!')
@@ -125,7 +125,7 @@ async def queues(_, message):
                   "requested_by": requested_by})
     await play()
 
-@app.on_message(filters.command("skip", cmds) & filters.me)
+@Client.on_message(filters.command("skip", cmds) & filters.me)
 async def skip(_, message):
     global playing
     if len(queue) == 0:
@@ -136,7 +136,7 @@ async def skip(_, message):
     await play()
 
 
-@app.on_message(filters.command("playlist", cmds) & filters.me)
+@Client.on_message(filters.command("playlist", cmds) & filters.me)
 async def queue_list(_, message):
     if len(queue) != 0:
         i = 1

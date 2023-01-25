@@ -43,7 +43,6 @@ async def main():
             ids.append(ex.id)
         except Exception as e:
             LOGGER("✅").info(f"{e}")
-    await idle()
     await aiosession.close()
 
 

@@ -28,6 +28,7 @@ from .functions import (
 
 from config import *
 from Geez import *
+from Geez import ARQ_API as arq
 from geezlibs import *
 from geezlibs.geez import *
 from geezlibs.geez.utils import *
@@ -36,8 +37,6 @@ from Geez.modules.basic import add_command_help
 
 group_call = GroupCallFactory(None, path_to_log_file='')
 
-# Arq Client
-arq = ARQ(ARQ_API)
 
 # File raw music
 raw_filename = 'input.raw'

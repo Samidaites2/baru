@@ -33,9 +33,6 @@ from geezlibs.geez.utils import *
 from Geez.modules.basic import add_command_help
 
 
-group_call = GroupCallFactory(None, path_to_log_file='')
-
-
 # File raw music
 raw_filename = 'input.raw'
 
@@ -415,3 +412,5 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     img.save("final.png")
     os.remove("temp.png")
     os.remove("background.png")
+
+app.run()

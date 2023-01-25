@@ -23,6 +23,7 @@ MSG_BOT = (f"**Userbot Assistant**\nis alive...")
 
 async def main():
     await app.start()
+    await app.run()
     LOGGER("✅").info(" Premium Userbot..")
     LOGGER("✅").info("Loading Everything.")
     for all_module in ALL_MODULES:
@@ -49,6 +50,5 @@ async def main():
 if __name__ == "__main__":
     LOGGER("✅").info("Starting Premium Userbot")
     install()
-    app.run()
     LOOP.run_until_complete(main())
 

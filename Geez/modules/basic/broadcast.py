@@ -100,7 +100,7 @@ async def gucast(client: Client, message: Message):
 
 
 add_command_help(
-    "broadcast",
+    "Broadcast",
     [
         [f"{cmds}gcast [text/reply]",
             "Broadcast pesan ke Group. (bisa menggunakan Media/Sticker)"],

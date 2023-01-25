@@ -11,20 +11,18 @@
 import asyncio
 import os
 import youtube_dl
+import aiohttp
+import aiofiles
+import ffmpeg
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 
 from datetime import datetime
 from pyrogram import Client, filters
 from pytgcalls import GroupCallFactory
 from Python_ARQ import ARQ
 
-from .functions import (
-    transcode,
-    download_and_transcode_song,
-    convert_seconds,
-    time_to_seconds,
-    generate_cover,
-    generate_cover_square
-)
 
 from config import *
 from Geez import *
@@ -45,8 +43,8 @@ queue = []  # This is where the whole song queue is stored
 playing = False  # Tells if something is playing or not
 
 
-@Client.on_message(filters.command("join", cmds) & filters.me)
-async def join(_, message):
+@Client.on_message(filters.command(["join"], cmds) & filters.me)
+async def join(client: Client, message: Message):
     if group_call.is_connected:
         await message.reply_text('Bot already joined!')
         return
@@ -55,20 +53,20 @@ async def join(_, message):
     await message.reply_text('Succsessfully joined!')
 
 
-@Client.on_message(filters.command("mute", cmds) & filters.me)
-async def mute(_, message):
+@Client.on_message(filters.command(["mute"], cmds) & filters.me)
+async def mute(client: Client, message: Message):
     group_call.set_is_mute(is_muted=True)
     await message.reply_text('Succsessfully muted bot!')
 
 
-@Client.on_message(filters.command("unmute", cmds) & filters.me)
-async def unmute(_, message):
+@Client.on_message(filters.command(["unmute"], cmds) & filters.me)
+async def unmute(client: Client, message: Message):
     group_call.set_is_mute(is_muted=False)
     await message.reply_text('Succsessfully unmuted bot!')
 
 
-@Client.on_message(filters.command("volume", cmds) & filters.me)
-async def volume(_, message):
+@Client.on_message(filters.command(["volume"], cmds) & filters.me)
+async def volume(client: Client, message: Message):
     if len(message.command) < 2:
         await message.reply_text('You forgot to pass volume (1-200)')
 
@@ -76,8 +74,8 @@ async def volume(_, message):
     await message.reply_text(f'Volume changed to {message.command[1]}')
 
 
-@Client.on_message(filters.command("end", cmds) & filters.me)
-async def stop(_, message):
+@Client.on_message(filters.command(["end"], cmds) & filters.me)
+async def stop(client: Client, message: Message):
     global playing
     group_call.stop_playout()
     queue.clear()
@@ -85,8 +83,8 @@ async def stop(_, message):
     await message.reply_text('Succsessfully end song!')
 
 
-@Client.on_message(filters.command("leave", cmds) & filters.me)
-async def leave(_, message):
+@Client.on_message(filters.command(["leave"], cmds) & filters.me)
+async def leave(client: Client, message: Message):
     global playing
     if not group_call.is_connected:
         await message.reply_text('Bot already leaved!')
@@ -98,8 +96,8 @@ async def leave(_, message):
     await message.reply_text('Succsessfully leaved!')
 
 
-@Client.on_message(filters.command("play", cmds) & filters.me)
-async def queues(_, message):
+@Client.on_message(filters.command(["play"], cmds) & filters.me)
+async def queues(client: Client, message: Message):
     if not group_call.is_connected:
         await message.reply_text('Bot not joined on Voice Calls!')
         return
@@ -125,8 +123,8 @@ async def queues(_, message):
                   "requested_by": requested_by})
     await play()
 
-@Client.on_message(filters.command("skip", cmds) & filters.me)
-async def skip(_, message):
+@Client.on_message(filters.command(["skip"], cmds) & filters.me)
+async def skip(client: Client, message: Message):
     global playing
     if len(queue) == 0:
         await message.reply_text("__**Queue Is Empty, Just Like Your Life.**__")
@@ -136,8 +134,8 @@ async def skip(_, message):
     await play()
 
 
-@Client.on_message(filters.command("playlist", cmds) & filters.me)
-async def queue_list(_, message):
+@Client.on_message(filters.command(["playlist"], cmds) & filters.me)
+async def queue_list(client: Client, message: Message):
     if len(queue) != 0:
         i = 1
         text = ""
@@ -303,3 +301,117 @@ async def ytplay(requested_by, query):
     await asyncio.sleep(int(time_to_seconds(duration)))
     playing = False
     await m.delete()
+
+
+def transcode(filename):
+    ffmpeg.input(filename).output("input.raw", format='s16le', acodec='pcm_s16le', ac=2, ar='48k').overwrite_output().run()
+    os.remove(filename)
+
+
+#Download song
+async def download_and_transcode_song(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open('song.mp3', mode='wb')
+                await f.write(await resp.read())
+                await f.close()
+    transcode("song.mp3")
+
+
+# Convert seconds to mm:ss
+def convert_seconds(seconds):
+    seconds = seconds % (24 * 3600)
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%02d:%02d" % (minutes, seconds)
+
+
+# Convert hh:mm:ss to seconds
+def time_to_seconds(time):
+    stringt = str(time)
+    return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(':'))))
+
+
+# Change image size
+def changeImageSize(maxWidth, maxHeight, image):
+    widthRatio = maxWidth / image.size[0]
+    heightRatio = maxHeight / image.size[1]
+    newWidth = int(widthRatio * image.size[0])
+    newHeight = int(heightRatio * image.size[1])
+    newImage = image.resize((newWidth, newHeight))
+    return newImage
+
+
+# Generate cover for jiosaavn and deezer
+async def generate_cover_square(requested_by, title, artist, duration, thumbnail):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(thumbnail) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open("background.png", mode="wb")
+                await f.write(await resp.read())
+                await f.close()
+    image1 = Image.open("./background.png")
+    image2 = Image.open("cache/foreground_square.png")
+    image3 = changeImageSize(600, 500, image1)
+    image4 = changeImageSize(600, 500, image2)
+    image5 = image3.convert("RGBA")
+    image6 = image4.convert("RGBA")
+    Image.alpha_composite(image5, image6).save("temp.png")
+    img = Image.open("temp.png")
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("cache/font.otf", 20)
+    draw.text((150, 380), f"Title: {title}", (255, 255, 255), font=font)
+    draw.text((150, 405), f"Artist: {artist}", (255, 255, 255), font=font)
+    draw.text(
+        (150, 430),
+        f"Duration: {duration} Seconds",
+        (255, 255, 255),
+        font=font,
+    )
+
+    draw.text(
+        (150, 455),
+        f"Played By: {requested_by}",
+        (255, 255, 255),
+        font=font,
+    )
+    img.save("final.png")
+    os.remove("temp.png")
+    os.remove("background.png")
+
+
+# Generate cover for youtube
+
+async def generate_cover(requested_by, title, views, duration, thumbnail):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(thumbnail) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open("background.png", mode="wb")
+                await f.write(await resp.read())
+                await f.close()
+
+    image1 = Image.open("./background.png")
+    image2 = Image.open("cache/foreground.png")
+    image3 = changeImageSize(1280, 720, image1)
+    image4 = changeImageSize(1280, 720, image2)
+    image5 = image3.convert("RGBA")
+    image6 = image4.convert("RGBA")
+    Image.alpha_composite(image5, image6).save("temp.png")
+    img = Image.open("temp.png")
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype("cache/font.otf", 32)
+    draw.text((190, 550), f"Title: {title}", (255, 255, 255), font=font)
+    draw.text(
+        (190, 590), f"Duration: {duration}", (255, 255, 255), font=font
+    )
+    draw.text((190, 630), f"Views: {views}", (255, 255, 255), font=font)
+    draw.text((190, 670),
+        f"Played By: {requested_by}",
+        (255, 255, 255),
+        font=font,
+    )
+    img.save("final.png")
+    os.remove("temp.png")
+    os.remove("background.png")

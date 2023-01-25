@@ -7,6 +7,8 @@ uvloop
 ffmpeg-python
 yt-dlp
 youtube-search
+python-arq
+youtube_dl
 youtube-search-python
 APScheduler==3.7.0
 aiohttp

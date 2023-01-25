@@ -136,8 +136,8 @@ async def gbanlist(client: Client, message: Message):
 add_command_help(
     "Global",
     [
-        [f"{cmdss}gban <reply/username/userid>","Global Banning.",],
-        [f"{cmdss}ungban <reply/username/userid>", "membatalkan Global Banned."],
-        [f"{cmdss}listgban", "list Global banning."],
+        [f"{cmds}gban <reply/username/userid>","Global Banning.",],
+        [f"{cmds}ungban <reply/username/userid>", "membatalkan Global Banned."],
+        [f"{cmds}listgban", "list Global banning."],
     ],
 )

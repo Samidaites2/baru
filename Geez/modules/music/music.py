@@ -28,7 +28,7 @@ from .functions import (
 
 from config import *
 from Geez import *
-from Geez import ARQ_API as arq
+from config import ARQ_API as arq
 from geezlibs import *
 from geezlibs.geez import *
 from geezlibs.geez.utils import *

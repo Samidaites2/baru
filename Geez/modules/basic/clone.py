@@ -19,7 +19,7 @@ from Geez.modules.basic.help import add_command_help
 from Geez import cmds
 
 OWNER = os.environ.get("OWNER", None)
-BIO = os.environ.get("BIO", "Sange Kok Di Tele")
+BIO = os.environ.get("BIO", "Geez Pyro Userbot")
 
 
 @Client.on_message(filters.command("clone", cmds) & filters.me)
@@ -43,7 +43,7 @@ async def clone(client: Client, message: Message):
         first_name=f_name,
         bio=c_bio,
     )
-    await message.edit(f"**Berhasil Clone** __{f_name}__")
+    await message.edit(f"**BErhasil Clone** __{f_name}__")
 
 
 @Client.on_message(filters.command("revert", cmds) & filters.me)
@@ -63,9 +63,8 @@ async def revert(client: Client, message: Message):
 
 
 add_command_help(
-    "Clone",
-    [
-        [f"{cmds}clone", "To Clone someone Profile."],
-        [f"{cmds}revert", "To Get Your Account Back."],
+    "clone",[
+        [f"{cmds}clone", "Clone profile seseorang."],
+        [f"{cmds}revert", "Kembali ke profile (bio dan nama terkadang menggunakan default)."],
     ],
 )

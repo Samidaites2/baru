@@ -35,7 +35,7 @@ async def setpmmsg(client, message):
 
 
 add_command_help(
-    "PM",
+    "antipm",
     [
         [f"{cmds}pmguard [on or off]", " -> mengaktifkan dan menonaktifkan anti-pm."],
         [f"{cmds}setpmmsg [message or default]", " -> Sets a custom anti-pm message."],

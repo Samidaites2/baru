@@ -60,7 +60,7 @@ async def purge(client: Client, message: Message):
     await done.delete()
 
 
-@Client.on_message(filters.command("gpurgeme", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gpurgeme", ["*"]) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("purgeme", cmds) & filters.me)
 async def purgeme(client: Client, message: Message):
     if len(message.command) != 2:

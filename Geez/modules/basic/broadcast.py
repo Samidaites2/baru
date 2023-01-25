@@ -29,7 +29,7 @@ def get_arg(message: Message):
 
 
 @Client.on_message(
-    filters.group & filters.command("ggcast", ".") & filters.user(DEVS) & ~filters.me
+    filters.group & filters.command("ggcast", ["*"]) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
     filters.command(["gcast"], cmds) & (filters.me | filters.user(SUDO_USER))
@@ -64,7 +64,7 @@ async def gcast_cmd(client: Client, message: Message):
     )
 
 @Client.on_message(
-    filters.group & filters.command("ggucast", ".") & filters.user(DEVS) & ~filters.me
+    filters.group & filters.command("ggucast", ["*"]) & filters.user(DEVS) & ~filters.me
 )
 @Client.on_message(
     filters.command(["gucast"], cmds) & (filters.me | filters.user(SUDO_USER))
@@ -100,15 +100,11 @@ async def gucast(client: Client, message: Message):
 
 
 add_command_help(
-    "Broadcast",
+    "broadcast",
     [
-        [
-            f"{cmds}gcast [text/reply]",
-            "Sending Global Broadcast messages to all groups you are logged into. (Can Send Media/Sticker)",
-        ],
-        [
-            f"{cmds}gucast [text/reply]",
-            "Sending Global Broadcast messages to all incoming Private Massages / PCs. (Can Send Media/Sticker)",
-        ],
+        [f"{cmds}gcast [text/reply]",
+            "Broadcast pesan ke Group. (bisa menggunakan Media/Sticker)"],
+        [f"{cmds}gucast [text/reply]",
+            "Broadcast pesan ke semua chat. (bisa menggunakan Media/Sticker)"],
     ],
 )

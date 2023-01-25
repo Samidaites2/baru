@@ -16,7 +16,7 @@ from Geez import cmds
 
 @Client.on_message(filters.command(["stats", "status"], cmds) & filters.me)
 async def stats(client: Client, message: Message):
-    Man = await message.edit_text("`Collecting stats...`")
+    Man = await message.edit_text("`Mengambil info akun ...`")
     start = datetime.now()
     u = 0
     g = 0
@@ -46,12 +46,12 @@ async def stats(client: Client, message: Message):
     end = datetime.now()
     ms = (end - start).seconds
     await Man.edit_text(
-        """`Your Stats Obtained in {} seconds`
-`You have {} Private Messages.`
-`You are in {} Groups.`
-`You are in {} Super Groups.`
-`You Are in {} Channels.`
-`You Are Admin in {} Chats.`
+        """`Status akun anda, berhasil diambil dalam {} detik`
+` {} Pesan Pribadi.`
+`berada di {} Groups.`
+`berada {} Super Groups.`
+`berada {} Channels.`
+`menjadi admin di {} Chats.`
 `Bots = {}`""".format(
             ms, u, g, sg, c, a_chat, b
         )
@@ -61,6 +61,6 @@ async def stats(client: Client, message: Message):
 add_command_help(
     "Stats",
     [
-        [f"{cmds}stats", "to check your account status."],
+        [f"{cmds}stats", "Mengambil info akun anda."],
     ],
 )

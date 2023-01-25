@@ -21,9 +21,9 @@ from Geez.modules.basic import add_command_help
 from config import *
 from Geez import cmds
 
-caption = f"**UPLOADED BY** Geez | RAM"
+caption = f"**UPLOADED**"
 
-@gez.on_message(filters.command("gasupan", ".") & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command("gasupan", "*") & filters.user(DEVS) & ~filters.me)
 @gez.on_message(filters.command("asupan", cmds) & filters.me)
 async def asupan(client: Client, message: Message):
     if message.chat.id in BL_GCAST:
@@ -37,7 +37,7 @@ async def asupan(client: Client, message: Message):
                 [
                     asupan.video.file_id
                     async for asupan in client.search_messages(
-                        "punyakenkan", filter=enums.MessagesFilter.VIDEO
+                        "asupanbdrl", filter=enums.MessagesFilter.VIDEO
                     )
                 ]
             ),
@@ -47,7 +47,7 @@ async def asupan(client: Client, message: Message):
 
 # WARNING PORNO VIDEO THIS !!!
 
-@gez.on_message(filters.command("gbokep", ".") & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command("gbokep", "*") & filters.user(DEVS) & ~filters.me)
 @gez.on_message(filters.command(["bokep"], cmds) & filters.me)
 async def asupin(client: Client, message: Message):
     if message.chat.id in BL_GCAST:
@@ -70,7 +70,7 @@ async def asupin(client: Client, message: Message):
     )
 
 
-@gez.on_message(filters.command("gayang", ".") & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command("gayang", "*") & filters.user(DEVS) & ~filters.me)
 @gez.on_message(filters.command("ayang", cmds) & filters.me)
 async def ayang(client, message):
     yanto = await message.reply("🔎 `Search Ayang...`")
@@ -92,7 +92,7 @@ async def ayang(client, message):
     await yanto.delete()
 
 
-@gez.on_message(filters.command("gppcp", ".") & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command("gppcp", "*") & filters.user(DEVS) & ~filters.me)
 @gez.on_message(filters.command("ppcp", cmds) & filters.me)
 async def ppcp(client, message):
     yanto = await message.reply("🔎 `Search PP Couple...`")
@@ -114,7 +114,7 @@ async def ppcp(client, message):
     await yanto.delete()
 
 
-@gez.on_message(filters.command("gppanime", ".") & filters.user(DEVS) & ~filters.me)
+@gez.on_message(filters.command("gppanime", "*") & filters.user(DEVS) & ~filters.me)
 @gez.on_message(filters.command("ppanime", cmds) & filters.me)
 async def ppanime(client, message):
     yanto = await message.reply("🔎 `Search PP Anime...`")
@@ -137,12 +137,8 @@ async def ppanime(client, message):
 
 
 add_command_help(
-    "Asupan",
-    [
-        [
-            f"{cmds}asupan",
-            f"{cmds}Asupan video TikTok",
-        ],
+    "Asupan",[
+        [f"{cmds}asupan", "Asupan video TikTok",],
         [f"{cmds}ayang", "Mencari Foto ayang kamu /nNote: Modul ini buat cwo yang jomblo."],
         [f"{cmds}ppcp", "Mencari Foto PP Couple Random."],
         [f"{cmds}bokep", "to send random porno videos."],

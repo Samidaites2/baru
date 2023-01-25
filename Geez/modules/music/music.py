@@ -412,5 +412,3 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     img.save("final.png")
     os.remove("temp.png")
     os.remove("background.png")
-
-app.run()

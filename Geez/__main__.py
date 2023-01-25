@@ -49,5 +49,6 @@ async def main():
 if __name__ == "__main__":
     LOGGER("✅").info("Starting Premium Userbot")
     install()
+    app.run()
     LOOP.run_until_complete(main())
 

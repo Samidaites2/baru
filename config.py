@@ -14,6 +14,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "")
 ALIVE_PIC = getenv("ALIVE_PIC")
 ALIVE_TEXT = getenv("ALIVE_TEXT")
 PM_LOGGER = getenv("PM_LOGGER")
+ARQ_API = getenv("ARQ_API", "http://35.240.133.234:8000")
 OPENAI_API = getenv("OPENAI_API")
 BOTLOG_CHATID = int(getenv("BOTLOG_CHATID") or 0)
 GIT_TOKEN = getenv("GIT_TOKEN", "") #personal access token

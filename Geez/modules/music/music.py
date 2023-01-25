@@ -303,10 +303,3 @@ async def ytplay(requested_by, query):
     await asyncio.sleep(int(time_to_seconds(duration)))
     playing = False
     await m.delete()
-
-async def send(text):
-    m = await app.send_message(SUDO_USER, text=text, disable_web_page_preview=True)
-    return m
-
-print('[INFO] Bot is running...\n')
-app.run()

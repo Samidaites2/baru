@@ -43,7 +43,7 @@ async def get_group_call(
             ).full_chat
         if full_chat is not None:
             return full_chat.call
-    await message.edit(f"**Yang Bener Dikit Banh** {err_msg}")
+    await message.edit(f"**Obrolan Suara Tidak Ditemukan** {err_msg}")
     return False
 
 
@@ -51,13 +51,13 @@ async def get_group_call(
 @gez.on_message(filters.command(["startvc"], cmds) & filters.me)
 async def opengc(client: Client, message: Message):
     flags = " ".join(message.command[1:])
-    gez = await edit_or_reply(message, "`Bentar . . .`")
+    gez = await edit_or_reply(message, "`Processing . . .`")
     vctitle = get_arg(message)
     if flags == enums.ChatType.CHANNEL:
         chat_id = message.chat.title
     else:
         chat_id = message.chat.id
-    args = f"**✅ Obrolan Suara Aktif Banh\n • **Chat ID** : `{chat_id}`"
+    args = f"**✅ Obrolan Suara Aktif\n • **Chat ID** : `{chat_id}`"
     try:
         if not vctitle:
             await client.invoke(
@@ -93,7 +93,7 @@ async def end_vc_(client: Client, message: Message):
     ):
         return
     await client.send(DiscardGroupCall(call=group_call))
-    await edit_or_reply(message, f"Bujet Dibanting Anjay **Chat ID** : `{chat_id}`")
+    await edit_or_reply(message, f"✅ Voice Call Ended **Chat ID** : `{chat_id}`")
     
     
 @gez.on_message(
@@ -103,16 +103,16 @@ async def end_vc_(client: Client, message: Message):
 async def joinvc(client: Client, message: Message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
     if message.from_user.id != client.me.id:
-        gez = await message.reply("`Otw Naik...`")
+        gez = await message.reply("`Processing...`")
     else:
-        gez = await message.edit("`Otw Naik....`")
+        gez = await message.edit("`Processing....`")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
         await client.group_call.start(chat_id)
     except Exception as e:
         return await gez.edit(f"**ERROR:** `{e}`")
-    await gez.edit(f"🤖 **Berhasil Naik Banh**\n **Kalo Gagal Naikin Dong**\n└ **Chat ID:** `{chat_id}`")
+    await gez.edit(f"🤖 **Berhasil Join Ke Obrolan Suara**\n└ **Chat ID:** `{chat_id}`")
     await asyncio.sleep(5)
     await client.group_call.set_is_mute(True)
 
@@ -123,16 +123,16 @@ async def joinvc(client: Client, message: Message):
 async def leavevc(client: Client, message: Message):
     chat_id = message.command[1] if len(message.command) > 1 else message.chat.id
     if message.from_user.id != client.me.id:
-        gez = await message.reply("`Turun Dulu...`")
+        gez = await message.reply("`Processing...`")
     else:
-        gez = await message.edit("`Turun Dulu....`")
+        gez = await message.edit("`Processing....`")
     with suppress(ValueError):
         chat_id = int(chat_id)
     try:
         await client.group_call.stop()
     except Exception as e:
         return await edit_or_reply(message, f"**ERROR:** `{e}`")
-    msg = "🤖 **Berhasil Turun Banh**\n **Kalo Gagal Turunin Dong Banh**"
+    msg = "🤖 **Berhasil Meninggalkan Obrolan Suara**\n**"
     if chat_id:
         msg += f"\n└ **Chat ID:** `{chat_id}`"
     await gez.edit(msg)

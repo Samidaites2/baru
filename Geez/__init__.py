@@ -30,6 +30,16 @@ from config import (
     STRING_SESSION8,
     STRING_SESSION9,
     STRING_SESSION10,
+    STRING_SESSION11,
+    STRING_SESSION12,
+    STRING_SESSION13,
+    STRING_SESSION14,
+    STRING_SESSION15,
+    STRING_SESSION16,
+    STRING_SESSION17,
+    STRING_SESSION18,
+    STRING_SESSION19,
+    STRING_SESSION20,
     SUDO_USERS,
     BOT_TOKEN
 )
@@ -237,9 +247,122 @@ bot10 = (
     if STRING_SESSION10
     else None
 )
+bot11 = (
+    Client(
+        name="bot11",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION11,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION11
+    else None
+)
 
+bot12 = (
+    Client(
+        name="bot12",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION12,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION12
+    else None
+)
 
-bots = [bot for bot in [bot1, bot2, bot3, bot4, bot5, bot6, bot7, bot8, bot9, bot10] if bot]
+bot13 = (
+    Client(
+        name="bot13",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION13,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION13
+    else None
+)
+
+bot14 = (
+    Client(
+        name="bot14",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION14,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION14
+    else None
+)
+
+bot15 = (
+    Client(
+        name="bot15",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION15,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION15
+    else None
+)
+bot16 = (
+    Client(
+        name="bot16",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION16,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION16
+    else None
+)
+bot17 = (
+    Client(
+        name="bot17",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION17,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION17
+    else None
+)
+bot18 = (
+    Client(
+        name="bot18",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION18,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION18
+    else None
+)
+bot19 = (
+    Client(
+        name="bot19",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION19,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION19
+    else None
+)
+bot20 = (
+    Client(
+        name="bot20",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=STRING_SESSION20,
+        plugins=dict(root="Geez/modules"),
+    )
+    if STRING_SESSION20
+    else None
+)
+
+bots = [bot for bot in [bot1, bot2, bot3, bot4, bot5, bot6, bot7, bot8, bot9, bot10, bot11, bot12, bot13, bot14, bot15, bot16, bot17, bot18, bot19, bot20] if bot]
 
 for bot in bots:
     if not hasattr(bot, "group_call"):

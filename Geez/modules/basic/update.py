@@ -142,7 +142,7 @@ async def updateme_requirements():
     except Exception as e:
         return repr(e)
         
-@Client.on_message(filters.command("restart", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("restart", cmds) & filters.me)
 async def restart_bot(_, message: Message):
     try:
         msg = await message.reply(" `Restarting bot...`")
@@ -159,7 +159,7 @@ async def restart_bot(_, message: Message):
 
 
 @Client.on_message(
-    filters.command(["shutdown", "off"], cmds) & filters.user(DEVS) & ~filters.me)
+    filters.command(["shutdown", "off"], cmds) & filters.me)
 async def shutdown_bot(client: Client, message: Message):
     if BOTLOG_CHATID:
         await client.send_message(

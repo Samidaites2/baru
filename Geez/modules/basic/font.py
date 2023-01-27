@@ -104,7 +104,7 @@ async def font_gz(client: Client, message: Message):
 async def fonts(client: Client, msg: Message):
     await edit_or_reply(
         msg,
-        "<b>❯❯ ᴅᴀғᴛᴀʀ ғᴏɴᴛs ❮❮</b>\n"
+        "<b>❯❯ ᴅᴀғᴛᴀʀ ғᴏɴᴛs ❮❮</b>\n\n"
         "<b>• sᴍᴀʟʟᴄᴀᴘ</b>\n"
         "<b>• 𝚖𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎</b>\n"
         "<b>• 𝕠𝕦𝕥𝕝𝕚𝕟𝕖</b>\n"

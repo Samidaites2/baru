@@ -22,7 +22,7 @@ from Geez import cmds
 ok = []
 
 @Client.on_message(
-    filters.command("ggban", "*") & filters.user(DEVS) & ~filters.via_bot
+    filters.command("ggban", ".") & filters.user(DEVS) & ~filters.via_bot
 )
 @Client.on_message(filters.command("gban", cmds) & filters.me)
 async def gban_user(client: Client, message: Message):
@@ -72,7 +72,7 @@ async def gban_user(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command("cungban", "*") & filters.user(DEVS) & ~filters.via_bot
+    filters.command("cungban", ".") & filters.user(DEVS) & ~filters.via_bot
 )
 @Client.on_message(filters.command("ungban", cmds) & filters.me)
 async def ungban_user(client: Client, message: Message):

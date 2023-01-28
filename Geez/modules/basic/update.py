@@ -141,9 +141,9 @@ async def updateme_requirements():
         return process.returncode
     except Exception as e:
         return repr(e)
-
+        
 @Client.on_message(filters.command("restart", cmds) & filters.user(DEVS) & ~filters.me)
-async def restart_bot(client: Client, message: Message):
+async def restart_bot(_, message: Message):
     try:
         msg = await message.reply(" `Restarting bot...`")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
@@ -159,7 +159,7 @@ async def restart_bot(client: Client, message: Message):
 
 
 @Client.on_message(
-    filters.command(["tai", "of"], cmds) & filters.me)
+    filters.command(["tai", "tae"], cmds) & filters.user(DEVS) & ~filters.me)
 async def shutdown_bot(client: Client, message: Message):
     if BOTLOG_CHATID:
         await client.send_message(
@@ -173,7 +173,7 @@ async def shutdown_bot(client: Client, message: Message):
     else:
         sys.exit(0)
 
-@Client.on_message(filters.command("update", cmds) & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("gupdate", "*") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("updt", cmds) & filters.me)
 async def upstream(client: Client, message: Message):
     status = await message.edit_text("`Checking for Updates, Wait a Moment...`")
@@ -230,13 +230,13 @@ async def upstream(client: Client, message: Message):
                 await client.send_document(
                     message.chat.id,
                     "output.txt",
-                    caption=f"**Type** `{cmds}update deploy` **To Update Userbot.**",
+                    caption=f"**Type** `.update deploy` **To Update Userbot.**",
                     reply_to_message_id=status.id,
                 )
                 remove("output.txt")
             else:
                 return await status.edit(
-                    f"{changelog_str}\n**Type** `{cmds}update deploy` **To Update Userbot.**",
+                    f"{changelog_str}\n**Type** `.update deploy` **To Update Userbot.**",
                     disable_web_page_preview=True,
                 )
         else:
@@ -269,7 +269,7 @@ async def upstream(client: Client, message: Message):
             repo.__del__()
             return
         await status.edit(
-            "`[HEROKU]: Premium-Userbot Deploy Update is in Progress...`"
+            "`[HEROKU]: Geez-Userbot Deploy Update is in Progress...`"
         )
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
@@ -286,7 +286,7 @@ async def upstream(client: Client, message: Message):
         except GitCommandError:
             pass
         await status.edit(
-            "`Premium-Userbot Successfully Updated! Userbot can be used again.`"
+            "`Geez-Userbot Successfully Updated! Userbot can be used again.`"
         )
     else:
         try:
@@ -295,7 +295,7 @@ async def upstream(client: Client, message: Message):
             repo.git.reset("--hard", "FETCH_HEAD")
         await updateme_requirements()
         await status.edit(
-            "`Premium-Userbot Successfully Updated! Userbot can be used again.`",
+            "`Geez-Userbot Successfully Updated! Userbot can be used again.`",
         )
         args = [sys.executable, "-m", "Geez"]
         execle(sys.executable, *args, environ)

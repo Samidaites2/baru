@@ -52,11 +52,9 @@ XCB = [
 ]
 
 
-@Client.on_message(
-    filters.command("logs", ".") & filters.user(DEVS) & ~filters.me
-)
+@Client.on_message(filters.command("logs", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("lgs", cmds) & filters.me)
-async def log_(client, message):
+async def log_(client: Client, message: Message):
     if await is_heroku():
         if HEROKU_API_KEY == "" and HEROKU_APP_NAME == "":
             return await message.reply_text(
@@ -86,11 +84,9 @@ async def log_(client, message):
         return await message.reply_text(data)
 
 
-@Client.on_message(
-    filters.command("getvar", ".") & filters.user(DEVS) & ~filters.me
-)
+@Client.on_message(filters.command("getvar", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("gtv", cmds) & filters.me)
-async def varget_(client, message):
+async def varget_(client: Client, message: Message):
     usage = "**Usage:**\n/get_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
@@ -131,11 +127,9 @@ async def varget_(client, message):
             )
 
 
-@Client.on_message(
-    filters.command("delvar", ".") & filters.user(DEVS) & ~filters.me
-)
+@Client.on_message(filters.command("delvar", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("dlv", cmds) & filters.me)
-async def vardel_(client, message):
+async def vardel_(client: Client, message: Message):
     usage = "**Usage:**\n/del_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
@@ -177,11 +171,9 @@ async def vardel_(client, message):
             )
 
 
-@Client.on_message(
-    filters.command("setvar", ".") & filters.user(DEVS) & ~filters.me
-)
+@Client.on_message(filters.command("setvar", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("stv", cmds) & filters.me)
-async def setvar(client, message):
+async def setvar(client: Client, message: Message):
     usage = "**Usage:**\n/setvar [Var Name] [Var Value]"
     if len(message.command) < 3:
         return await message.reply_text(usage)
@@ -228,9 +220,7 @@ async def setvar(client, message):
             )
 
 
-@Client.on_message(
-    filters.command("usage", ".") & filters.user(DEVS) & ~filters.me
-)
+@Client.on_message(filters.command("usage", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("usg", cmds) & filters.me)
 async def usage_dynos(client, message):
     ### Credits CatUserbot

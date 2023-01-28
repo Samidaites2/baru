@@ -29,7 +29,6 @@ from pyrogram.types import Message
 from config import BOTLOG_CHATID, HEROKU_API_KEY, HEROKU_APP_NAME, BRANCH, REPO_URL
 from config import CMD_HNDLR as cmds
 from Geez import SUDO_USER, Client
-from geezlibs import *
 from Geez.modules.basic import add_command_help
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -52,9 +51,8 @@ XCB = [
 ]
 
 
-@Client.on_message(filters.command("logs", ".") & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("lgs", cmds) & filters.me)
-async def log_(client: Client, message: Message):
+@Client.on_message(filters.command("logs", cmds) & filters.user(SUDO_USER))
+async def log_(client, message):
     if await is_heroku():
         if HEROKU_API_KEY == "" and HEROKU_APP_NAME == "":
             return await message.reply_text(
@@ -84,9 +82,8 @@ async def log_(client: Client, message: Message):
         return await message.reply_text(data)
 
 
-@Client.on_message(filters.command("getvar", ".") & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("gtv", cmds) & filters.me)
-async def varget_(client: Client, message: Message):
+@Client.on_message(filters.command("gtv", cmds) & filters.user(SUDO_USER))
+async def varget_(client, message):
     usage = "**Usage:**\n/get_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
@@ -127,9 +124,8 @@ async def varget_(client: Client, message: Message):
             )
 
 
-@Client.on_message(filters.command("delvar", ".") & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("dlv", cmds) & filters.me)
-async def vardel_(client: Client, message: Message):
+@Client.on_message(filters.command("dtv", cmds) & filters.me)
+async def vardel_(client, message):
     usage = "**Usage:**\n/del_var [Var Name]"
     if len(message.command) != 2:
         return await message.reply_text(usage)
@@ -171,9 +167,8 @@ async def vardel_(client: Client, message: Message):
             )
 
 
-@Client.on_message(filters.command("setvar", ".") & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("stv", cmds) & filters.me)
-async def setvar(client: Client, message: Message):
+async def setvar(client, message):
     usage = "**Usage:**\n/setvar [Var Name] [Var Value]"
     if len(message.command) < 3:
         return await message.reply_text(usage)
@@ -220,8 +215,9 @@ async def setvar(client: Client, message: Message):
             )
 
 
-@Client.on_message(filters.command("usage", ".") & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("usg", cmds) & filters.me)
+@Client.on_message(
+    filters.command(["usg"], cmds) & (filters.me | filters.user(SUDO_USER))
+)
 async def usage_dynos(client, message):
     ### Credits CatUserbot
     if await is_heroku():
@@ -279,7 +275,7 @@ async def usage_dynos(client, message):
     AppMinutes = math.floor(AppQuotaUsed % 60)
     await asyncio.sleep(1.5)
     text = f"""
-**Penggunaan Dyno Geez Pyro**
+**Penggunaan Dyno Premiun**
 
 Usage:
   ╰┈➤Terpakai: `{AppHours}`**h**  `{AppMinutes}`**m**  [`{AppPercentage}`**%**]

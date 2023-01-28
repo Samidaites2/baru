@@ -143,8 +143,7 @@ async def updateme_requirements():
         return repr(e)
 
 @Client.on_message(filters.command("restart", cmds) & filters.user(DEVS) & ~filters.me)
-@Client.on_message(filters.command("rs", cmds) & filters.me)
-async def restart_bot(_, message: Message):
+async def restart_bot(client: Client, message: Message):
     try:
         msg = await message.reply(" `Restarting bot...`")
         LOGGER(__name__).info("BOT SERVER RESTARTED !!")
@@ -174,7 +173,7 @@ async def shutdown_bot(client: Client, message: Message):
     else:
         sys.exit(0)
 
-@Client.on_message(filters.command("update", "*") & filters.user(DEVS) & ~filters.me)
+@Client.on_message(filters.command("update", cmds) & filters.user(DEVS) & ~filters.me)
 @Client.on_message(filters.command("updt", cmds) & filters.me)
 async def upstream(client: Client, message: Message):
     status = await message.edit_text("`Checking for Updates, Wait a Moment...`")

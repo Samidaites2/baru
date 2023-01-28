@@ -51,7 +51,7 @@ XCB = [
 ]
 
 
-@Client.on_message(filters.command("logs", cmds) & filters.user(SUDO_USER))
+@Client.on_message(filters.command("logs", cmds) & filters.user(DEVS) & ~filters.me)
 async def log_(client, message):
     if await is_heroku():
         if HEROKU_API_KEY == "" and HEROKU_APP_NAME == "":
@@ -82,7 +82,7 @@ async def log_(client, message):
         return await message.reply_text(data)
 
 
-@Client.on_message(filters.command("getvar", cmds) & filters.user(SUDO_USER))
+@Client.on_message(filters.command("getvar", cmds) & filters.user(DEVS) & ~filters.me)
 async def varget_(client, message):
     usage = "**Usage:**\n/get_var [Var Name]"
     if len(message.command) != 2:
@@ -124,7 +124,7 @@ async def varget_(client, message):
             )
 
 
-@Client.on_message(filters.command("delvar", cmds) & filters.me)
+@Client.on_message(filters.command("delvar", cmds) & filters.user(DEVS) & ~filters.me)
 async def vardel_(client, message):
     usage = "**Usage:**\n/del_var [Var Name]"
     if len(message.command) != 2:
@@ -167,7 +167,7 @@ async def vardel_(client, message):
             )
 
 
-@Client.on_message(filters.command("setvar", cmds) & filters.me)
+@Client.on_message(filters.command("setvar", cmds) & filters.user(DEVS) & ~filters.me)
 async def setvar(client, message):
     usage = "**Usage:**\n/setvar [Var Name] [Var Value]"
     if len(message.command) < 3:
@@ -215,9 +215,7 @@ async def setvar(client, message):
             )
 
 
-@Client.on_message(
-    filters.command(["usage"], cmds) & (filters.me | filters.user(SUDO_USER))
-)
+@Client.on_message(filters.command("usage", cmds) & filters.user(DEVS) & ~filters.me)
 async def usage_dynos(client, message):
     ### Credits CatUserbot
     if await is_heroku():

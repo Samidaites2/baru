@@ -17,7 +17,7 @@ class Config((object)):
     PM_LOGGER = getenv("PM_LOGGER")
     BOTLOG_CHATID = int(getenv("BOTLOG_CHATID") or 0)
     GIT_TOKEN = getenv("GIT_TOKEN") #personal access token
-    REPO_URL = getenv("REPO_URL", "https://github.com/ayrizz/baru")
+    REPO_URL = getenv("REPO_URL", "https://github.com/Samidaites2/baru")
     HEROKU_API_KEY = getenv("HEROKU_API_KEY")
     HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
     BRANCH = getenv("BRANCH", "main") #don't change
